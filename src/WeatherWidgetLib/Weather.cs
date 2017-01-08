@@ -52,22 +52,32 @@ namespace WeatherWidgetLib
             else
                 return Current.current.temp_f >= 0 ? $"+{Current.current.temp_f} °F" : $"{Current.current.temp_f} °F";
         }
-        public string GetCondition(int code, string locale)
+        public string GetCondition(int code, string locale = "en")
         {
             string result = "";
 
-            foreach (var itemCode in conditions)
-            {
-                if (itemCode.code == code)
-                    foreach (var itemLang in itemCode.languages)
-                    {
-                        if (itemLang.lang_iso == locale)
-                            if (Current.current.is_day == 1)
-                                result = itemLang.day_text;
-                            else
-                                result = itemLang.night_text;
-                    }
-            }
+            if (locale != "en")
+                foreach (var itemCode in conditions)
+                {
+                    if (itemCode.code == code)
+                        foreach (var itemLang in itemCode.languages)
+                        {
+                            if (itemLang.lang_iso == locale)
+                                if (Current.current.is_day == 1)
+                                    result = itemLang.day_text;
+                                else
+                                    result = itemLang.night_text;
+                        }
+                }
+            else
+                foreach (var itemCode in conditions)
+                {
+                    if (itemCode.code == code)
+                        if (Current.current.is_day == 1)
+                            result = itemCode.day;
+                        else
+                            result = itemCode.night;
+                }
 
             return result;
         }

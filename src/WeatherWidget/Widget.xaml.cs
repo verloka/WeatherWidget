@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static WeatherWidget.Win32;
 
@@ -17,6 +18,20 @@ namespace WeatherWidget
             InitializeComponent();
         }
 
+        public void SetWidgetTextColor()
+        {
+            SolidColorBrush scb = new SolidColorBrush(new Color()
+            {
+                A = Properties.Settings.Default.TextColorA,
+                R = Properties.Settings.Default.TextColorR,
+                G = Properties.Settings.Default.TextColorG,
+                B = Properties.Settings.Default.TextColorB
+            });
+
+            tbCondition.Foreground = scb;
+            tbLocation.Foreground = scb;
+            tbThemperature.Foreground = scb;
+        }
         public void Update(string t, string c, string l, BitmapImage img)
         {
             tbThemperature.Text = t;

@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WeatherWidgetLib;
 using WeatherWidgetLib.Geoname;
 using WeatherWidgetLib.Language;
@@ -21,17 +13,26 @@ namespace WeatherWidget
 {
     public partial class MainWindow : Window
     {
+        const double MINUTES_20 = 60 * 60 * 250;
+
         Weather weather;
         Widget widget;
+        System.Windows.Forms.NotifyIcon notifyIcon;
+        System.Timers.Timer timer;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            Application.Current.Exit += CurrentExit;
+
             weather = new Weather();
             widget = new Widget();
-        }
 
+            timer = new System.Timers.Timer(MINUTES_20);
+            timer.Elapsed += TimerElapsed;
+            timer.Enabled = true;
+        }
         Task<List<LanguageObject>> LoadLanguages()
         {
             return Task.Run(() =>
@@ -51,10 +52,38 @@ namespace WeatherWidget
                  return list.geonames;
              });
         }
+        void CreateIcon()
+        {
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Icon = Properties.Resources.icon;
+            notifyIcon.DoubleClick += NotifyIconDoubleClick;
 
+            notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            notifyIcon.ContextMenuStrip.Items.Add("Open").Click += MainWindowNotifyIconOpenClick;
+            notifyIcon.ContextMenuStrip.Items.Add("Information"); //open info window
+            notifyIcon.ContextMenuStrip.Items.Add("-");
+            notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += MainWindowNotifyIconExitClick;
+
+            notifyIcon.Visible = true;
+
+        }
+        void UpdateWidget()
+        {
+            weather.LoadData();
+            widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
+                          weather.GetCondition(weather.GetConditionCode(),
+                          Properties.Settings.Default.LanguageIso),
+                          weather.GetLocation(),
+                          weather.GetConditionIcon(weather.GetConditionCode()));
+        }
+
+        //comon events
         private async void windowLoaded(object sender, RoutedEventArgs e)
         {
+            CreateIcon();
+
             var list = await LoadLanguages();
+            list.Add(new LanguageObject() { LanguageIso = "en", LanguageName = "English" });
             cbLanguage.ItemsSource = list;
             var selectedLang = from lang in list where lang.LanguageIso == Properties.Settings.Default.LanguageIso select lang;
             cbLanguage.SelectedItem = selectedLang.FirstOrDefault();
@@ -74,24 +103,49 @@ namespace WeatherWidget
             cbThemperature.SelectedIndex = Properties.Settings.Default.Celsium;
             cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
 
-            cbUpdate.SelectedIndex = Properties.Settings.Default.Rate;
-            cbUpdate.SelectionChanged += CbUpdateSelectionChanged;
-
             cbIcon.IsChecked = Properties.Settings.Default.LoadIcon;
             cbIcon.Click += CbIconClick;
 
             cbCondition.IsChecked = Properties.Settings.Default.ShowCondition;
             cbCondition.Click += CbConditionClick;
 
+            colorPicker.SelectedColor = new Color()
+            {
+                A = Properties.Settings.Default.TextColorA,
+                R = Properties.Settings.Default.TextColorR,
+                G = Properties.Settings.Default.TextColorG,
+                B = Properties.Settings.Default.TextColorB
+            };
+            colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
+
             weather.City = (cbCity.SelectedItem as GeonameCity).name;
             weather.LoadData();
+            widget.SetWidgetTextColor();
+            widget.ShowWidget(true);
             widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
                           weather.GetCondition(weather.GetConditionCode(),
                           Properties.Settings.Default.LanguageIso),
                           weather.GetLocation(),
                           weather.GetConditionIcon(weather.GetConditionCode()));
         }
-
+        private void CurrentExit(object sender, ExitEventArgs e)
+        {
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose();
+            notifyIcon = null;
+            timer.Dispose();
+            timer = null;
+        }
+        private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            UpdateWidget();
+        }
+        //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
         {
             try
@@ -106,15 +160,6 @@ namespace WeatherWidget
             try
             {
                 Properties.Settings.Default.ShowCondition = cbCondition.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
-        }
-        private void CbUpdateSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Properties.Settings.Default.Rate = cbUpdate.SelectedIndex;
                 Properties.Settings.Default.Save();
             }
             catch { }
@@ -183,6 +228,30 @@ namespace WeatherWidget
         {
             widget.EditMode(!widget.IsEdit);
             btnEdit.Content = widget.IsEdit ? "Done" : "Edit";
+        }
+        private void colorPickerSelectionColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Properties.Settings.Default.TextColorA = e.NewValue.Value.A;
+            Properties.Settings.Default.TextColorR = e.NewValue.Value.R;
+            Properties.Settings.Default.TextColorG = e.NewValue.Value.G;
+            Properties.Settings.Default.TextColorB = e.NewValue.Value.B;
+
+            Properties.Settings.Default.Save();
+
+            widget.SetWidgetTextColor();
+        }
+        //tray contextmenu
+        private void NotifyIconDoubleClick(object sender, EventArgs e)
+        {
+            Show();
+        }
+        private void MainWindowNotifyIconOpenClick(object sender, EventArgs e)
+        {
+            Show();
+        }
+        private void MainWindowNotifyIconExitClick(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown(0);
         }
     }
 }

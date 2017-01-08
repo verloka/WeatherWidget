@@ -73,18 +73,6 @@ namespace WeatherWidget.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Rate {
-            get {
-                return ((int)(this["Rate"]));
-            }
-            set {
-                this["Rate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool LoadIcon {
             get {
@@ -128,6 +116,54 @@ namespace WeatherWidget.Properties {
             }
             set {
                 this["WidgetTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte TextColorA {
+            get {
+                return ((byte)(this["TextColorA"]));
+            }
+            set {
+                this["TextColorA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte TextColorR {
+            get {
+                return ((byte)(this["TextColorR"]));
+            }
+            set {
+                this["TextColorR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte TextColorG {
+            get {
+                return ((byte)(this["TextColorG"]));
+            }
+            set {
+                this["TextColorG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte TextColorB {
+            get {
+                return ((byte)(this["TextColorB"]));
+            }
+            set {
+                this["TextColorB"] = value;
             }
         }
     }
