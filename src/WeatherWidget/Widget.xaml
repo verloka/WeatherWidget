@@ -1,0 +1,29 @@
+﻿<Window x:Class="WeatherWidget.Widget"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherWidget"
+        mc:Ignorable="d"
+        Title="Widget" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Loaded="widgetLoaded" ShowInTaskbar="False" SizeToContent="Width" ResizeMode="CanMinimize" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20px"/>
+            <RowDefinition Height="46*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="gridHeader" Grid.Row="0" Background="#FF0074FF" MouseDown="gridHeaderMouseDown">
+            <TextBlock Text="×" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="24" Margin="0,-9,1,-3"/>
+            <TextBlock Text=".................................." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="24,-14,24,2" Foreground="#FF0023FF" IsHitTestVisible="False"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <StackPanel  Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock x:Name="tbThemperature" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="+1 С" VerticalAlignment="Center" FontSize="36" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1"/>
+                <Image x:Name="imgIcon" HorizontalAlignment="Left" Height="64" Margin="10,0,0,0" VerticalAlignment="Top" Width="64" />
+            </StackPanel>
+            <StackPanel Margin="25,0,0,0">
+                <TextBlock x:Name="tbCondition" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="состояние" VerticalAlignment="Top" FontSize="24" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1"/>
+                <TextBlock x:Name="tbLocation" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" Text="страна, город" VerticalAlignment="Top" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
