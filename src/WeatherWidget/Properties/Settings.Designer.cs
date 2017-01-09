@@ -166,5 +166,29 @@ namespace WeatherWidget.Properties {
                 this["TextColorB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowThemperatue {
+            get {
+                return ((bool)(this["ShowThemperatue"]));
+            }
+            set {
+                this["ShowThemperatue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowLocation {
+            get {
+                return ((bool)(this["ShowLocation"]));
+            }
+            set {
+                this["ShowLocation"] = value;
+            }
+        }
     }
 }

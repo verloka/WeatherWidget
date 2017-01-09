@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherWidget", "WeatherWid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherWidgetLib", "WeatherWidgetLib\WeatherWidgetLib.csproj", "{ECF949CB-D670-4C6A-9E7F-59E0EE0A810D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WeatherWidgetSetup", "WeatherWidgetSetup\WeatherWidgetSetup.vdproj", "{7A2D9D51-4F57-4C19-B1F1-F8761669FE0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{ECF949CB-D670-4C6A-9E7F-59E0EE0A810D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECF949CB-D670-4C6A-9E7F-59E0EE0A810D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECF949CB-D670-4C6A-9E7F-59E0EE0A810D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A2D9D51-4F57-4C19-B1F1-F8761669FE0B}.Debug|Any CPU.ActiveCfg = Debug
+		{7A2D9D51-4F57-4C19-B1F1-F8761669FE0B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

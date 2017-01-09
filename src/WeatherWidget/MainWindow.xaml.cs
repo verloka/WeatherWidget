@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,8 +15,6 @@ namespace WeatherWidget
 {
     public partial class MainWindow : Window
     {
-        const double MINUTES_20 = 60 * 60 * 250;
-
         Weather weather;
         Widget widget;
         System.Windows.Forms.NotifyIcon notifyIcon;
@@ -29,10 +29,11 @@ namespace WeatherWidget
             weather = new Weather();
             widget = new Widget();
 
-            timer = new System.Timers.Timer(MINUTES_20);
+            timer = new System.Timers.Timer(GetMilisec(1));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
         }
+
         Task<List<LanguageObject>> LoadLanguages()
         {
             return Task.Run(() =>
@@ -60,6 +61,7 @@ namespace WeatherWidget
 
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Open").Click += MainWindowNotifyIconOpenClick;
+            notifyIcon.ContextMenuStrip.Items.Add("Full weather"); //open info window
             notifyIcon.ContextMenuStrip.Items.Add("Information"); //open info window
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += MainWindowNotifyIconExitClick;
@@ -67,14 +69,18 @@ namespace WeatherWidget
             notifyIcon.Visible = true;
 
         }
-        void UpdateWidget()
+        async void UpdateWidget()
         {
-            weather.LoadData();
+            await weather.LoadData();
+
             widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(),
-                          Properties.Settings.Default.LanguageIso),
+                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
                           weather.GetLocation(),
-                          weather.GetConditionIcon(weather.GetConditionCode()));
+                          weather.GetConditionIconURL(weather.GetConditionCode()));
+        }
+        double GetMilisec(int minunte)
+        {
+            return 60000 * minunte;
         }
 
         //comon events
@@ -109,6 +115,19 @@ namespace WeatherWidget
             cbCondition.IsChecked = Properties.Settings.Default.ShowCondition;
             cbCondition.Click += CbConditionClick;
 
+            cbThemperatureShow.IsChecked = Properties.Settings.Default.ShowThemperatue;
+            cbThemperatureShow.Click += CbThemperatureShowClick;
+
+            cbLocationShow.IsChecked = Properties.Settings.Default.ShowLocation;
+            cbLocationShow.Click += CbLocationShowClick;
+
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if ((string)key.GetValue("Weather Widget") == null)
+                cbStartUP.IsChecked = false;
+            else
+                cbStartUP.IsChecked = true;
+            cbStartUP.Click += CbStartUPClick;
+
             colorPicker.SelectedColor = new Color()
             {
                 A = Properties.Settings.Default.TextColorA,
@@ -119,14 +138,13 @@ namespace WeatherWidget
             colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
 
             weather.City = (cbCity.SelectedItem as GeonameCity).name;
-            weather.LoadData();
+            await weather.LoadData();
             widget.SetWidgetTextColor();
             widget.ShowWidget(true);
             widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(),
-                          Properties.Settings.Default.LanguageIso),
+                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
                           weather.GetLocation(),
-                          weather.GetConditionIcon(weather.GetConditionCode()));
+                          weather.GetConditionIconURL(weather.GetConditionCode()));
         }
         private void CurrentExit(object sender, ExitEventArgs e)
         {
@@ -150,7 +168,7 @@ namespace WeatherWidget
         {
             try
             {
-                Properties.Settings.Default.LoadIcon = cbIcon.IsChecked.Value;
+                Properties.Settings.Default.ShowCondition = cbCondition.IsChecked.Value;
                 Properties.Settings.Default.Save();
             }
             catch { }
@@ -159,7 +177,7 @@ namespace WeatherWidget
         {
             try
             {
-                Properties.Settings.Default.ShowCondition = cbCondition.IsChecked.Value;
+                Properties.Settings.Default.LoadIcon = cbIcon.IsChecked.Value;
                 Properties.Settings.Default.Save();
             }
             catch { }
@@ -214,15 +232,14 @@ namespace WeatherWidget
             widget.ShowWidget(!widget.IsShow);
             btnShow.Content = widget.IsShow ? "Hide" : "Show";
         }
-        private void btnApplyClick(object sender, RoutedEventArgs e)
+        private async void btnApplyClick(object sender, RoutedEventArgs e)
         {
             weather.City = (cbCity.SelectedItem as GeonameCity).name;
-            weather.LoadData();
+            await weather.LoadData();
             widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(),
-                          Properties.Settings.Default.LanguageIso),
+                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
                           weather.GetLocation(),
-                          weather.GetConditionIcon(weather.GetConditionCode()));
+                          weather.GetConditionIconURL(weather.GetConditionCode()));
         }
         private void btnEditClick(object sender, RoutedEventArgs e)
         {
@@ -239,6 +256,32 @@ namespace WeatherWidget
             Properties.Settings.Default.Save();
 
             widget.SetWidgetTextColor();
+        }
+        private void CbThemperatureShowClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Properties.Settings.Default.ShowThemperatue = cbThemperatureShow.IsChecked.Value;
+                Properties.Settings.Default.Save();
+            }
+            catch { };
+        }
+        private void CbLocationShowClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Properties.Settings.Default.ShowLocation = cbLocationShow.IsChecked.Value;
+                Properties.Settings.Default.Save();
+            }
+            catch { };
+        }
+        private void CbStartUPClick(object sender, RoutedEventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (!cbStartUP.IsChecked.Value)
+                key.DeleteValue("Weather Widget", false);
+            else
+                key.SetValue("Weather Widget", $"\"{Assembly.GetExecutingAssembly().Location}\" -silent");
         }
         //tray contextmenu
         private void NotifyIconDoubleClick(object sender, EventArgs e)

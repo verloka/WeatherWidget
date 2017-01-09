@@ -26,15 +26,18 @@ namespace WeatherWidgetLib
             geonames = JsonConvert.DeserializeObject<Geonames>(File.ReadAllText(@"Geoname\Geonames.json"));
         }
 
-        public void LoadData()
+        public Task LoadData()
         {
-            string url = $"http://api.apixu.com/v1/current.json?key={apiKey}&q={City}";
-
-            using (var webClient = new WebClient())
+            return Task.Factory.StartNew(() =>
             {
-                var response = webClient.DownloadString(url);
-                Current = JsonConvert.DeserializeObject<WeatherObject>(response);
-            }
+                string url = $"http://api.apixu.com/v1/current.json?key={apiKey}&q={City}";
+
+                using (var webClient = new WebClient())
+                {
+                    var response = webClient.DownloadString(url);
+                    Current = JsonConvert.DeserializeObject<WeatherObject>(response);
+                }
+            });
         }
 
         public string GetLocation()
@@ -48,9 +51,9 @@ namespace WeatherWidgetLib
         public string GetThemperature(bool Celsium)
         {
             if (Celsium)
-                return Current.current.temp_c >= 0 ? $"+{Current.current.temp_c} °C" : $"{Current.current.temp_c} °C";
+                return (Current.current.temp_c >= 0 ? $"+{Current.current.temp_c} °C" : $"{Current.current.temp_c} °C").Replace(',', '.');
             else
-                return Current.current.temp_f >= 0 ? $"+{Current.current.temp_f} °F" : $"{Current.current.temp_f} °F";
+                return (Current.current.temp_f >= 0 ? $"+{Current.current.temp_f} °F" : $"{Current.current.temp_f} °F").Replace(',', '.');
         }
         public string GetCondition(int code, string locale = "en")
         {
@@ -81,14 +84,9 @@ namespace WeatherWidgetLib
 
             return result;
         }
-        public BitmapImage GetConditionIcon(int code)
+        public string GetConditionIconURL(int code)
         {
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri($"http:{Current.current.condition.icon}", UriKind.Absolute);
-            bitmap.EndInit();
-
-            return bitmap;
+            return $"http:{Current.current.condition.icon}";
         }
     }
 }

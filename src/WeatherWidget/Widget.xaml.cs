@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using static WeatherWidget.Win32;
 
 namespace WeatherWidget
@@ -13,9 +12,20 @@ namespace WeatherWidget
         public bool IsEdit { get; set; }
         public bool IsShow { get; set; }
 
+        public string ImageURL
+        {
+            get { return GetValue(ImageURLProperty) as string; }
+            set
+            {
+                SetValue(ImageURLProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ImageURLProperty = DependencyProperty.Register("ImageURL", typeof(string), typeof(Widget), null);
+
         public Widget()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         public void SetWidgetTextColor()
@@ -32,12 +42,29 @@ namespace WeatherWidget
             tbLocation.Foreground = scb;
             tbThemperature.Foreground = scb;
         }
-        public void Update(string t, string c, string l, BitmapImage img)
+        public void Update(string t, string c, string l, string u)
         {
-            tbThemperature.Text = t;
-            tbCondition.Text = c;
-            tbLocation.Text = l;
-            imgIcon.Source = img;
+            Dispatcher.BeginInvoke(new Action(delegate ()
+            {
+                tbThemperature.Text = t;
+                tbCondition.Text = c;
+                tbLocation.Text = l;
+
+                if(Properties.Settings.Default.LoadIcon)
+                {
+                    ImageURL = u;
+                    imgIcon.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    ImageURL = "";
+                    imgIcon.Visibility = Visibility.Collapsed;
+                }
+
+                tbThemperature.Visibility = Properties.Settings.Default.ShowThemperatue ? Visibility.Visible : Visibility.Collapsed;
+                tbCondition.Visibility = Properties.Settings.Default.ShowCondition ? Visibility.Visible : Visibility.Collapsed;
+                tbLocation.Visibility = Properties.Settings.Default.ShowLocation ? Visibility.Visible : Visibility.Collapsed;
+            }));
         }
         public void EditMode(bool edit)
         {
