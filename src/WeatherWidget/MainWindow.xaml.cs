@@ -27,9 +27,10 @@ namespace WeatherWidget
             Application.Current.Exit += CurrentExit;
 
             weather = new Weather();
+            weather.ErrorLoadData += WeatherErrorLoadData;
             widget = new Widget();
 
-            timer = new System.Timers.Timer(GetMilisec(1));
+            timer = new System.Timers.Timer(GetMilisec(10));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
         }
@@ -48,10 +49,10 @@ namespace WeatherWidget
         async Task<List<GeonameCity>> LoadCity(string contryCode)
         {
             return await Task.Run(async () =>
-             {
-                 var list = await GetCitys.Get(contryCode);
-                 return list.geonames;
-             });
+            {
+                var list = Web.GetConnection() ? await GetCitys.Get(contryCode) : new GeonameCitys() { geonames = new List<GeonameCity>(), totalResultsCount = 0 };
+                return list.geonames;
+            });
         }
         void CreateIcon()
         {
@@ -62,7 +63,7 @@ namespace WeatherWidget
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Open").Click += MainWindowNotifyIconOpenClick;
             notifyIcon.ContextMenuStrip.Items.Add("Full weather"); //open info window
-            notifyIcon.ContextMenuStrip.Items.Add("Information"); //open info window
+            notifyIcon.ContextMenuStrip.Items.Add("Information").Click += MainWindowInfoClick;
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += MainWindowNotifyIconExitClick;
 
@@ -71,12 +72,21 @@ namespace WeatherWidget
         }
         async void UpdateWidget()
         {
-            await weather.LoadData();
+            if (Web.GetConnection())
+            {
+                weather.City = (cbCity.SelectedItem as GeonameCity).name;
 
-            widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
-                          weather.GetLocation(),
-                          weather.GetConditionIconURL(weather.GetConditionCode()));
+                await weather.LoadData();
+
+                widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
+                              weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
+                              weather.GetLocation(),
+                              weather.GetConditionIconURL(weather.GetConditionCode()));
+            }
+            else
+            {
+                Xceed.Wpf.Toolkit.MessageBox.Show("Alert", "Nope internet! Update the widget can not be", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         double GetMilisec(int minunte)
         {
@@ -136,15 +146,10 @@ namespace WeatherWidget
                 B = Properties.Settings.Default.TextColorB
             };
             colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
-
-            weather.City = (cbCity.SelectedItem as GeonameCity).name;
-            await weather.LoadData();
+            
             widget.SetWidgetTextColor();
             widget.ShowWidget(true);
-            widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
-                          weather.GetLocation(),
-                          weather.GetConditionIconURL(weather.GetConditionCode()));
+            UpdateWidget();
         }
         private void CurrentExit(object sender, ExitEventArgs e)
         {
@@ -162,6 +167,10 @@ namespace WeatherWidget
         private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             UpdateWidget();
+        }
+        private void WeatherErrorLoadData(WeatherWidgetLib.Error.Error eror)
+        {
+            Xceed.Wpf.Toolkit.MessageBox.Show("Alert", $"Error code - {eror.code};\n{eror.message}", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
@@ -232,14 +241,9 @@ namespace WeatherWidget
             widget.ShowWidget(!widget.IsShow);
             btnShow.Content = widget.IsShow ? "Hide" : "Show";
         }
-        private async void btnApplyClick(object sender, RoutedEventArgs e)
+        private void btnApplyClick(object sender, RoutedEventArgs e)
         {
-            weather.City = (cbCity.SelectedItem as GeonameCity).name;
-            await weather.LoadData();
-            widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                          weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
-                          weather.GetLocation(),
-                          weather.GetConditionIconURL(weather.GetConditionCode()));
+            UpdateWidget();
         }
         private void btnEditClick(object sender, RoutedEventArgs e)
         {
@@ -295,6 +299,10 @@ namespace WeatherWidget
         private void MainWindowNotifyIconExitClick(object sender, EventArgs e)
         {
             Application.Current.Shutdown(0);
+        }
+        private void MainWindowInfoClick(object sender, EventArgs e)
+        {
+            new Info().ShowDialog();
         }
     }
 }

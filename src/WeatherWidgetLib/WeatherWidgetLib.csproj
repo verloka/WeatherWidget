@@ -49,6 +49,8 @@
     <Compile Include="Condition\Condition.cs" />
     <Compile Include="Condition\ConditionsObject.cs" />
     <Compile Include="Current.cs" />
+    <Compile Include="Error\Error.cs" />
+    <Compile Include="Error\ErrorObject.cs" />
     <Compile Include="Geoname\Geoname.cs" />
     <Compile Include="Geoname\GeonameCity.cs" />
     <Compile Include="Geoname\GeonameCitys.cs" />

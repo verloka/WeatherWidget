@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherWidget"
         mc:Ignorable="d"
-        Title="Widget" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Loaded="widgetLoaded" ShowInTaskbar="False" SizeToContent="Width" ResizeMode="CanMinimize" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False">
+        Title="Widget" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Loaded="widgetLoaded" ShowInTaskbar="False" SizeToContent="Width" ResizeMode="CanMinimize" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="True" IsTabStop="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20px"/>
@@ -17,12 +17,12 @@
         </Grid>
         <StackPanel Grid.Row="1">
             <StackPanel  Orientation="Horizontal" VerticalAlignment="Top">
-                <TextBlock x:Name="tbThemperature" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="+1 С" VerticalAlignment="Center" FontSize="36" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                <TextBlock x:Name="tbThemperature" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" FontSize="36" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
                 <Image x:Name="imgIcon" Source="{Binding Path=ImageURL}" HorizontalAlignment="Left" Height="64" Margin="10,0,0,0" VerticalAlignment="Top" Width="64" IsHitTestVisible="False"/>
             </StackPanel>
             <StackPanel Margin="25,0,0,0">
-                <TextBlock x:Name="tbCondition" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="состояние" VerticalAlignment="Top" FontSize="24" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
-                <TextBlock x:Name="tbLocation" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" Text="страна, город" VerticalAlignment="Top" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                <TextBlock x:Name="tbCondition" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="24" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                <TextBlock x:Name="tbLocation" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
             </StackPanel>
         </StackPanel>
     </Grid>

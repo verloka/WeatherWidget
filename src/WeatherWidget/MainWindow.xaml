@@ -32,9 +32,9 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Margin="15,0,0,0" Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
-                <ComboBox x:Name="cbCuntry" Grid.Row="0" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True"/>
+                <ComboBox x:Name="cbCuntry" Grid.Row="0" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True" Height="22"/>
                 <TextBlock Grid.Column="0" Grid.Row="1" Margin="15,0,0,0" Text="City" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
-                <ComboBox x:Name="cbCity" Grid.Row="1" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True"/>
+                <ComboBox x:Name="cbCity" Grid.Row="1" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True" Height="22"/>
             </Grid>
             <Grid x:Name="gridLanguage" Margin="20,15,20,0">
                 <Grid.ColumnDefinitions>
@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Margin="15,0,0,0" Text="Condition's language" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
-                <ComboBox x:Name="cbLanguage" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True"/>
+                <ComboBox x:Name="cbLanguage" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True" Height="22"/>
             </Grid>
             <Grid x:Name="gridThemperature" Margin="20,15,20,0">
                 <Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Margin="15,0,0,0" Text="Temperature scale" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
-                <ComboBox x:Name="cbThemperature" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14">
+                <ComboBox x:Name="cbThemperature" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" Height="22">
                     <ComboBoxItem Content="°C"/>
                     <ComboBoxItem Content="°F"/>
                 </ComboBox>
@@ -88,7 +88,7 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="btnEdit" Content="Edit" Grid.Column="0" Margin="15,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Click="btnEditClick"/>
                 <Button x:Name="btnApply" Content="Apply" Grid.Column="2" Margin="15,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Click="btnApplyClick"/>
-                <Button x:Name="btnShow" Content="Show" Grid.Column="1" Margin="15,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Click="btnShowClick"/>
+                <Button x:Name="btnShow" Visibility="Collapsed" Content="Show" Grid.Column="1" Margin="15,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Click="btnShowClick"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

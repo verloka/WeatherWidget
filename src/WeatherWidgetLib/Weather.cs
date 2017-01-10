@@ -14,6 +14,8 @@ namespace WeatherWidgetLib
 {
     public class Weather
     {
+        public event Action<Error.Error> ErrorLoadData;
+
         public WeatherObject Current { get; private set; }
         public List<ConditionsObject> conditions { get; private set; }
         public Geonames geonames { get; private set; }
@@ -34,8 +36,16 @@ namespace WeatherWidgetLib
 
                 using (var webClient = new WebClient())
                 {
-                    var response = webClient.DownloadString(url);
-                    Current = JsonConvert.DeserializeObject<WeatherObject>(response);
+                    string resp = "";
+
+                    resp = webClient.DownloadString(url);
+                    Current = JsonConvert.DeserializeObject<WeatherObject>(resp);
+
+                    if(Current?.current == null || Current?.location == null)
+                    {
+                        Error.Error error = JsonConvert.DeserializeObject<Error.Error>(resp);
+                        ErrorLoadData?.Invoke(error);
+                    }
                 }
             });
         }
