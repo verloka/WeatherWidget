@@ -1,0 +1,66 @@
+﻿<Window x:Class="WeatherWidget.FullWeather"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherWidget"
+        mc:Ignorable="d"
+        Title="Full information about weather" Height="350" Width="500" ResizeMode="NoResize" Icon="Assets/sun.png" Background="#FFE6F4FF" Loaded="windowLoaded" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,0,50">
+            <Grid x:Name="gridLogo">
+                <Image Source="Assets/sun.png" Width="128" Height="128" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10"/>
+                <TextBlock Text="Weather Widget" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr">
+                    <TextBlock.Effect>
+                        <DropShadowEffect/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="by Vadim Verloka" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="1"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Grid>
+            <TextBlock Margin="0" Text="Full weather information:" VerticalAlignment="Center" FontSize="20" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" TextAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Margin="15,10,0,0" Text="Data was updated" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Margin="15,10,0,0" Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Margin="15,10,0,0" Text="Feels like temperature" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Margin="15,10,0,0" Text="Condition" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Margin="15,10,0,0" Text="Wind speed" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="5" Margin="15,10,0,0" Text="Wind direction" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="6" Margin="15,10,0,0" Text="Pressure" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="7" Margin="15,10,0,0" Text="Precipitation" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="8" Margin="15,10,0,0" Text="Humidity" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock Grid.Column="0" Grid.Row="9" Margin="15,10,0,0" Text="Cloud cover" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+
+                <TextBlock x:Name="tbData" Grid.Column="1" Grid.Row="0" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbTemp" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbFeelTemp" Grid.Column="1" Grid.Row="2" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbCond" Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" Text="" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" TextWrapping="Wrap"/>
+                <TextBlock x:Name="tbWindSpeed" Grid.Column="1" Grid.Row="4" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbWindDir" Grid.Column="1" Grid.Row="5" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbPres" Grid.Column="1" Grid.Row="6" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbPrec" Grid.Column="1" Grid.Row="7" Margin="0,10,0,0" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbHum" Grid.Column="1" Grid.Row="8" Margin="0,10,0,0" Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <TextBlock x:Name="tbCloud" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

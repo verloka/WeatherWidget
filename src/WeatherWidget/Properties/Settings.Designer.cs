@@ -190,5 +190,41 @@ namespace WeatherWidget.Properties {
                 this["ShowLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ApixuKey {
+            get {
+                return ((string)(this["ApixuKey"]));
+            }
+            set {
+                this["ApixuKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GeonamesLogin {
+            get {
+                return ((string)(this["GeonamesLogin"]));
+            }
+            set {
+                this["GeonamesLogin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowInetDis {
+            get {
+                return ((bool)(this["ShowInetDis"]));
+            }
+            set {
+                this["ShowInetDis"] = value;
+            }
+        }
     }
 }

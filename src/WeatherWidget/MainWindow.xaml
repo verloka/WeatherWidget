@@ -78,6 +78,7 @@
                 <xctk:ColorPicker x:Name="colorPicker" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" ColorMode="ColorCanvas"/>
             </Grid>
 
+            <CheckBox x:Name="cbShowInetMessage" Grid.Column="1" Grid.Row="1" Content="Show a message when there is no internet" HorizontalAlignment="Left" Margin="25,10,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16"/>
             <CheckBox x:Name="cbStartUP" Grid.Column="1" Grid.Row="1" Content="Startup application with Windows" HorizontalAlignment="Left" Margin="25,10,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16"/>
 
             <Grid x:Name="gridButtons" Margin="20,25,20,0">

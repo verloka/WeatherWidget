@@ -1,0 +1,41 @@
+﻿<Window x:Class="WeatherWidget.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherWidget"
+        mc:Ignorable="d"
+        Title="Login" Width="500" ResizeMode="NoResize" Icon="Assets/sun.png" Background="#FFE6F4FF" WindowStartupLocation="CenterOwner" SizeToContent="Height">
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="170px"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="gridLogo" Grid.Row="0">
+            <Image Source="Assets/sun.png" Width="128" Height="128" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10"/>
+            <TextBlock Text="Weather Widget" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr">
+                <TextBlock.Effect>
+                    <DropShadowEffect/>
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Text="by Vadim Verloka" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="1"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </Grid>
+        <StackPanel Grid.Row="1" Margin="20,5">
+            <TextBlock  Margin="0,0,0,3" Text="Key" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+            <TextBox x:Name="tbKey" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Height="26"/>
+            <TextBlock Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="20,5">
+            <TextBlock  Margin="0,0,0,3" Text="Login" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+            <TextBox x:Name="tbLogin" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Height="26"/>
+            <TextBlock Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0"/>
+        </StackPanel>
+        <Button x:Name="btnLogin" Grid.Row="3" Content="Log In" Margin="0,25,0,15" HorizontalAlignment="Center" Width="100" Click="btnLoginClick" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+    </Grid>
+</Window>

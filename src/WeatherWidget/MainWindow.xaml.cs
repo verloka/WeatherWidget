@@ -19,20 +19,19 @@ namespace WeatherWidget
         Widget widget;
         System.Windows.Forms.NotifyIcon notifyIcon;
         System.Timers.Timer timer;
+        bool CanWork = false;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            Application.Current.Exit += CurrentExit;
-
-            weather = new Weather();
-            weather.ErrorLoadData += WeatherErrorLoadData;
-            widget = new Widget();
-
-            timer = new System.Timers.Timer(GetMilisec(10));
-            timer.Elapsed += TimerElapsed;
-            timer.Enabled = true;
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ApixuKey) && string.IsNullOrWhiteSpace(Properties.Settings.Default.GeonamesLogin))
+            {
+                if (new Login().ShowDialog().Value)
+                    Init();
+            }
+            else
+                Init();
         }
 
         Task<List<LanguageObject>> LoadLanguages()
@@ -50,7 +49,7 @@ namespace WeatherWidget
         {
             return await Task.Run(async () =>
             {
-                var list = Web.GetConnection() ? await GetCitys.Get(contryCode) : new GeonameCitys() { geonames = new List<GeonameCity>(), totalResultsCount = 0 };
+                var list = Web.GetConnection() ? await GetCitys.Get(contryCode, Properties.Settings.Default.GeonamesLogin) : new GeonameCitys() { geonames = new List<GeonameCity>(), totalResultsCount = 0 };
                 return list.geonames;
             });
         }
@@ -62,7 +61,7 @@ namespace WeatherWidget
 
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Open").Click += MainWindowNotifyIconOpenClick;
-            notifyIcon.ContextMenuStrip.Items.Add("Full weather"); //open info window
+            notifyIcon.ContextMenuStrip.Items.Add("Full weather").Click += MainWindowFullWeatherClick;
             notifyIcon.ContextMenuStrip.Items.Add("Information").Click += MainWindowInfoClick;
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += MainWindowNotifyIconExitClick;
@@ -74,9 +73,13 @@ namespace WeatherWidget
         {
             if (Web.GetConnection())
             {
+                if (!CanWork)
+                    return;
+
                 weather.City = (cbCity.SelectedItem as GeonameCity).name;
 
-                await weather.LoadData();
+                if (!await weather.LoadData())
+                    return;
 
                 widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
                               weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
@@ -85,71 +88,93 @@ namespace WeatherWidget
             }
             else
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("Alert", "Nope internet! Update the widget can not be", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (Properties.Settings.Default.ShowInetDis)
+                    MessageBox.Show("Nope internet! Update the widget can not be", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         double GetMilisec(int minunte)
         {
             return 60000 * minunte;
         }
+        void Init()
+        {
+            Application.Current.Exit += CurrentExit;
+            GetCitys.WrongUser += GetCitysWrongUser;
+
+            weather = new Weather(Properties.Settings.Default.ApixuKey);
+            weather.ErrorLoadData += WeatherErrorLoadData;
+            widget = new Widget();
+
+            timer = new System.Timers.Timer(GetMilisec(10));
+            timer.Elapsed += TimerElapsed;
+            timer.Enabled = true;
+
+            CanWork = true;
+        }
 
         //comon events
         private async void windowLoaded(object sender, RoutedEventArgs e)
         {
-            CreateIcon();
-
-            var list = await LoadLanguages();
-            list.Add(new LanguageObject() { LanguageIso = "en", LanguageName = "English" });
-            cbLanguage.ItemsSource = list;
-            var selectedLang = from lang in list where lang.LanguageIso == Properties.Settings.Default.LanguageIso select lang;
-            cbLanguage.SelectedItem = selectedLang.FirstOrDefault();
-            cbLanguage.SelectionChanged += CbLanguageSelectionChanged;
-
-            cbCuntry.ItemsSource = weather.geonames.geonames;
-            var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == Properties.Settings.Default.GeonameID select contry;
-            cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
-            cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
-
-            var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
-            cbCity.ItemsSource = cityList;
-            var selectedCity = from city in cityList where city.geonameId == Properties.Settings.Default.CityGeonameID select city;
-            cbCity.SelectedItem = selectedCity.FirstOrDefault();
-            cbCity.SelectionChanged += CbCitySelectionChanged;
-
-            cbThemperature.SelectedIndex = Properties.Settings.Default.Celsium;
-            cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
-
-            cbIcon.IsChecked = Properties.Settings.Default.LoadIcon;
-            cbIcon.Click += CbIconClick;
-
-            cbCondition.IsChecked = Properties.Settings.Default.ShowCondition;
-            cbCondition.Click += CbConditionClick;
-
-            cbThemperatureShow.IsChecked = Properties.Settings.Default.ShowThemperatue;
-            cbThemperatureShow.Click += CbThemperatureShowClick;
-
-            cbLocationShow.IsChecked = Properties.Settings.Default.ShowLocation;
-            cbLocationShow.Click += CbLocationShowClick;
-
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if ((string)key.GetValue("Weather Widget") == null)
-                cbStartUP.IsChecked = false;
-            else
-                cbStartUP.IsChecked = true;
-            cbStartUP.Click += CbStartUPClick;
-
-            colorPicker.SelectedColor = new Color()
+            if (CanWork)
             {
-                A = Properties.Settings.Default.TextColorA,
-                R = Properties.Settings.Default.TextColorR,
-                G = Properties.Settings.Default.TextColorG,
-                B = Properties.Settings.Default.TextColorB
-            };
-            colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
-            
-            widget.SetWidgetTextColor();
-            widget.ShowWidget(true);
-            UpdateWidget();
+                CreateIcon();
+
+                var list = await LoadLanguages();
+                list.Add(new LanguageObject() { LanguageIso = "en", LanguageName = "English" });
+                cbLanguage.ItemsSource = list;
+                var selectedLang = from lang in list where lang.LanguageIso == Properties.Settings.Default.LanguageIso select lang;
+                cbLanguage.SelectedItem = selectedLang.FirstOrDefault();
+                cbLanguage.SelectionChanged += CbLanguageSelectionChanged;
+
+                cbCuntry.ItemsSource = weather.geonames.geonames;
+                var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == Properties.Settings.Default.GeonameID select contry;
+                cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
+                cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
+
+                var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
+                cbCity.ItemsSource = cityList;
+                var selectedCity = from city in cityList where city.geonameId == Properties.Settings.Default.CityGeonameID select city;
+                cbCity.SelectedItem = selectedCity.FirstOrDefault();
+                cbCity.SelectionChanged += CbCitySelectionChanged;
+
+                cbThemperature.SelectedIndex = Properties.Settings.Default.Celsium;
+                cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
+
+                cbIcon.IsChecked = Properties.Settings.Default.LoadIcon;
+                cbIcon.Click += CbIconClick;
+
+                cbCondition.IsChecked = Properties.Settings.Default.ShowCondition;
+                cbCondition.Click += CbConditionClick;
+
+                cbThemperatureShow.IsChecked = Properties.Settings.Default.ShowThemperatue;
+                cbThemperatureShow.Click += CbThemperatureShowClick;
+
+                cbLocationShow.IsChecked = Properties.Settings.Default.ShowLocation;
+                cbLocationShow.Click += CbLocationShowClick;
+
+                cbShowInetMessage.IsChecked = Properties.Settings.Default.ShowInetDis;
+                cbShowInetMessage.Click += CbShowInetMessageClick;
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if ((string)key.GetValue("Weather Widget") == null)
+                    cbStartUP.IsChecked = false;
+                else
+                    cbStartUP.IsChecked = true;
+                cbStartUP.Click += CbStartUPClick;
+
+                colorPicker.SelectedColor = new Color()
+                {
+                    A = Properties.Settings.Default.TextColorA,
+                    R = Properties.Settings.Default.TextColorR,
+                    G = Properties.Settings.Default.TextColorG,
+                    B = Properties.Settings.Default.TextColorB
+                };
+                colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
+
+                widget.SetWidgetTextColor();
+                widget.ShowWidget(true);
+                UpdateWidget();
+            }
         }
         private void CurrentExit(object sender, ExitEventArgs e)
         {
@@ -170,7 +195,34 @@ namespace WeatherWidget
         }
         private void WeatherErrorLoadData(WeatherWidgetLib.Error.Error eror)
         {
-            Xceed.Wpf.Toolkit.MessageBox.Show("Alert", $"Error code - {eror.code};\n{eror.message}", MessageBoxButton.OK, MessageBoxImage.Warning);
+            switch (eror.code)
+            {
+                case 2006:
+                    MessageBox.Show($"Error code - {eror.code};\n{eror.message}\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Properties.Settings.Default.GeonamesLogin = "";
+                    Properties.Settings.Default.ApixuKey = "";
+                    Properties.Settings.Default.Save();
+                    CanWork = false;
+                    break;
+                case 2007:
+                    MessageBox.Show($"Error code - {eror.code};\n{eror.message}\nKey and Login been reser\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Properties.Settings.Default.GeonamesLogin = "";
+                    Properties.Settings.Default.ApixuKey = "";
+                    Properties.Settings.Default.Save();
+                    CanWork = false;
+                    break;
+                default:
+                    MessageBox.Show($"Error code - {eror.code};\n{eror.message}\n", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+            }
+        }
+        private void GetCitysWrongUser(string obj)
+        {
+            MessageBox.Show($"Wrong login: {obj}\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+            Properties.Settings.Default.GeonamesLogin = "";
+            Properties.Settings.Default.ApixuKey = "";
+            Properties.Settings.Default.Save();
+            CanWork = false;
         }
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
@@ -287,6 +339,15 @@ namespace WeatherWidget
             else
                 key.SetValue("Weather Widget", $"\"{Assembly.GetExecutingAssembly().Location}\" -silent");
         }
+        private void CbShowInetMessageClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Properties.Settings.Default.ShowInetDis = cbShowInetMessage.IsChecked.Value;
+                Properties.Settings.Default.Save();
+            }
+            catch { };
+        }
         //tray contextmenu
         private void NotifyIconDoubleClick(object sender, EventArgs e)
         {
@@ -303,6 +364,10 @@ namespace WeatherWidget
         private void MainWindowInfoClick(object sender, EventArgs e)
         {
             new Info().ShowDialog();
+        }
+        private void MainWindowFullWeatherClick(object sender, EventArgs e)
+        {
+            new FullWeather(weather).ShowDialog();
         }
     }
 }

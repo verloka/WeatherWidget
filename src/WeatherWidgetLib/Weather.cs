@@ -19,33 +19,55 @@ namespace WeatherWidgetLib
         public WeatherObject Current { get; private set; }
         public List<ConditionsObject> conditions { get; private set; }
         public Geonames geonames { get; private set; }
-        public string City { get; set; } = "Kharkiv";
-        string apiKey = "40cb9b0803474ba6982135724170701";
+        public string City { get; set; }
+        string apiKey;
 
-        public Weather()
+        public Weather(string apiKey)
         {
+            this.apiKey = apiKey;
+
             conditions = JsonConvert.DeserializeObject<List<ConditionsObject>>(File.ReadAllText(@"Condition\Conditions.json"));
             geonames = JsonConvert.DeserializeObject<Geonames>(File.ReadAllText(@"Geoname\Geonames.json"));
         }
 
-        public Task LoadData()
+        public Task<bool> LoadData()
         {
             return Task.Factory.StartNew(() =>
             {
+                bool result = true;
                 string url = $"http://api.apixu.com/v1/current.json?key={apiKey}&q={City}";
 
                 using (var webClient = new WebClient())
                 {
                     string resp = "";
 
-                    resp = webClient.DownloadString(url);
-                    Current = JsonConvert.DeserializeObject<WeatherObject>(resp);
-
-                    if(Current?.current == null || Current?.location == null)
+                    try
                     {
-                        Error.Error error = JsonConvert.DeserializeObject<Error.Error>(resp);
-                        ErrorLoadData?.Invoke(error);
+                        resp = webClient.DownloadString(url);
+                        Current = JsonConvert.DeserializeObject<WeatherObject>(resp);
+
+                        if (Current?.current == null || Current?.location == null)
+                        {
+                            Error.Error error = JsonConvert.DeserializeObject<Error.Error>(resp);
+                            ErrorLoadData?.Invoke(error);
+                            result = false;
+                        }
                     }
+                    catch (WebException e)
+                    {
+                        if (e.Status == WebExceptionStatus.ProtocolError)
+                        {
+                            var response = e.Response as HttpWebResponse;
+                            if (response != null && (int)response.StatusCode == 401)
+                                ErrorLoadData?.Invoke(new Error.Error() { code = 2006, message = "API key provided is invalid" });
+                            else if(response != null && (int)response.StatusCode == 403)
+                                ErrorLoadData?.Invoke(new Error.Error() { code = 2007, message = "API key has been disabled. API key has exceeded calls per month quota." });
+
+                        }
+                        result = false;
+                    }
+
+                    return result;
                 }
             });
         }
