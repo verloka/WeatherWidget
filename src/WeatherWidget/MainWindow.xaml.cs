@@ -69,28 +69,31 @@ namespace WeatherWidget
             notifyIcon.Visible = true;
 
         }
-        async void UpdateWidget()
+        void UpdateWidget()
         {
-            if (Web.GetConnection())
+            Dispatcher.BeginInvoke(new Action(async delegate ()
             {
-                if (!CanWork)
-                    return;
+                if (Web.GetConnection())
+                {
+                    if (!CanWork)
+                        return;
 
-                weather.City = (cbCity.SelectedItem as GeonameCity).name;
+                    weather.City = (cbCity.SelectedItem as GeonameCity).name;
 
-                if (!await weather.LoadData())
-                    return;
+                    if (!await weather.LoadData())
+                        return;
 
-                widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                              weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
-                              weather.GetLocation(),
-                              weather.GetConditionIconURL(weather.GetConditionCode()));
-            }
-            else
-            {
-                if (Properties.Settings.Default.ShowInetDis)
-                    MessageBox.Show("Nope internet! Update the widget can not be", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+                    widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
+                                  weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
+                                  weather.GetLocation(),
+                                  weather.GetConditionIconURL(weather.GetConditionCode()));
+                }
+                else
+                {
+                    if (Properties.Settings.Default.ShowInetDis)
+                        MessageBox.Show("Nope internet! Update the widget can not be", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }));
         }
         double GetMilisec(int minunte)
         {
