@@ -60,9 +60,11 @@ namespace WeatherWidget
             notifyIcon.DoubleClick += NotifyIconDoubleClick;
 
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            notifyIcon.ContextMenuStrip.Items.Add("Open").Click += MainWindowNotifyIconOpenClick;
+            notifyIcon.ContextMenuStrip.Items.Add("Show window").Click += MainWindowNotifyIconOpenClick;
+            notifyIcon.ContextMenuStrip.Items.Add("Update widget").Click += MainWindowUpdateWidgetClick; ;
+            notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Full weather").Click += MainWindowFullWeatherClick;
-            notifyIcon.ContextMenuStrip.Items.Add("Information").Click += MainWindowInfoClick;
+            notifyIcon.ContextMenuStrip.Items.Add("About").Click += MainWindowInfoClick;
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += MainWindowNotifyIconExitClick;
 
@@ -371,6 +373,10 @@ namespace WeatherWidget
         private void MainWindowFullWeatherClick(object sender, EventArgs e)
         {
             new FullWeather(weather).ShowDialog();
+        }
+        private void MainWindowUpdateWidgetClick(object sender, EventArgs e)
+        {
+            UpdateWidget();
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherWidget"
         mc:Ignorable="d"
-        Title="Full information about weather" Height="350" Width="500" ResizeMode="NoResize" Icon="Assets/sun.png" Background="#FFE6F4FF" Loaded="windowLoaded" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="Full information about weather" Height="350" Width="500" ResizeMode="NoResize" Icon="Assets/sun.png" Background="#FFE6F4FF" Loaded="windowLoaded" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="0,0,0,50">
             <Grid x:Name="gridLogo">

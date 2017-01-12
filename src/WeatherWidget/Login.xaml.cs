@@ -19,5 +19,13 @@ namespace WeatherWidget
                 DialogResult = true;
             }
         }
+        private void tBLoginClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://ogycode.github.io/WeatherWidget/login.html");
+        }
+        private void tbKey1Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://ogycode.github.io/WeatherWidget/key.html");
+        }
     }
 }

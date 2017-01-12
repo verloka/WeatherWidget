@@ -29,12 +29,12 @@
         <StackPanel Grid.Row="1" Margin="20,5">
             <TextBlock  Margin="0,0,0,3" Text="Key" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
             <TextBox x:Name="tbKey" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Height="26"/>
-            <TextBlock Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0"/>
+            <TextBlock x:Name="tbKey1" Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0" HorizontalAlignment="Left" MouseLeftButtonUp="tbKey1Click"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="20,5">
             <TextBlock  Margin="0,0,0,3" Text="Login" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
             <TextBox x:Name="tbLogin" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16" Height="26"/>
-            <TextBlock Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0"/>
+            <TextBlock x:Name="tBLogin" Text="How to get?" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Foreground="#FF000ADC" TextDecorations="Underline" Cursor="Hand" Margin="0,3,0,0" HorizontalAlignment="Left" MouseLeftButtonUp="tBLoginClick"/>
         </StackPanel>
         <Button x:Name="btnLogin" Grid.Row="3" Content="Log In" Margin="0,25,0,15" HorizontalAlignment="Center" Width="100" Click="btnLoginClick" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
     </Grid>
