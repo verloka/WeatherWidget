@@ -1,4 +1,4 @@
-![Readme Photo](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/readme.png)
+![Readme Photo](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/readme.png)![Readme Screen](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/readmeScreen.JPG)
 
 ## Weather Widget ##
 **Widget for demonstration on desktop the weather on your location**
