@@ -193,30 +193,6 @@ namespace WeatherWidget.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ApixuKey {
-            get {
-                return ((string)(this["ApixuKey"]));
-            }
-            set {
-                this["ApixuKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GeonamesLogin {
-            get {
-                return ((string)(this["GeonamesLogin"]));
-            }
-            set {
-                this["GeonamesLogin"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ShowInetDis {
             get {
@@ -224,6 +200,150 @@ namespace WeatherWidget.Properties {
             }
             set {
                 this["ShowInetDis"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte BackgroundColorA {
+            get {
+                return ((byte)(this["BackgroundColorA"]));
+            }
+            set {
+                this["BackgroundColorA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte BackgroundColorR {
+            get {
+                return ((byte)(this["BackgroundColorR"]));
+            }
+            set {
+                this["BackgroundColorR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte BackgroundColorG {
+            get {
+                return ((byte)(this["BackgroundColorG"]));
+            }
+            set {
+                this["BackgroundColorG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte BackgroundColorB {
+            get {
+                return ((byte)(this["BackgroundColorB"]));
+            }
+            set {
+                this["BackgroundColorB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte BorderColorA {
+            get {
+                return ((byte)(this["BorderColorA"]));
+            }
+            set {
+                this["BorderColorA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte BorderColorR {
+            get {
+                return ((byte)(this["BorderColorR"]));
+            }
+            set {
+                this["BorderColorR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte BorderColorG {
+            get {
+                return ((byte)(this["BorderColorG"]));
+            }
+            set {
+                this["BorderColorG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public byte BorderColorB {
+            get {
+                return ((byte)(this["BorderColorB"]));
+            }
+            set {
+                this["BorderColorB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BorderLeft {
+            get {
+                return ((int)(this["BorderLeft"]));
+            }
+            set {
+                this["BorderLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BorderRight {
+            get {
+                return ((int)(this["BorderRight"]));
+            }
+            set {
+                this["BorderRight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BorderTop {
+            get {
+                return ((int)(this["BorderTop"]));
+            }
+            set {
+                this["BorderTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BorderBottom {
+            get {
+                return ((int)(this["BorderBottom"]));
+            }
+            set {
+                this["BorderBottom"] = value;
             }
         }
     }

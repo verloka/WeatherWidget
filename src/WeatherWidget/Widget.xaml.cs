@@ -42,6 +42,37 @@ namespace WeatherWidget
             tbLocation.Foreground = scb;
             tbThemperature.Foreground = scb;
         }
+        public void SetWidgetBackgroundColor()
+        {
+            SolidColorBrush scb = new SolidColorBrush(new Color()
+            {
+                A = Properties.Settings.Default.BackgroundColorA,
+                R = Properties.Settings.Default.BackgroundColorR,
+                G = Properties.Settings.Default.BackgroundColorG,
+                B = Properties.Settings.Default.BackgroundColorB
+            });
+
+            widgetBorder.Background = scb;
+        }
+        public void SetWidgetBorderColor()
+        {
+            SolidColorBrush scb = new SolidColorBrush(new Color()
+            {
+                A = Properties.Settings.Default.BorderColorA,
+                R = Properties.Settings.Default.BorderColorR,
+                G = Properties.Settings.Default.BorderColorG,
+                B = Properties.Settings.Default.BorderColorB
+            });
+
+            widgetBorder.BorderBrush = scb;
+        }
+        public void SetWidgetBorder()
+        {
+            widgetBorder.BorderThickness = new Thickness(Properties.Settings.Default.BorderLeft,
+                                                         Properties.Settings.Default.BorderTop,
+                                                         Properties.Settings.Default.BorderRight,
+                                                         Properties.Settings.Default.BorderBottom);
+        }
         public void Update(string t, string c, string l, string u)
         {
             Dispatcher.BeginInvoke(new Action(delegate ()
@@ -69,7 +100,10 @@ namespace WeatherWidget
         public void EditMode(bool edit)
         {
             IsEdit = edit;
+
             gridHeader.Visibility = IsEdit ? Visibility.Visible : Visibility.Collapsed;
+            windowBorder.BorderBrush = IsEdit ? (SolidColorBrush)FindResource("WidgetBorderColorActive") : (SolidColorBrush)FindResource("WidgetBorderColorInactive");
+            rootGrid.Background = IsEdit ? (SolidColorBrush)FindResource("RootGridColorActive") : (SolidColorBrush)FindResource("RootGridColorInactive");
         }
         public void ShowWidget(bool show)
         {

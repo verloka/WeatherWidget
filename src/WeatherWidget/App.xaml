@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:WeatherWidget"
              Startup="AppStartup">
     <Application.Resources>
-         
+
+        
+
     </Application.Resources>
 </Application>

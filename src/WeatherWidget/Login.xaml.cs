@@ -4,18 +4,20 @@ namespace WeatherWidget
 {
     public partial class Login : Window
     {
-        public Login()
+        MainWindow mainWindow;
+
+        public Login(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
         }
 
         private void btnLoginClick(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(tbKey.Text) && !string.IsNullOrWhiteSpace(tbLogin.Text))
             {
-                Properties.Settings.Default.ApixuKey = tbKey.Text;
-                Properties.Settings.Default.GeonamesLogin = tbLogin.Text;
-                Properties.Settings.Default.Save();
+                mainWindow.Key = tbKey.Text;
+                mainWindow.Login = tbLogin.Text;
                 DialogResult = true;
             }
         }

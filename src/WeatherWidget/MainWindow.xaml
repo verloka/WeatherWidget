@@ -69,13 +69,48 @@
                 <CheckBox x:Name="cbThemperatureShow" Grid.Column="1" Grid.Row="0" Content="Show themperature" HorizontalAlignment="Left" Margin="25,10,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16"/>
                 <CheckBox x:Name="cbLocationShow" Grid.Column="1" Grid.Row="1" Content="Show location" HorizontalAlignment="Left" Margin="25,10,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16"/>
             </Grid>
-            <Grid x:Name="gridWidgetTextColor" Margin="20,15,20,0">
+            <Grid x:Name="gridWidgetView" Margin="20,15,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Margin="15,0,0,0" Text="Text color" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
-                <xctk:ColorPicker x:Name="colorPicker" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" ColorMode="ColorCanvas"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="15,0,0,0" Text="Text color" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <xctk:ColorPicker x:Name="colorPicker" Grid.Row="0" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" ColorMode="ColorCanvas"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="15,0,0,0" Text="Background color" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <xctk:ColorPicker x:Name="colorPickerBackground" Grid.Row="1" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" ColorMode="ColorCanvas"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Margin="15,0,0,0" Text="Border color" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <xctk:ColorPicker x:Name="colorPickerBorder" Grid.Row="2" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" ColorMode="ColorCanvas"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Margin="15,0,0,0" Text="Border thickness" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                <StackPanel x:Name="spLeftRight" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="10,5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Text="←" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Width="20"/>
+                        <TextBox x:Name="tbBorderLeft" Tag="0" Width="90" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="22,0,0,0">
+                        <TextBlock  Text="→" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Width="20"/>
+                        <TextBox x:Name="tbBorderRight" Tag="1" Width="90" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="spTopBottom" Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="10,5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Text="↑" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Width="20"/>
+                        <TextBox x:Name="tbBorderTop" Tag="2" Width="90" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="22,0,0,0">
+                        <TextBlock  Text="↓" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Width="20"/>
+                        <TextBox x:Name="tbBorderBottom" Tag="3" Width="90" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
 
             <CheckBox x:Name="cbShowInetMessage" Grid.Column="1" Grid.Row="1" Content="Show a message when there is no internet" HorizontalAlignment="Left" Margin="25,10,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="16"/>

@@ -22,12 +22,12 @@ namespace WeatherWidgetLib
         public string City { get; set; }
         string apiKey;
 
-        public Weather(string apiKey)
+        public Weather(string apiKey, string appPath)
         {
             this.apiKey = apiKey;
 
-            conditions = JsonConvert.DeserializeObject<List<ConditionsObject>>(File.ReadAllText(@"Condition\Conditions.json"));
-            geonames = JsonConvert.DeserializeObject<Geonames>(File.ReadAllText(@"Geoname\Geonames.json"));
+            conditions = JsonConvert.DeserializeObject<List<ConditionsObject>>(File.ReadAllText($"{appPath}\\Condition\\Conditions.json"));
+            geonames = JsonConvert.DeserializeObject<Geonames>(File.ReadAllText($"{appPath}\\Geoname\\Geonames.json"));
         }
 
         public Task<bool> LoadData()

@@ -15,6 +15,39 @@ namespace WeatherWidget
 {
     public partial class MainWindow : Window
     {
+        public string Key
+        {
+            get
+            {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\WeatherWidget");
+                var value = key.GetValue("WeatherWidgetApixuKey");
+                key.Close();
+                return value == null ? string.Empty : value.ToString();
+            }
+            set
+            {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\WeatherWidget");
+                key.SetValue("WeatherWidgetApixuKey", value);
+                key.Close();
+            }
+        }
+        public string Login
+        {
+            get
+            {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\WeatherWidget");
+                var value = key.GetValue("WeatherWidgetApixuLogin");
+                key.Close();
+                return value == null ? string.Empty : value.ToString();
+            }
+            set
+            {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\WeatherWidget");
+                key.SetValue("WeatherWidgetApixuLogin", value);
+                key.Close();
+            }
+        }
+
         Weather weather;
         Widget widget;
         System.Windows.Forms.NotifyIcon notifyIcon;
@@ -25,9 +58,9 @@ namespace WeatherWidget
         {
             InitializeComponent();
 
-            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ApixuKey) && string.IsNullOrWhiteSpace(Properties.Settings.Default.GeonamesLogin))
+            if (string.IsNullOrWhiteSpace(Key) && string.IsNullOrWhiteSpace(Login))
             {
-                if (new Login().ShowDialog().Value)
+                if (new Login(this).ShowDialog().Value)
                     Init();
             }
             else
@@ -49,7 +82,7 @@ namespace WeatherWidget
         {
             return await Task.Run(async () =>
             {
-                var list = Web.GetConnection() ? await GetCitys.Get(contryCode, Properties.Settings.Default.GeonamesLogin) : new GeonameCitys() { geonames = new List<GeonameCity>(), totalResultsCount = 0 };
+                var list = Web.GetConnection() ? await GetCitys.Get(contryCode, Login) : new GeonameCitys() { geonames = new List<GeonameCity>(), totalResultsCount = 0 };
                 return list.geonames;
             });
         }
@@ -106,7 +139,7 @@ namespace WeatherWidget
             Application.Current.Exit += CurrentExit;
             GetCitys.WrongUser += GetCitysWrongUser;
 
-            weather = new Weather(Properties.Settings.Default.ApixuKey);
+            weather = new Weather(Key, AppDomain.CurrentDomain.BaseDirectory);
             weather.ErrorLoadData += WeatherErrorLoadData;
             widget = new Widget();
 
@@ -176,9 +209,40 @@ namespace WeatherWidget
                 };
                 colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
 
+                colorPickerBackground.SelectedColor = new Color()
+                {
+                    A = Properties.Settings.Default.BackgroundColorA,
+                    R = Properties.Settings.Default.BackgroundColorR,
+                    G = Properties.Settings.Default.BackgroundColorG,
+                    B = Properties.Settings.Default.BackgroundColorB
+                };
+                colorPickerBackground.SelectedColorChanged += ColorPickerBackgroundSelectedColorChanged;
+
+                colorPickerBorder.SelectedColor = new Color()
+                {
+                    A = Properties.Settings.Default.BorderColorA,
+                    R = Properties.Settings.Default.BorderColorR,
+                    G = Properties.Settings.Default.BorderColorG,
+                    B = Properties.Settings.Default.BorderColorB
+                };
+                colorPickerBorder.SelectedColorChanged += ColorPickerBorderSelectedColorChanged;
+
+                tbBorderLeft.Text = Properties.Settings.Default.BorderLeft.ToString();
+                tbBorderRight.Text = Properties.Settings.Default.BorderRight.ToString();
+                tbBorderTop.Text = Properties.Settings.Default.BorderTop.ToString();
+                tbBorderBottom.Text = Properties.Settings.Default.BorderBottom.ToString();
+
+                tbBorderLeft.TextChanged += TbBorderTextChanged;
+                tbBorderRight.TextChanged += TbBorderTextChanged;
+                tbBorderTop.TextChanged += TbBorderTextChanged;
+                tbBorderBottom.TextChanged += TbBorderTextChanged;
+
+                widget.SetWidgetBorder();
                 widget.SetWidgetTextColor();
-                widget.ShowWidget(true);
+                widget.SetWidgetBackgroundColor();
+                widget.SetWidgetBorderColor();
                 UpdateWidget();
+                widget.ShowWidget(true);
             }
         }
         private void CurrentExit(object sender, ExitEventArgs e)
@@ -204,16 +268,14 @@ namespace WeatherWidget
             {
                 case 2006:
                     MessageBox.Show($"Error code - {eror.code};\n{eror.message}\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    Properties.Settings.Default.GeonamesLogin = "";
-                    Properties.Settings.Default.ApixuKey = "";
-                    Properties.Settings.Default.Save();
+                    Login = string.Empty;
+                    Key = string.Empty;
                     CanWork = false;
                     break;
                 case 2007:
                     MessageBox.Show($"Error code - {eror.code};\n{eror.message}\nKey and Login been reser\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    Properties.Settings.Default.GeonamesLogin = "";
-                    Properties.Settings.Default.ApixuKey = "";
-                    Properties.Settings.Default.Save();
+                    Login = string.Empty;
+                    Key = string.Empty;
                     CanWork = false;
                     break;
                 default:
@@ -224,9 +286,8 @@ namespace WeatherWidget
         private void GetCitysWrongUser(string obj)
         {
             MessageBox.Show($"Wrong login: {obj}\nRestart the application and start again", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-            Properties.Settings.Default.GeonamesLogin = "";
-            Properties.Settings.Default.ApixuKey = "";
-            Properties.Settings.Default.Save();
+            Login = string.Empty;
+            Key = string.Empty;
             CanWork = false;
         }
         //options 
@@ -352,6 +413,57 @@ namespace WeatherWidget
                 Properties.Settings.Default.Save();
             }
             catch { };
+        }
+        private void ColorPickerBackgroundSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Properties.Settings.Default.BackgroundColorA = e.NewValue.Value.A;
+            Properties.Settings.Default.BackgroundColorR = e.NewValue.Value.R;
+            Properties.Settings.Default.BackgroundColorG = e.NewValue.Value.G;
+            Properties.Settings.Default.BackgroundColorB = e.NewValue.Value.B;
+
+            Properties.Settings.Default.Save();
+
+            widget.SetWidgetBackgroundColor();
+        }
+        private void ColorPickerBorderSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Properties.Settings.Default.BorderColorA = e.NewValue.Value.A;
+            Properties.Settings.Default.BorderColorR = e.NewValue.Value.R;
+            Properties.Settings.Default.BorderColorG = e.NewValue.Value.G;
+            Properties.Settings.Default.BorderColorB = e.NewValue.Value.B;
+
+            Properties.Settings.Default.Save();
+
+            widget.SetWidgetBorderColor();
+        }
+        private void TbBorderTextChanged(object sender, TextChangedEventArgs e)
+        {
+            int i = 0;
+            int.TryParse((sender as TextBox).Text, out i);
+
+            int tag = 0;
+            int.TryParse((sender as TextBox).Tag.ToString(), out tag);
+
+            switch (tag)
+            {
+                case 0://left
+                    Properties.Settings.Default.BorderLeft = i;
+                    break;
+                case 1://right
+                    Properties.Settings.Default.BorderRight = i;
+                    break;
+                case 2://top
+                    Properties.Settings.Default.BorderTop = i;
+                    break;
+                case 3://bottom
+                    Properties.Settings.Default.BorderBottom = i;
+                    break;
+                default:
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+            widget.SetWidgetBorder();
         }
         //tray contextmenu
         private void NotifyIconDoubleClick(object sender, EventArgs e)

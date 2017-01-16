@@ -5,25 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherWidget"
         mc:Ignorable="d"
-        Title="Widget" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Loaded="widgetLoaded" ShowInTaskbar="False" SizeToContent="Width" ResizeMode="CanMinimize" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="True" IsTabStop="False">
-    <Grid>
+        Title="Widget" AllowsTransparency="True" WindowStyle="None" Background="Transparent" Loaded="widgetLoaded" ShowInTaskbar="False" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="True" IsTabStop="False">
+    <Window.Resources>
+        <SolidColorBrush x:Key="WidgetBorderColorActive" Color="#FF0074FF"/>
+        <SolidColorBrush x:Key="WidgetBorderColorInactive"/>
+        <SolidColorBrush x:Key="RootGridColorActive" Color="#26000000"/>
+        <SolidColorBrush x:Key="RootGridColorInactive"/>
+    </Window.Resources>
+    <Grid x:Name="rootGrid" Background="{StaticResource RootGridColorInactive}">
         <Grid.RowDefinitions>
             <RowDefinition Height="20px"/>
             <RowDefinition Height="46*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="gridHeader" Grid.Row="0" Background="#FF0074FF" MouseDown="gridHeaderMouseDown">
-            <TextBlock Text="×" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="24" Margin="0,-9,1,-3"/>
-            <TextBlock Text=".................................." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="24,-14,24,2" Foreground="#FF0023FF" IsHitTestVisible="False"/>
+            <TextBlock Text="×" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="24" Margin="0,-9,1,-3" Visibility="Collapsed"/>
+            <TextBlock Text="..........................." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="24,-14,24,2" Foreground="#FF0023FF" IsHitTestVisible="False"/>
         </Grid>
-        <StackPanel Grid.Row="1">
-            <StackPanel  Orientation="Horizontal" VerticalAlignment="Top">
-                <TextBlock x:Name="tbThemperature" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" FontSize="36" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
-                <Image x:Name="imgIcon" Source="{Binding Path=ImageURL}" HorizontalAlignment="Left" Height="64" Margin="10,0,0,0" VerticalAlignment="Top" Width="64" IsHitTestVisible="False"/>
-            </StackPanel>
-            <StackPanel Margin="25,0,0,0">
-                <TextBlock x:Name="tbCondition" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="24" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
-                <TextBlock x:Name="tbLocation" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
-            </StackPanel>
-        </StackPanel>
+        <Border x:Name="windowBorder" Grid.Row="1" BorderBrush="{StaticResource WidgetBorderColorInactive}" BorderThickness="1">
+            <Border x:Name="widgetBorder" Margin="10" Background="#00979090" BorderBrush="#00C36262" BorderThickness="3">
+                <StackPanel Margin="10">
+                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Top">
+                        <TextBlock x:Name="tbThemperature" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" FontSize="36" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                        <Image x:Name="imgIcon" Source="{Binding Path=ImageURL}" HorizontalAlignment="Left" Height="64" Margin="10,0,0,0" VerticalAlignment="Top" Width="64" IsHitTestVisible="False"/>
+                    </StackPanel>
+                    <StackPanel Margin="25,0,0,0">
+                        <TextBlock x:Name="tbCondition" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="24" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                        <TextBlock x:Name="tbLocation" HorizontalAlignment="Left" Margin="20,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Grid.Row="1" IsHitTestVisible="False"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Border>
     </Grid>
 </Window>
