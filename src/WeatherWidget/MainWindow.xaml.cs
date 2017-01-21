@@ -10,6 +10,7 @@ using System.Windows.Media;
 using WeatherWidgetLib;
 using WeatherWidgetLib.Geoname;
 using WeatherWidgetLib.Language;
+using Verloka.HelperLib.Settings;
 
 namespace WeatherWidget
 {
@@ -47,6 +48,8 @@ namespace WeatherWidget
                 key.Close();
             }
         }
+        
+        public RegSettings settings { get; set; }
 
         Weather weather;
         Widget widget;
@@ -57,6 +60,8 @@ namespace WeatherWidget
         public MainWindow()
         {
             InitializeComponent();
+
+            settings = new RegSettings("WeatherWidget");
 
             if (string.IsNullOrWhiteSpace(Key) && string.IsNullOrWhiteSpace(Login))
             {
@@ -118,8 +123,8 @@ namespace WeatherWidget
                     if (!await weather.LoadData())
                         return;
 
-                    widget.Update(weather.GetThemperature(Properties.Settings.Default.Celsium == 0 ? true : false),
-                                  weather.GetCondition(weather.GetConditionCode(), Properties.Settings.Default.LanguageIso),
+                    widget.Update(weather.GetThemperature(settings.GetValue<int>("Celsium") == 0 ? true : false),
+                                  weather.GetCondition(weather.GetConditionCode(), settings["LanguageIso"].ToString()),
                                   weather.GetLocation(),
                                   weather.GetConditionIconURL(weather.GetConditionCode()));
                 }
@@ -141,7 +146,7 @@ namespace WeatherWidget
 
             weather = new Weather(Key, AppDomain.CurrentDomain.BaseDirectory);
             weather.ErrorLoadData += WeatherErrorLoadData;
-            widget = new Widget();
+            widget = new Widget(this);
 
             timer = new System.Timers.Timer(GetMilisec(10));
             timer.Elapsed += TimerElapsed;
@@ -160,28 +165,28 @@ namespace WeatherWidget
                 var list = await LoadLanguages();
                 list.Add(new LanguageObject() { LanguageIso = "en", LanguageName = "English" });
                 cbLanguage.ItemsSource = list;
-                var selectedLang = from lang in list where lang.LanguageIso == Properties.Settings.Default.LanguageIso select lang;
+                var selectedLang = from lang in list where lang.LanguageIso == settings.GetValue("LanguageIso", "en") select lang;
                 cbLanguage.SelectedItem = selectedLang.FirstOrDefault();
                 cbLanguage.SelectionChanged += CbLanguageSelectionChanged;
 
                 cbCuntry.ItemsSource = weather.geonames.geonames;
-                var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == Properties.Settings.Default.GeonameID select contry;
+                var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == settings.GetValue("GeonameID", 6252001) select contry;
                 cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
                 cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
 
                 var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
                 cbCity.ItemsSource = cityList;
-                var selectedCity = from city in cityList where city.geonameId == Properties.Settings.Default.CityGeonameID select city;
+                var selectedCity = from city in cityList where city.geonameId == settings.GetValue("CityGeonameID", 5128581) select city;
                 cbCity.SelectedItem = selectedCity.FirstOrDefault();
                 cbCity.SelectionChanged += CbCitySelectionChanged;
 
-                cbThemperature.SelectedIndex = Properties.Settings.Default.Celsium;
+                cbThemperature.SelectedIndex = settings.GetValue("Celsium", 0);
                 cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
 
-                cbIcon.IsChecked = Properties.Settings.Default.LoadIcon;
+                cbIcon.IsChecked = settings.GetValue("LoadIcon", true);
                 cbIcon.Click += CbIconClick;
 
-                cbCondition.IsChecked = Properties.Settings.Default.ShowCondition;
+                cbCondition.IsChecked = settings.GetValue("ShowCondition", true);
                 cbCondition.Click += CbConditionClick;
 
                 cbThemperatureShow.IsChecked = Properties.Settings.Default.ShowThemperatue;
@@ -293,50 +298,29 @@ namespace WeatherWidget
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.ShowCondition = cbCondition.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
+            settings["ShowCondition"] = cbCondition.IsChecked.Value;
         }
         private void CbIconClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.LoadIcon = cbIcon.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
+            settings["LoadIcon"] = cbIcon.IsChecked.Value;
         }
         private void CbThemperatureSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.Celsium = cbThemperature.SelectedIndex;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
+            settings["Celsium"] = cbThemperature.SelectedIndex;
         }
         private void CbCitySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.CityGeonameID = (cbCity.SelectedItem as GeonameCity).geonameId;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
+            settings["CityGeonameID"] = (cbCity.SelectedItem as GeonameCity).geonameId;
         }
         private async void CbCuntrySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                Properties.Settings.Default.GeonameID = (cbCuntry.SelectedItem as Geoname).geonameId;
-                Properties.Settings.Default.Save();
+                settings["GeonameID"] = (cbCuntry.SelectedItem as Geoname).geonameId;
 
                 var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
                 cbCity.ItemsSource = cityList;
-                var selectedCity = from city in cityList where city.geonameId == Properties.Settings.Default.CityGeonameID select city;
+                var selectedCity = from city in cityList where city.geonameId == settings.GetValue<int>("CityGeonameID") select city;
                 cbCity.SelectedItem = selectedCity.First();
             }
             catch
@@ -347,12 +331,7 @@ namespace WeatherWidget
         }
         private void CbLanguageSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.LanguageIso = (cbLanguage.SelectedItem as LanguageObject).LanguageIso;
-                Properties.Settings.Default.Save();
-            }
-            catch { }
+            settings["LanguageIso"] = (cbLanguage.SelectedItem as LanguageObject).LanguageIso;
         }
         private void btnShowClick(object sender, RoutedEventArgs e)
         {

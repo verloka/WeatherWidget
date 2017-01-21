@@ -12,6 +12,9 @@ namespace WeatherWidget
         public bool IsEdit { get; set; }
         public bool IsShow { get; set; }
 
+        WidgetPosition pos;
+        MainWindow mainWindow;
+
         public string ImageURL
         {
             get { return GetValue(ImageURLProperty) as string; }
@@ -22,9 +25,11 @@ namespace WeatherWidget
         }
         public static readonly DependencyProperty ImageURLProperty = DependencyProperty.Register("ImageURL", typeof(string), typeof(Widget), null);
 
-        public Widget()
+        public Widget(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
+            pos = mainWindow.settings.GetValue("WidgetPosittion", new WidgetPosition() { Left = 100, Top = 100 });
             DataContext = this;
         }
 
@@ -81,7 +86,7 @@ namespace WeatherWidget
                 tbCondition.Text = c;
                 tbLocation.Text = l;
 
-                if(Properties.Settings.Default.LoadIcon)
+                if(mainWindow.settings.GetValue<bool>("LoadIcon"))
                 {
                     ImageURL = u;
                     imgIcon.Visibility = Visibility.Visible;
@@ -93,7 +98,7 @@ namespace WeatherWidget
                 }
 
                 tbThemperature.Visibility = Properties.Settings.Default.ShowThemperatue ? Visibility.Visible : Visibility.Collapsed;
-                tbCondition.Visibility = Properties.Settings.Default.ShowCondition ? Visibility.Visible : Visibility.Collapsed;
+                tbCondition.Visibility = mainWindow.settings.GetValue<bool>("ShowCondition") ? Visibility.Visible : Visibility.Collapsed;
                 tbLocation.Visibility = Properties.Settings.Default.ShowLocation ? Visibility.Visible : Visibility.Collapsed;
             }));
         }
@@ -120,14 +125,9 @@ namespace WeatherWidget
             try
             {
                 DragMove();
-                Properties.Settings.Default.WidgetLeft = Left;
-                Properties.Settings.Default.WidgetTop = Top;
+                mainWindow.settings["WidgetPosittion"] = new WidgetPosition() { Left = (int)Left, Top = (int)Top };
             }
             catch { }
-            finally
-            {
-                Properties.Settings.Default.Save();
-            }
         }
         private void widgetLoaded(object sender, RoutedEventArgs e)
         {
@@ -143,8 +143,8 @@ namespace WeatherWidget
             catch { }
 
             gridHeader.Visibility = Visibility.Collapsed;
-            Left = Properties.Settings.Default.WidgetLeft;
-            Top = Properties.Settings.Default.WidgetTop;
+            Left = pos.Left;
+            Top = pos.Top;
         }
     }
 }
