@@ -35,13 +35,7 @@ namespace WeatherWidget
 
         public void SetWidgetTextColor()
         {
-            SolidColorBrush scb = new SolidColorBrush(new Color()
-            {
-                A = Properties.Settings.Default.TextColorA,
-                R = Properties.Settings.Default.TextColorR,
-                G = Properties.Settings.Default.TextColorG,
-                B = Properties.Settings.Default.TextColorB
-            });
+            SolidColorBrush scb = new SolidColorBrush(mainWindow.settings.GetValue<WeatherColor>("TextColor").GetColor());
 
             tbCondition.Foreground = scb;
             tbLocation.Foreground = scb;
@@ -49,34 +43,17 @@ namespace WeatherWidget
         }
         public void SetWidgetBackgroundColor()
         {
-            SolidColorBrush scb = new SolidColorBrush(new Color()
-            {
-                A = Properties.Settings.Default.BackgroundColorA,
-                R = Properties.Settings.Default.BackgroundColorR,
-                G = Properties.Settings.Default.BackgroundColorG,
-                B = Properties.Settings.Default.BackgroundColorB
-            });
-
+            SolidColorBrush scb = new SolidColorBrush(mainWindow.settings.GetValue<WeatherColor>("BackgroundColor").GetColor());
             widgetBorder.Background = scb;
         }
         public void SetWidgetBorderColor()
         {
-            SolidColorBrush scb = new SolidColorBrush(new Color()
-            {
-                A = Properties.Settings.Default.BorderColorA,
-                R = Properties.Settings.Default.BorderColorR,
-                G = Properties.Settings.Default.BorderColorG,
-                B = Properties.Settings.Default.BorderColorB
-            });
-
+            SolidColorBrush scb = new SolidColorBrush(mainWindow.settings.GetValue<WeatherColor>("BorderColor").GetColor());
             widgetBorder.BorderBrush = scb;
         }
         public void SetWidgetBorder()
         {
-            widgetBorder.BorderThickness = new Thickness(Properties.Settings.Default.BorderLeft,
-                                                         Properties.Settings.Default.BorderTop,
-                                                         Properties.Settings.Default.BorderRight,
-                                                         Properties.Settings.Default.BorderBottom);
+            widgetBorder.BorderThickness = mainWindow.settings.GetValue<WidgetBorder>("WidgetBorder").GetBorder();
         }
         public void Update(string t, string c, string l, string u)
         {
@@ -97,9 +74,9 @@ namespace WeatherWidget
                     imgIcon.Visibility = Visibility.Collapsed;
                 }
 
-                tbThemperature.Visibility = Properties.Settings.Default.ShowThemperatue ? Visibility.Visible : Visibility.Collapsed;
+                tbThemperature.Visibility = mainWindow.settings.GetValue<bool>("ShowThemperatue") ? Visibility.Visible : Visibility.Collapsed;
                 tbCondition.Visibility = mainWindow.settings.GetValue<bool>("ShowCondition") ? Visibility.Visible : Visibility.Collapsed;
-                tbLocation.Visibility = Properties.Settings.Default.ShowLocation ? Visibility.Visible : Visibility.Collapsed;
+                tbLocation.Visibility = mainWindow.settings.GetValue<bool>("ShowLocation") ? Visibility.Visible : Visibility.Collapsed;
             }));
         }
         public void EditMode(bool edit)

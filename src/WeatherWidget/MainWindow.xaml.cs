@@ -124,13 +124,13 @@ namespace WeatherWidget
                         return;
 
                     widget.Update(weather.GetThemperature(settings.GetValue<int>("Celsium") == 0 ? true : false),
-                                  weather.GetCondition(weather.GetConditionCode(), settings["LanguageIso"].ToString()),
+                                  weather.GetCondition(weather.GetConditionCode(), settings.GetValue<string>("LanguageIso")),
                                   weather.GetLocation(),
                                   weather.GetConditionIconURL(weather.GetConditionCode()));
                 }
                 else
                 {
-                    if (Properties.Settings.Default.ShowInetDis)
+                    if (settings.GetValue<bool>("ShowInetDis"))
                         MessageBox.Show("Nope internet! Update the widget can not be", "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }));
@@ -189,13 +189,13 @@ namespace WeatherWidget
                 cbCondition.IsChecked = settings.GetValue("ShowCondition", true);
                 cbCondition.Click += CbConditionClick;
 
-                cbThemperatureShow.IsChecked = Properties.Settings.Default.ShowThemperatue;
+                cbThemperatureShow.IsChecked = settings.GetValue("ShowThemperatue", true);
                 cbThemperatureShow.Click += CbThemperatureShowClick;
 
-                cbLocationShow.IsChecked = Properties.Settings.Default.ShowLocation;
+                cbLocationShow.IsChecked = settings.GetValue("ShowLocation", true); 
                 cbLocationShow.Click += CbLocationShowClick;
 
-                cbShowInetMessage.IsChecked = Properties.Settings.Default.ShowInetDis;
+                cbShowInetMessage.IsChecked = settings.GetValue("ShowInetDis", false);
                 cbShowInetMessage.Click += CbShowInetMessageClick;
 
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -205,37 +205,20 @@ namespace WeatherWidget
                     cbStartUP.IsChecked = true;
                 cbStartUP.Click += CbStartUPClick;
 
-                colorPicker.SelectedColor = new Color()
-                {
-                    A = Properties.Settings.Default.TextColorA,
-                    R = Properties.Settings.Default.TextColorR,
-                    G = Properties.Settings.Default.TextColorG,
-                    B = Properties.Settings.Default.TextColorB
-                };
+                colorPicker.SelectedColor = settings.GetValue("TextColor", new WeatherColor(255,255,255,255)).GetColor(); 
                 colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
 
-                colorPickerBackground.SelectedColor = new Color()
-                {
-                    A = Properties.Settings.Default.BackgroundColorA,
-                    R = Properties.Settings.Default.BackgroundColorR,
-                    G = Properties.Settings.Default.BackgroundColorG,
-                    B = Properties.Settings.Default.BackgroundColorB
-                };
+                colorPickerBackground.SelectedColor = settings.GetValue("BackgroundColor", new WeatherColor(0, 255, 255, 255)).GetColor();
                 colorPickerBackground.SelectedColorChanged += ColorPickerBackgroundSelectedColorChanged;
 
-                colorPickerBorder.SelectedColor = new Color()
-                {
-                    A = Properties.Settings.Default.BorderColorA,
-                    R = Properties.Settings.Default.BorderColorR,
-                    G = Properties.Settings.Default.BorderColorG,
-                    B = Properties.Settings.Default.BorderColorB
-                };
+                colorPickerBorder.SelectedColor = settings.GetValue("BorderColor", new WeatherColor(0, 255, 255, 255)).GetColor();
                 colorPickerBorder.SelectedColorChanged += ColorPickerBorderSelectedColorChanged;
 
-                tbBorderLeft.Text = Properties.Settings.Default.BorderLeft.ToString();
-                tbBorderRight.Text = Properties.Settings.Default.BorderRight.ToString();
-                tbBorderTop.Text = Properties.Settings.Default.BorderTop.ToString();
-                tbBorderBottom.Text = Properties.Settings.Default.BorderBottom.ToString();
+                var th = settings.GetValue("WidgetBorder", new WidgetBorder(1, 1, 1, 1)).GetBorder();
+                tbBorderLeft.Text = th.Left.ToString();
+                tbBorderRight.Text = th.Right.ToString();
+                tbBorderTop.Text = th.Top.ToString();
+                tbBorderBottom.Text = th.Bottom.ToString();
 
                 tbBorderLeft.TextChanged += TbBorderTextChanged;
                 tbBorderRight.TextChanged += TbBorderTextChanged;
@@ -349,32 +332,16 @@ namespace WeatherWidget
         }
         private void colorPickerSelectionColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            Properties.Settings.Default.TextColorA = e.NewValue.Value.A;
-            Properties.Settings.Default.TextColorR = e.NewValue.Value.R;
-            Properties.Settings.Default.TextColorG = e.NewValue.Value.G;
-            Properties.Settings.Default.TextColorB = e.NewValue.Value.B;
-
-            Properties.Settings.Default.Save();
-
+            settings["TextColor"] = new WeatherColor(e.NewValue.Value.A, e.NewValue.Value.R, e.NewValue.Value.G, e.NewValue.Value.B);
             widget.SetWidgetTextColor();
         }
         private void CbThemperatureShowClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.ShowThemperatue = cbThemperatureShow.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { };
+            settings["ShowThemperatue"] = cbThemperatureShow.IsChecked.Value;
         }
         private void CbLocationShowClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.ShowLocation = cbLocationShow.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { };
+            settings["ShowLocation"] = cbLocationShow.IsChecked.Value;
         }
         private void CbStartUPClick(object sender, RoutedEventArgs e)
         {
@@ -386,33 +353,16 @@ namespace WeatherWidget
         }
         private void CbShowInetMessageClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Properties.Settings.Default.ShowInetDis = cbShowInetMessage.IsChecked.Value;
-                Properties.Settings.Default.Save();
-            }
-            catch { };
+            settings["ShowInetDis"] = cbShowInetMessage.IsChecked.Value;
         }
         private void ColorPickerBackgroundSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            Properties.Settings.Default.BackgroundColorA = e.NewValue.Value.A;
-            Properties.Settings.Default.BackgroundColorR = e.NewValue.Value.R;
-            Properties.Settings.Default.BackgroundColorG = e.NewValue.Value.G;
-            Properties.Settings.Default.BackgroundColorB = e.NewValue.Value.B;
-
-            Properties.Settings.Default.Save();
-
+            settings["BackgroundColor"] = new WeatherColor(e.NewValue.Value.A, e.NewValue.Value.R, e.NewValue.Value.G, e.NewValue.Value.B);
             widget.SetWidgetBackgroundColor();
         }
         private void ColorPickerBorderSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            Properties.Settings.Default.BorderColorA = e.NewValue.Value.A;
-            Properties.Settings.Default.BorderColorR = e.NewValue.Value.R;
-            Properties.Settings.Default.BorderColorG = e.NewValue.Value.G;
-            Properties.Settings.Default.BorderColorB = e.NewValue.Value.B;
-
-            Properties.Settings.Default.Save();
-
+            settings["BorderColor"] = new WeatherColor(e.NewValue.Value.A, e.NewValue.Value.R, e.NewValue.Value.G, e.NewValue.Value.B);
             widget.SetWidgetBorderColor();
         }
         private void TbBorderTextChanged(object sender, TextChangedEventArgs e)
@@ -423,25 +373,26 @@ namespace WeatherWidget
             int tag = 0;
             int.TryParse((sender as TextBox).Tag.ToString(), out tag);
 
+            var th = settings.GetValue<WidgetBorder>("WidgetBorder");
+
             switch (tag)
             {
                 case 0://left
-                    Properties.Settings.Default.BorderLeft = i;
+                    th.Left = i;
                     break;
                 case 1://right
-                    Properties.Settings.Default.BorderRight = i;
+                    th.Right = i;
                     break;
                 case 2://top
-                    Properties.Settings.Default.BorderTop = i;
+                    th.Top = i;
                     break;
                 case 3://bottom
-                    Properties.Settings.Default.BorderBottom = i;
+                    th.Bottom = i;
                     break;
                 default:
                     break;
             }
-
-            Properties.Settings.Default.Save();
+            settings["WidgetBorder"] = th;
             widget.SetWidgetBorder();
         }
         //tray contextmenu

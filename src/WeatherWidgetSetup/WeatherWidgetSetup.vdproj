@@ -148,7 +148,7 @@
         "Entry"
         {
         "MsmKey" = "8:_CB6C68C46B99E16F45ADA68B26E7E7C0"
-        "OwnerKey" = "8:_6E4D1719A0ACBF13189D5BC52DA88ECB"
+        "OwnerKey" = "8:_FD75ED8DE19AB1080B1AE1F7EF4D2748"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -160,7 +160,7 @@
         "Entry"
         {
         "MsmKey" = "8:_CB6C68C46B99E16F45ADA68B26E7E7C0"
-        "OwnerKey" = "8:_FD75ED8DE19AB1080B1AE1F7EF4D2748"
+        "OwnerKey" = "8:_6E4D1719A0ACBF13189D5BC52DA88ECB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -196,109 +196,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0E1C9A2392276D45E4C78B6A49F40D71"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C11D590F95144A4192F38D9EC81E7D3A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9C152861834946C1BDE24EF99F0FDA75"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_975DDB904078418F9FD15D43B116ACB1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_946D90F1685942B1BAC31D8DE9F67D06"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7A6815FA509540BC917AFE9A4CD7FB91"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5F79A60064AE46EC89DE0EDB3BBFB9AA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_55AA5094EE884742A12E9EF1FA4356B6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2F5301C88B3341EEA50D5A82E5463609"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_15EEB14592C04989AC384003DC4F4B94"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_06C81374C61B4EEB9F6BCCED6C5B857E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_092459DE7BE0E58F3660F452AAAAB766"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DF6857C866300C88E5ABF314A1496CEB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ABF7762F178A217E3FA1A4B6A31DCA06"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6E4D1719A0ACBF13189D5BC52DA88ECB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_519F8AEFAA22C7D182991F97707ACCE9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FD75ED8DE19AB1080B1AE1F7EF4D2748"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CB6C68C46B99E16F45ADA68B26E7E7C0"
+        "OwnerKey" = "8:_094153E49946A4057EFBA4B4549F7C3B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -310,7 +208,109 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_094153E49946A4057EFBA4B4549F7C3B"
+        "OwnerKey" = "8:_CB6C68C46B99E16F45ADA68B26E7E7C0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FD75ED8DE19AB1080B1AE1F7EF4D2748"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_519F8AEFAA22C7D182991F97707ACCE9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6E4D1719A0ACBF13189D5BC52DA88ECB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_ABF7762F178A217E3FA1A4B6A31DCA06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DF6857C866300C88E5ABF314A1496CEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_092459DE7BE0E58F3660F452AAAAB766"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_06C81374C61B4EEB9F6BCCED6C5B857E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_15EEB14592C04989AC384003DC4F4B94"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2F5301C88B3341EEA50D5A82E5463609"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_55AA5094EE884742A12E9EF1FA4356B6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5F79A60064AE46EC89DE0EDB3BBFB9AA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7A6815FA509540BC917AFE9A4CD7FB91"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_946D90F1685942B1BAC31D8DE9F67D06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_975DDB904078418F9FD15D43B116ACB1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9C152861834946C1BDE24EF99F0FDA75"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C11D590F95144A4192F38D9EC81E7D3A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0E1C9A2392276D45E4C78B6A49F40D71"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -446,11 +446,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_092459DE7BE0E58F3660F452AAAAB766"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -477,11 +472,6 @@
             "AssemblyAsmDisplayName" = "8:PresentationFramework.Aero2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
                 "ScatterAssemblies"
                 {
-                    "_094153E49946A4057EFBA4B4549F7C3B"
-                    {
-                    "Name" = "8:PresentationFramework.Aero2.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PresentationFramework.Aero2.dll"
             "TargetName" = "8:"
@@ -508,11 +498,6 @@
             "AssemblyAsmDisplayName" = "8:WeatherWidgetLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0E1C9A2392276D45E4C78B6A49F40D71"
-                    {
-                    "Name" = "8:WeatherWidgetLib.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:WeatherWidgetLib.dll"
             "TargetName" = "8:"
@@ -641,11 +626,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_519F8AEFAA22C7D182991F97707ACCE9"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.Metro.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.Metro.dll"
             "TargetName" = "8:"
@@ -734,11 +714,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_6E4D1719A0ACBF13189D5BC52DA88ECB"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010.dll"
             "TargetName" = "8:"
@@ -889,11 +864,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_ABF7762F178A217E3FA1A4B6A31DCA06"
-                    {
-                    "Name" = "8:Xceed.Wpf.Toolkit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.Toolkit.dll"
             "TargetName" = "8:"
@@ -951,11 +921,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CB6C68C46B99E16F45ADA68B26E7E7C0"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.dll"
             "TargetName" = "8:"
@@ -982,11 +947,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_D5C8FCCB47090098315772917E2509CE"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -1013,11 +973,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.DataGrid, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DF6857C866300C88E5ABF314A1496CEB"
-                    {
-                    "Name" = "8:Xceed.Wpf.DataGrid.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.DataGrid.dll"
             "TargetName" = "8:"
@@ -1064,11 +1019,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_FD75ED8DE19AB1080B1AE1F7EF4D2748"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.Aero.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.Aero.dll"
             "TargetName" = "8:"
@@ -1276,15 +1226,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Weather Widget"
-        "ProductCode" = "8:{6BA75041-1134-4D04-9D6B-6DC0AA0BA3B2}"
-        "PackageCode" = "8:{0A246395-465E-473A-ADC6-F0A80BC703CA}"
-        "UpgradeCode" = "8:{3130AB18-360C-4EBE-A774-6D595522972C}"
+        "ProductCode" = "8:{05BF6937-4E92-44A4-B689-D77F300569F1}"
+        "PackageCode" = "8:{BE3258FD-CB62-4284-85BC-B21EADD739C2}"
+        "UpgradeCode" = "8:{CCC3CE47-CE0F-4F27-B66F-354DF5EC4477}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:Verloka"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
