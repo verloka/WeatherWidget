@@ -11,6 +11,7 @@ using WeatherWidgetLib;
 using WeatherWidgetLib.Geoname;
 using WeatherWidgetLib.Language;
 using Verloka.HelperLib.Settings;
+using Verloka.HelperLib.Update;
 
 namespace WeatherWidget
 {
@@ -48,9 +49,10 @@ namespace WeatherWidget
                 key.Close();
             }
         }
-        
+
         public RegSettings settings { get; set; }
         public PCLocation location { get; set; }
+        public UpdateClient Update { get; set; }
 
         Weather weather;
         Widget widget;
@@ -63,7 +65,6 @@ namespace WeatherWidget
             InitializeComponent();
 
             settings = new RegSettings("WeatherWidget");
-            location = new PCLocation();
 
             if (string.IsNullOrWhiteSpace(Key) && string.IsNullOrWhiteSpace(Login))
             {
@@ -119,7 +120,7 @@ namespace WeatherWidget
                 {
                     if (!CanWork)
                         return;
-                    
+
                     weather.QParametr = settings.GetValue<bool>("AutomaticDetection") ? location.GetCoordinate() : (cbCity.SelectedItem as GeonameCity).name;
 
                     if (!await weather.LoadData())
@@ -172,8 +173,9 @@ namespace WeatherWidget
                 cbLanguage.SelectionChanged += CbLanguageSelectionChanged;
 
 
-                if(settings.GetValue("AutomaticDetection", false))
+                if (settings.GetValue("AutomaticDetection", false))
                 {
+                    location = new PCLocation();
                     cbAutomaticLocation.IsChecked = settings.GetValue<bool>("AutomaticDetection");
                     cbCuntry.IsEnabled = false;
                     cbCity.IsEnabled = false;
@@ -207,7 +209,7 @@ namespace WeatherWidget
                 cbThemperatureShow.IsChecked = settings.GetValue("ShowThemperatue", true);
                 cbThemperatureShow.Click += CbThemperatureShowClick;
 
-                cbLocationShow.IsChecked = settings.GetValue("ShowLocation", true); 
+                cbLocationShow.IsChecked = settings.GetValue("ShowLocation", true);
                 cbLocationShow.Click += CbLocationShowClick;
 
                 cbShowInetMessage.IsChecked = settings.GetValue("ShowInetDis", false);
@@ -220,7 +222,7 @@ namespace WeatherWidget
                     cbStartUP.IsChecked = true;
                 cbStartUP.Click += CbStartUPClick;
 
-                colorPicker.SelectedColor = settings.GetValue("TextColor", new WeatherColor(255,255,255,255)).GetColor(); 
+                colorPicker.SelectedColor = settings.GetValue("TextColor", new WeatherColor(255, 255, 255, 255)).GetColor();
                 colorPicker.SelectedColorChanged += colorPickerSelectionColorChanged;
 
                 colorPickerBackground.SelectedColor = settings.GetValue("BackgroundColor", new WeatherColor(0, 255, 255, 255)).GetColor();
@@ -246,6 +248,12 @@ namespace WeatherWidget
                 widget.SetWidgetBorderColor();
                 UpdateWidget();
                 widget.ShowWidget(true);
+
+                Update = new UpdateClient("https://ogycode.github.io/WeatherWidget/update.json");
+                Update.NewVersion += UpdateNewVersion;
+                var assembly = Assembly.GetExecutingAssembly();
+                var version = assembly.GetName().Version;
+                Update.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.MajorRevision, version.MinorRevision));
             }
         }
         private void CurrentExit(object sender, ExitEventArgs e)
@@ -293,6 +301,10 @@ namespace WeatherWidget
             Key = string.Empty;
             CanWork = false;
         }
+        private void UpdateNewVersion(UpdateItem obj)
+        {
+            
+        }
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
         {
@@ -308,7 +320,8 @@ namespace WeatherWidget
         }
         private void CbCitySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            settings["CityGeonameID"] = (cbCity.SelectedItem as GeonameCity).geonameId;
+            if (cbCity.SelectedIndex != -1)
+                settings["CityGeonameID"] = (cbCity.SelectedItem as GeonameCity).geonameId;
         }
         private async void CbCuntrySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -416,12 +429,19 @@ namespace WeatherWidget
 
             if (settings.GetValue<bool>("AutomaticDetection"))
             {
+                location = new PCLocation();
                 cbAutomaticLocation.IsChecked = settings.GetValue<bool>("AutomaticDetection");
                 cbCuntry.IsEnabled = false;
                 cbCity.IsEnabled = false;
             }
             else
             {
+                location.StopDispose();
+                location = null;
+
+                cbCuntry.IsEnabled = true;
+                cbCity.IsEnabled = true;
+
                 cbCuntry.ItemsSource = weather.geonames.geonames;
                 var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == settings.GetValue("GeonameID", 6252001) select contry;
                 cbCuntry.SelectedItem = selectedContry.FirstOrDefault();

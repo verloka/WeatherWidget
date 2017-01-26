@@ -9,6 +9,17 @@
         Title="Weather Widget" Height="400" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="Assets/sun.png" Background="#FFE6F4FF" Loaded="windowLoaded" Closing="windowClosing">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
         <StackPanel Margin="0,0,0,50">
+            <Grid x:Name="gridUpdate" Background="#FF00BD5F" Margin="0,0,0,10" Visibility="Collapsed">
+                <Grid.Effect>
+                    <DropShadowEffect BlurRadius="40"/>
+                </Grid.Effect>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbUpdateVersion" Text="New verison - 1.3.0.0" FontSize="26" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Margin="20" Foreground="White" Grid.Column="0"/>
+                <Button x:Name="btnUdate" Content="Update" Grid.Column="1" Margin="20"/>
+            </Grid>
             <Grid x:Name="gridLogo">
                 <Image Source="Assets/sun.png" Width="128" Height="128" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10"/>
                 <TextBlock Text="Weather Widget" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr">
