@@ -50,6 +50,7 @@ namespace WeatherWidget
         }
         
         public RegSettings settings { get; set; }
+        public PCLocation location { get; set; }
 
         Weather weather;
         Widget widget;
@@ -62,6 +63,7 @@ namespace WeatherWidget
             InitializeComponent();
 
             settings = new RegSettings("WeatherWidget");
+            location = new PCLocation();
 
             if (string.IsNullOrWhiteSpace(Key) && string.IsNullOrWhiteSpace(Login))
             {
@@ -117,8 +119,8 @@ namespace WeatherWidget
                 {
                     if (!CanWork)
                         return;
-
-                    weather.City = (cbCity.SelectedItem as GeonameCity).name;
+                    
+                    weather.QParametr = settings.GetValue<bool>("AutomaticDetection") ? location.GetCoordinate() : (cbCity.SelectedItem as GeonameCity).name;
 
                     if (!await weather.LoadData())
                         return;
@@ -169,16 +171,29 @@ namespace WeatherWidget
                 cbLanguage.SelectedItem = selectedLang.FirstOrDefault();
                 cbLanguage.SelectionChanged += CbLanguageSelectionChanged;
 
-                cbCuntry.ItemsSource = weather.geonames.geonames;
-                var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == settings.GetValue("GeonameID", 6252001) select contry;
-                cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
-                cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
 
-                var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
-                cbCity.ItemsSource = cityList;
-                var selectedCity = from city in cityList where city.geonameId == settings.GetValue("CityGeonameID", 5128581) select city;
-                cbCity.SelectedItem = selectedCity.FirstOrDefault();
-                cbCity.SelectionChanged += CbCitySelectionChanged;
+                if(settings.GetValue("AutomaticDetection", false))
+                {
+                    cbAutomaticLocation.IsChecked = settings.GetValue<bool>("AutomaticDetection");
+                    cbCuntry.IsEnabled = false;
+                    cbCity.IsEnabled = false;
+                }
+                else
+                {
+                    cbCuntry.IsEnabled = true;
+                    cbCuntry.ItemsSource = weather.geonames.geonames;
+                    var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == settings.GetValue("GeonameID", 6252001) select contry;
+                    cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
+                    cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
+
+                    cbCity.IsEnabled = true;
+                    var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
+                    cbCity.ItemsSource = cityList;
+                    var selectedCity = from city in cityList where city.geonameId == settings.GetValue("CityGeonameID", 5128581) select city;
+                    cbCity.SelectedItem = selectedCity.FirstOrDefault();
+                    cbCity.SelectionChanged += CbCitySelectionChanged;
+                }
+                cbAutomaticLocation.Click += CbAutomaticLocationClick;
 
                 cbThemperature.SelectedIndex = settings.GetValue("Celsium", 0);
                 cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
@@ -394,6 +409,30 @@ namespace WeatherWidget
             }
             settings["WidgetBorder"] = th;
             widget.SetWidgetBorder();
+        }
+        private async void CbAutomaticLocationClick(object sender, RoutedEventArgs e)
+        {
+            settings["AutomaticDetection"] = cbAutomaticLocation.IsChecked.Value;
+
+            if (settings.GetValue<bool>("AutomaticDetection"))
+            {
+                cbAutomaticLocation.IsChecked = settings.GetValue<bool>("AutomaticDetection");
+                cbCuntry.IsEnabled = false;
+                cbCity.IsEnabled = false;
+            }
+            else
+            {
+                cbCuntry.ItemsSource = weather.geonames.geonames;
+                var selectedContry = from contry in weather.geonames.geonames where contry.geonameId == settings.GetValue("GeonameID", 6252001) select contry;
+                cbCuntry.SelectedItem = selectedContry.FirstOrDefault();
+                cbCuntry.SelectionChanged += CbCuntrySelectionChanged;
+
+                var cityList = await LoadCity((cbCuntry.SelectedItem as Geoname).countryCode);
+                cbCity.ItemsSource = cityList;
+                var selectedCity = from city in cityList where city.geonameId == settings.GetValue("CityGeonameID", 5128581) select city;
+                cbCity.SelectedItem = selectedCity.FirstOrDefault();
+                cbCity.SelectionChanged += CbCitySelectionChanged;
+            }
         }
         //tray contextmenu
         private void NotifyIconDoubleClick(object sender, EventArgs e)

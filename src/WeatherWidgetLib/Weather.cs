@@ -19,7 +19,7 @@ namespace WeatherWidgetLib
         public WeatherObject Current { get; private set; }
         public List<ConditionsObject> conditions { get; private set; }
         public Geonames geonames { get; private set; }
-        public string City { get; set; }
+        public string QParametr { get; set; }
         string apiKey;
 
         public Weather(string apiKey, string appPath)
@@ -35,7 +35,7 @@ namespace WeatherWidgetLib
             return Task.Factory.StartNew(() =>
             {
                 bool result = true;
-                string url = $"http://api.apixu.com/v1/current.json?key={apiKey}&q={City}";
+                string url = $"http://api.apixu.com/v1/current.json?key={apiKey}&q={QParametr}";
 
                 using (var webClient = new WebClient())
                 {
