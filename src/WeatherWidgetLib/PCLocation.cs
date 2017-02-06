@@ -25,7 +25,7 @@ namespace WeatherWidgetLib
             GeoCoordinate coord = watcher.Position.Location;
             return $"{coord.Latitude.ToString().Replace(',', '.')},{coord.Longitude.ToString().Replace(',', '.')}";
         }
-        public void StopDispose()
+        public void Stop()
         {
             watcher.Stop();
             watcher.Dispose();

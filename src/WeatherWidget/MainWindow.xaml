@@ -38,6 +38,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
@@ -47,7 +48,7 @@
                 <ComboBox x:Name="cbCuntry" Grid.Row="0" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True" Height="22"/>
                 <TextBlock Grid.Column="0" Grid.Row="1" Margin="15,0,0,0" Text="City" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr"/>
                 <ComboBox x:Name="cbCity" Grid.Row="1" Grid.Column="1" Margin="10,5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" IsEditable="True" Height="22"/>
-                <CheckBox x:Name="cbAutomaticLocation" Grid.Row="2" Content="Automatic detect your location" Margin="5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" Grid.ColumnSpan="2"/>
+                <CheckBox x:Name="cbAutomaticLocation" Grid.Row="2" Content="Automatic detect your location (with app's startup)" Margin="5" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" FontSize="14" Grid.ColumnSpan="2"/>
             </Grid>
             <Grid x:Name="gridLanguage" Margin="20,15,20,0">
                 <Grid.ColumnDefinitions>

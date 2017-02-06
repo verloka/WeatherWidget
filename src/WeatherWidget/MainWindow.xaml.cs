@@ -102,7 +102,8 @@ namespace WeatherWidget
 
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Show window").Click += MainWindowNotifyIconOpenClick;
-            notifyIcon.ContextMenuStrip.Items.Add("Update widget").Click += MainWindowUpdateWidgetClick; ;
+            notifyIcon.ContextMenuStrip.Items.Add("Update widget").Click += MainWindowUpdateWidgetClick;
+            notifyIcon.ContextMenuStrip.Items.Add("Update pc location").Click += MainWindowUpdatePcLoction; ;
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Full weather").Click += MainWindowFullWeatherClick;
             notifyIcon.ContextMenuStrip.Items.Add("About").Click += MainWindowInfoClick;
@@ -196,6 +197,7 @@ namespace WeatherWidget
                     cbCity.SelectionChanged += CbCitySelectionChanged;
                 }
                 cbAutomaticLocation.Click += CbAutomaticLocationClick;
+                
 
                 cbThemperature.SelectedIndex = settings.GetValue("Celsium", 0);
                 cbThemperature.SelectionChanged += CbThemperatureSelectionChanged;
@@ -303,7 +305,12 @@ namespace WeatherWidget
         }
         private void UpdateNewVersion(UpdateItem obj)
         {
-            
+            gridUpdate.Visibility = Visibility.Visible;
+            tbUpdateVersion.Text = $"New version {obj.VersionNumber} hype!";
+        }
+        private void MainWindowUpdatePcLoction(object sender, EventArgs e)
+        {
+
         }
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
@@ -436,7 +443,7 @@ namespace WeatherWidget
             }
             else
             {
-                location.StopDispose();
+                location.Stop();
                 location = null;
 
                 cbCuntry.IsEnabled = true;
