@@ -56,8 +56,8 @@
     <StartupObject>WeatherWidget.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HelperLib, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Verloka.HelperLib.1.2.0\lib\net452\HelperLib.dll</HintPath>
+    <Reference Include="HelperLib, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Verloka.HelperLib.1.2.0.2\lib\net452\HelperLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
@@ -107,6 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DownloadClient.xaml.cs">
+      <DependentUpon>DownloadClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FullWeather.xaml.cs">
       <DependentUpon>FullWeather.xaml</DependentUpon>
     </Compile>
@@ -124,6 +127,10 @@
     <Compile Include="WidgetBorder.cs" />
     <Compile Include="WidgetPosition.cs" />
     <Compile Include="Win32.cs" />
+    <Page Include="DownloadClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FullWeather.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -18,7 +18,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="tbUpdateVersion" Text="New verison - 1.3.0.0" FontSize="26" FontFamily="/WeatherWidget;component/Fonts/#HelveticaNeueCyr" Margin="20" Foreground="White" Grid.Column="0"/>
-                <Button x:Name="btnUdate" Content="Update" Grid.Column="1" Margin="20"/>
+                <Button x:Name="btnUdate" Content="Update" Grid.Column="1" Margin="20" Click="btnUdateClick"/>
             </Grid>
             <Grid x:Name="gridLogo">
                 <Image Source="Assets/sun.png" Width="128" Height="128" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10"/>

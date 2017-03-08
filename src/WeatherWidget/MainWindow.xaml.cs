@@ -53,6 +53,7 @@ namespace WeatherWidget
         public RegSettings settings { get; set; }
         public PCLocation location { get; set; }
         public UpdateClient Update { get; set; }
+        public UpdateItem UpdateContent { get; set; }
 
         Weather weather;
         Widget widget;
@@ -103,7 +104,6 @@ namespace WeatherWidget
             notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Show window").Click += MainWindowNotifyIconOpenClick;
             notifyIcon.ContextMenuStrip.Items.Add("Update widget").Click += MainWindowUpdateWidgetClick;
-            notifyIcon.ContextMenuStrip.Items.Add("Update pc location").Click += MainWindowUpdatePcLoction; ;
             notifyIcon.ContextMenuStrip.Items.Add("-");
             notifyIcon.ContextMenuStrip.Items.Add("Full weather").Click += MainWindowFullWeatherClick;
             notifyIcon.ContextMenuStrip.Items.Add("About").Click += MainWindowInfoClick;
@@ -307,10 +307,15 @@ namespace WeatherWidget
         {
             gridUpdate.Visibility = Visibility.Visible;
             tbUpdateVersion.Text = $"New version {obj.VersionNumber} hype!";
+            UpdateContent = obj;
         }
-        private void MainWindowUpdatePcLoction(object sender, EventArgs e)
+        private void btnUdateClick(object sender, RoutedEventArgs e)
         {
+            if (UpdateContent == null)
+                return;
 
+            DownloadClient dc = new DownloadClient(UpdateContent);
+            dc.ShowDialog();
         }
         //options 
         private void CbConditionClick(object sender, RoutedEventArgs e)
