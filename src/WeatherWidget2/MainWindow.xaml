@@ -1,13 +1,37 @@
-﻿<Window x:Class="WeatherWidget2.MainWindow"
+﻿<Window xmlns:Controls="clr-namespace:WeatherWidget2.Controls"  x:Class="WeatherWidget2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherWidget2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="85,66,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-
+        Title="Weather Widget 2" 
+        Height="350" 
+        Width="525" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        x:Name="window">
+    <Grid x:Name="gridRoot">
+        <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
+            <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
+                <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top" MouseDown="DragWindow">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Icons/WindowHeadIcon.png" Margin="4" Stretch="UniformToFill"/>
+                    <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" Grid.Column="1" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="Icons/CloseButtonIcon.png" HorizontalAlignment="Right" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="Icons/MinimazeButton.png" HorizontalAlignment="Left" />
+                </Grid>
+                <Grid x:Name="gridBody" Margin="0,50,0,0">
+                    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="85,66,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

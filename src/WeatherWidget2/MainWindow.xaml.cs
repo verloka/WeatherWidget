@@ -22,6 +22,12 @@ namespace WeatherWidget2
             InitializeComponent();
         }
 
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            try { this.DragMove(); }
+            catch { }
+        }
+
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Weather w = new Weather();
