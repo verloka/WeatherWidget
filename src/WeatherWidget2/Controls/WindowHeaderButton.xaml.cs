@@ -17,6 +17,9 @@ namespace WeatherWidget2.Controls
 {
     public partial class WindowHeaderButton : UserControl
     {
+        public event Action Click;
+        bool pressed = false;
+
         public ImageSource Icon
         {
             get { return GetValue(IconProperty) as ImageSource; }
@@ -28,6 +31,23 @@ namespace WeatherWidget2.Controls
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void gridMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            pressed = true;
+        }
+        private void gridMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (pressed)
+            {
+                Click?.Invoke();
+                pressed = false;
+            }
+        }
+        private void gridMouseLeave(object sender, MouseEventArgs e)
+        {
+            pressed = false;
         }
     }
 }

@@ -33,10 +33,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WeatherWidget2.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Prototyping.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -83,8 +92,10 @@
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Clouds.cs" />
     <Compile Include="Model\Coordinates.cs" />
+    <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Current.cs" />
     <Compile Include="Model\Forecast.cs" />
+    <Compile Include="Model\Localization.cs" />
     <Compile Include="Model\Main.cs" />
     <Compile Include="Model\Rain.cs" />
     <Compile Include="Model\Snow.cs" />
@@ -130,6 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\MinimazeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AppIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

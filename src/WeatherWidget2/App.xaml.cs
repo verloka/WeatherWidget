@@ -8,10 +8,8 @@ using System.Windows;
 
 namespace WeatherWidget2
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public static Model.Localization Lang = new Model.Localization();
     }
 }

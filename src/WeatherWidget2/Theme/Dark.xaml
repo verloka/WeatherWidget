@@ -2,10 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#HelveticaNeueCyr</FontFamily>
-    
+
     <SolidColorBrush x:Key="WindowBackgroundColor" Color="#2d2d30"/>
+    <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="White"/>
     <SolidColorBrush x:Key="WindowHeadTextColor" Color="#999999"/>
     <SolidColorBrush x:Key="WindowBorderColor" Color="#007acc"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
+    <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
+    <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>
 
 </ResourceDictionary>

@@ -20,13 +20,25 @@ namespace WeatherWidget2
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = App.Lang;
         }
 
+        #region Window Events
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {
-            try { this.DragMove(); }
+            try { DragMove(); }
             catch { }
         }
+        private void btnCloseClick()
+        {
+            //TODO
+            Application.Current.Shutdown(0);
+        }
+        private void btnMinimazeClick()
+        {
+            WindowState = WindowState.Minimized;
+        }
+        #endregion
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -34,5 +46,7 @@ namespace WeatherWidget2
             var aaa = w.LoadCurrent();
             var bbb = w.LoadForecast();
         }
+
+
     }
 }

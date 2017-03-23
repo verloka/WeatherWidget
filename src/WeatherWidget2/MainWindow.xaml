@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WeatherWidget2"
         mc:Ignorable="d"
         Title="Weather Widget 2" 
         Height="350" 
@@ -13,23 +12,83 @@
         WindowStyle="None" 
         Background="{x:Null}"
         AllowsTransparency="True"
-        x:Name="window">
+        x:Name="window" Icon="Icons/AppIcon.png">
     <Grid x:Name="gridRoot">
         <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
             <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
-                <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top" MouseDown="DragWindow">
+                <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Source="Icons/WindowHeadIcon.png" Margin="4" Stretch="UniformToFill"/>
-                    <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" Grid.Column="1" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
-                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="Icons/CloseButtonIcon.png" HorizontalAlignment="Right" />
-                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="Icons/MinimazeButton.png" HorizontalAlignment="Left" />
+                    <Grid Grid.Column="1" MouseDown="DragWindow">
+                        <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
+                    </Grid>
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="Icons/CloseButtonIcon.png" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="Icons/MinimazeButton.png" HorizontalAlignment="Left" Click="btnMinimazeClick" />
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0">
-                    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="85,66,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                    <TabControl Margin="0" HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0" FontFamily="{StaticResource DefaultFontFamily}" FontSize="16">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Grid Name="Panel" Width="128" Height="24">
+                                                <Grid Name="PanelBg" Background="White">
+                                                    <Grid.Style>
+                                                        <Style>
+                                                            <Setter Property="Grid.Opacity" Value="0"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Grid.IsMouseOver" Value="True">
+                                                                    <Setter Property="Grid.Opacity" Value="0.25" />
+                                                                </Trigger>
+                                                                <Trigger Property="Grid.IsMouseOver" Value="False">
+                                                                    <Setter Property="Grid.Opacity" Value="0" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                </Grid>
+                                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2" IsHitTestVisible="False"/>
+                                                <Border x:Name="HeaderLine" VerticalAlignment="Bottom" Margin="10,0,10,0" BorderThickness="0,2,0,0" BorderBrush="{StaticResource WindowBorderColor}" IsHitTestVisible="False"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="HeaderLine" Property="Visibility" Value="Visible" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="False">
+                                                    <Setter TargetName="HeaderLine" Property="Visibility" Value="Hidden" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="{Binding GeneralTabHome, FallbackValue=home}" Foreground="{StaticResource WindowTextColor}">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=weatherwidget}" FontSize="28" TextAlignment="Center" />
+                                <TextBlock Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{StaticResource WindowTextLinkColor}" />
+                                <StackPanel MinWidth="250" Margin="0,25,0,0">
+                                    <TextBlock Text="active widgets - 0" Margin="0,5,0,0"/>
+                                    <TextBlock Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
+                                    <TextBlock Text="conection status - ok/fail" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{StaticResource WindowTextColor}">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{StaticResource WindowTextColor}">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem Header="{Binding GeneralTabInformation, FallbackValue=information}" Foreground="{StaticResource WindowTextColor}">
+                            <Grid/>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
             </Grid>
         </Border>
