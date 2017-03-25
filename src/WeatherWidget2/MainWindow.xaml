@@ -83,10 +83,39 @@
                             <Grid/>
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{StaticResource WindowTextColor}">
-                            <Grid/>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <StackPanel Margin="10,10,10,50">
+                                    <CheckBox Content="{Binding TabOptionsAutorun, FallbackValue=startup}" Foreground="{StaticResource WindowTextColor}"/>
+                                    <CheckBox Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{StaticResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <CheckBox Content="{Binding TabOptionsCheckUpdate, FallbackValue=check-update}" Foreground="{StaticResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150px"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding TabOptionsLanguage, FallbackValue=lang}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                        <ComboBox Grid.Column="1" Width="200" Height="22"/>
+                                    </Grid>
+                                    <Grid x:Name="gridSettingTheme" Margin="0,7,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150px"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding TabOptionsTheme, FallbackValue=theme}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                        <ComboBox Grid.Column="1" Width="200" Height="22"/>
+                                    </Grid>
+                                </StackPanel>
+                            </ScrollViewer>
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabInformation, FallbackValue=information}" Foreground="{StaticResource WindowTextColor}">
-                            <Grid/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="170px"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="Icons/Moon.png" Width="150" Height="150" Grid.Row="0" Margin="182,10,181,10" />
+                                <TextBlock Text="{Binding TabInfoDeveloped, FallbackValue=developed}" Grid.Row="1" VerticalAlignment="Bottom" TextAlignment="Center" Margin="0,0,0,10"/>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>
