@@ -33,5 +33,42 @@ namespace WeatherWidget2.Model
 
         [DataMember(Name = "TabInfoDeveloped")]
         public string TabInfoDeveloped { get; set; } = "!developed in 2017 by Verloka Vadim";
+
+        [DataMember(Name = "WidgetFactoryTitle")]
+        public string WidgetFactoryTitle { get; set; } = "!create widgt";
+        [DataMember(Name = "WidgetFactoryType")]
+        public string WidgetFactoryType { get; set; } = "!type of widget";
+        [DataMember(Name = "WidgetFactoryTypeDaily")]
+        public string WidgetFactoryTypeDaily { get; set; } = "!daily (one day)";
+        [DataMember(Name = "WidgetFactoryTypeForecast")]
+        public string WidgetFactoryTypeForecast { get; set; } = "!forecast (5 days)";
+        [DataMember(Name = "WidgetFactoryTypeMeasures")]
+        public string WidgetFactoryTypeMeasures { get; set; } = "!system of measures";
+        [DataMember(Name = "WidgetFactoryTypeMetrical")]
+        public string WidgetFactoryTypeMetrical { get; set; } = "!metrical";
+        [DataMember(Name = "WidgetFactoryTypeImperial")]
+        public string WidgetFactoryTypeImperial { get; set; } = "!imperial";
+        [DataMember(Name = "WidgetFactoryTypeSize")]
+        public string WidgetFactoryTypeSize { get; set; } = "!size";
+        [DataMember(Name = "WidgetFactoryTypeSizeBig")]
+        public string WidgetFactoryTypeSizeBig { get; set; } = "!big";
+        [DataMember(Name = "WidgetFactoryTypeSizeMedium")]
+        public string WidgetFactoryTypeSizeMedium { get; set; } = "!medium";
+        [DataMember(Name = "WidgetFactoryTypeSizeSmall")]
+        public string WidgetFactoryTypeSizeSmall { get; set; } = "!small";
+        [DataMember(Name = "WidgetFactoryTypeTheme")]
+        public string WidgetFactoryTypeTheme { get; set; } = "!theme of widget";
+        [DataMember(Name = "WidgetFactoryTypeThemeDark")]
+        public string WidgetFactoryTypeThemeDark { get; set; } = "!dark";
+        [DataMember(Name = "WidgetFactoryTypeThemeWhite")]
+        public string WidgetFactoryTypeThemeWhite { get; set; } = "!white";
+        [DataMember(Name = "WidgetFactoryTypeIconTheme")]
+        public string WidgetFactoryTypeIconTheme { get; set; } = "!theme of icons";
+        [DataMember(Name = "WidgetFactoryContry")]
+        public string WidgetFactoryContry { get; set; } = "!contry";
+        [DataMember(Name = "WidgetFactoryCity")]
+        public string WidgetFactoryCity { get; set; } = "!city";
+        [DataMember(Name = "WidgetFactoryWidgetName")]
+        public string WidgetFactoryWidgetName { get; set; } = "!name of widget";
     }
 }

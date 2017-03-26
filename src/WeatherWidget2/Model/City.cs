@@ -13,5 +13,10 @@ namespace WeatherWidget2.Model
         public string Country { get; set; }
         [DataMember(Name = "coord")]
         public Coordinates Coordinates { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

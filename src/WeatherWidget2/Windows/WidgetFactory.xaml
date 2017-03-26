@@ -1,0 +1,113 @@
+﻿<Window x:Class="WeatherWidget2.Windows.WidgetFactory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:WeatherWidget2.Controls"
+        mc:Ignorable="d"
+        Title="{Binding WidgetFactoryTitle}" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        x:Name="mywindow" 
+        Height="350" 
+        Width="525" Loaded="mywindowLoaded" >
+    <Grid x:Name="gridRoot">
+        <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
+            <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
+                <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Margin="4" Stretch="UniformToFill"/>
+                    <Grid Grid.Column="1" MouseDown="DragWindow">
+                        <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
+                    </Grid>
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="/WeatherWidget2;component/Icons/CloseButtonIcon.png" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="/WeatherWidget2;component/Icons/MinimazeButton.png" HorizontalAlignment="Left" Click="btnMinimazeClick" />
+                </Grid>
+                <Grid x:Name="gridBody" Margin="0,50,0,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="{StaticResource DefaultFontFamily}" FontSize="14">
+                        <StackPanel Margin="10,10,10,50">
+                            <TextBlock Text="{Binding WidgetFactoryWidgetName, FallbackValue=name}" Foreground="{StaticResource WindowTextColor}" FontSize="16"/>
+                            <TextBox FontSize="16" Height="24" Margin="5"/>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryType, FallbackValue=type}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeDaily, FallbackValue=daily}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeForecast, FallbackValue=forecast}"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryTypeMeasures, FallbackValue=measure}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeMetrical, FallbackValue=metric}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeImperial, FallbackValue=imperial}"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryTypeSize, FallbackValue=size}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeBig, FallbackValue=big}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeMedium, FallbackValue=medium}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeSmall, FallbackValue=small}"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryTypeTheme, FallbackValue=theme}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeThemeDark, FallbackValue=dark}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeThemeWhite, FallbackValue=white}"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryTypeIconTheme, FallbackValue=theme2}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox Grid.Column="1" Width="200" Height="22"/>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryContry, FallbackValue=contry}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox x:Name="cbCountrys" Grid.Column="1" Width="200" Height="22" IsEditable="True" SelectionChanged="cbCountrysSelectionChanged"/>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryCity, FallbackValue=city}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox x:Name="cbCitys" Grid.Column="1" Width="200" Height="22" IsEditable="True"/>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

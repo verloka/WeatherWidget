@@ -47,6 +47,11 @@ namespace WeatherWidget2
             var bbb = w.LoadForecast();
         }
 
-
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Windows.WidgetFactory wf = new Windows.WidgetFactory();
+            wf.Show();
+            
+        }
     }
 }

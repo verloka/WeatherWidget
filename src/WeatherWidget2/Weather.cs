@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 
 namespace WeatherWidget2
 {
@@ -6,7 +7,7 @@ namespace WeatherWidget2
     {
         string key = "b8c6dced55c3dbe25f25f8c827fa76b7";
         string city = "Kharkiv";
-        string metric = "metric"; //metric/imperial
+        string measures = "metric"; //metric/imperial
         Model.Current Current;
         Model.Forecast Forecast;
 
@@ -23,13 +24,13 @@ namespace WeatherWidget2
         {
             using (var webClient = new WebClient())
             {
-                string URL = $"http://api.openweathermap.org/data/2.5/weather?q={city}&units={metric}&appid={key}";
+                string URL = $"http://api.openweathermap.org/data/2.5/weather?q={city}&units={measures}&appid={key}";
                 string resp = "";
 
                 try
                 {
                     resp = webClient.DownloadString(URL);
-                    Current = Tools.Pack.Deserialize<Model.Current>(resp);
+                    Current = JsonConvert.DeserializeObject<Model.Current>(resp);
                 }
                 catch { }
 
@@ -40,13 +41,13 @@ namespace WeatherWidget2
         {
             using (var webClient = new WebClient())
             {
-                string URL = $"http://api.openweathermap.org/data/2.5/forecast?q={city}&units={metric}&appid={key}";
+                string URL = $"http://api.openweathermap.org/data/2.5/forecast?q={city}&units={measures}&appid={key}";
                 string resp = "";
 
                 try
                 {
                     resp = webClient.DownloadString(URL);
-                    Forecast = Tools.Pack.Deserialize<Model.Forecast>(resp);
+                    Forecast = JsonConvert.DeserializeObject<Model.Forecast>(resp);
                 }
                 catch { }
 

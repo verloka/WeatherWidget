@@ -14,5 +14,10 @@ namespace WeatherWidget2.Model
         public string Path { get; set; }
         [DataMember(Name = "countryCityList")]
         public List<City> Сities { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
