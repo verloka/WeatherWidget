@@ -104,6 +104,7 @@
                                 <TextBlock Text="{Binding WidgetFactoryCity, FallbackValue=city}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
                                 <ComboBox x:Name="cbCitys" Grid.Column="1" Width="200" Height="22" IsEditable="True"/>
                             </Grid>
+                            <Controls:MetroButton x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150px" BorderThickness="0" Margin="0,25,0,0" FontSize="14"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

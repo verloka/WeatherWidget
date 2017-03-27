@@ -70,5 +70,7 @@ namespace WeatherWidget2.Model
         public string WidgetFactoryCity { get; set; } = "!city";
         [DataMember(Name = "WidgetFactoryWidgetName")]
         public string WidgetFactoryWidgetName { get; set; } = "!name of widget";
+        [DataMember(Name = "WidgetFactoryAddWidget")]
+        public string WidgetFactoryAddWidget { get; set; } = "!add this";
     }
 }

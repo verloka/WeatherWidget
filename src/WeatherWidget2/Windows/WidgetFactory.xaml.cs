@@ -57,6 +57,8 @@ namespace WeatherWidget2.Windows
 
         private void mywindowLoaded(object sender, RoutedEventArgs e)
         {
+            btnAdd.Text = App.Lang.WidgetFactoryAddWidget;
+
             LoadCountrys();
         }
         private void cbCountrysSelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -11,4 +11,9 @@
     <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
     <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>
 
+    <SolidColorBrush x:Key="MetroButtonBorderColor" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonForegraund" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonBackground" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#007acc"/>
+
 </ResourceDictionary>
