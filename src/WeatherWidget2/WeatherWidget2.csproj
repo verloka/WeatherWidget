@@ -73,6 +73,11 @@
     <Compile Include="Controls\MetroButton.xaml.cs">
       <DependentUpon>MetroButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Point.cs" />
+    <Compile Include="Widget\TempWidget.xaml.cs">
+      <DependentUpon>TempWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win32.cs" />
     <Compile Include="Windows\WidgetFactory.xaml.cs">
       <DependentUpon>WidgetFactory.xaml</DependentUpon>
     </Compile>
@@ -100,6 +105,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Theme\Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\TempWidget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

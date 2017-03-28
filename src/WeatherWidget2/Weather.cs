@@ -8,8 +8,8 @@ namespace WeatherWidget2
         string key = "b8c6dced55c3dbe25f25f8c827fa76b7";
         string city = "Kharkiv";
         string measures = "metric"; //metric/imperial
-        Model.Current Current;
-        Model.Forecast Forecast;
+        public Model.Current Current;
+        public Model.Forecast Forecast;
 
         public Weather()
         {

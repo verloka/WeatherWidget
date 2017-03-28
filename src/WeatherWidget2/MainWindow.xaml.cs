@@ -17,10 +17,24 @@ namespace WeatherWidget2
 {
     public partial class MainWindow : Window
     {
+        Weather weather;
+        Widget.TempWidget tempWidget;
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = App.Lang;
+        }
+
+        void LoadTempWidget()
+        {
+            weather = new Weather();
+            weather.LoadCurrent();
+
+            tempWidget = new Widget.TempWidget();
+            tempWidget.Show();
+            tempWidget.UpdateInfo(weather.Current.Main.Temperature.ToString(), weather.Current.WeatherList[0].Description, weather.Current.Name);
+            tempWidget.SetIcon($"http://openweathermap.org/img/w/{weather.Current.WeatherList[0].Icon}.png");
         }
 
         #region Window Events
@@ -40,18 +54,15 @@ namespace WeatherWidget2
         }
         #endregion
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            Weather w = new Weather();
-            var aaa = w.LoadCurrent();
-            var bbb = w.LoadForecast();
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Windows.WidgetFactory wf = new Windows.WidgetFactory();
             wf.Show();
             
+        }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            LoadTempWidget();
         }
     }
 }

@@ -83,7 +83,8 @@
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{StaticResource WindowTextColor}">
                             <Grid>
-                                <Button Content="Add" Click="Button_Click_1"/>
+                                <Button Content="Add" Click="Button_Click_1" Margin="0,0,344,0"/>
+                                <Button Content="Open" Click="Button_Click_2" Margin="356,0,0,0"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{StaticResource WindowTextColor}">
