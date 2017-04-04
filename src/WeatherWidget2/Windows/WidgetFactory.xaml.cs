@@ -2,17 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WeatherWidget2.Model;
 
 namespace WeatherWidget2.Windows
@@ -21,6 +13,8 @@ namespace WeatherWidget2.Windows
     {
         List<Country> countrys;
         Country country;
+        Model.Widget widget;
+        bool delete = true;
 
         public WidgetFactory()
         {
@@ -32,11 +26,13 @@ namespace WeatherWidget2.Windows
         {
             countrys = JsonConvert.DeserializeObject<List<Country>>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\Countrys.json"));
             cbCountrys.ItemsSource = countrys;
+            cbCountrys.SelectedIndex = 0;
         }
         void LoadCitys(string city)
         {
             country = JsonConvert.DeserializeObject<Country>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\{city}"));
             cbCitys.ItemsSource = country.Сities;
+            cbCitys.SelectedIndex = 0;
         }
 
         #region Window Events
@@ -60,10 +56,34 @@ namespace WeatherWidget2.Windows
             btnAdd.Text = App.Lang.WidgetFactoryAddWidget;
 
             LoadCountrys();
+
+            widget = new Model.Widget();
+            widget.CityID = (cbCitys.SelectedItem as City).ID;
+            widget.WidgetMeasure = 0;
+            widget.CreateWindow();
+
+            cbCitys.SelectionChanged += CbCitysSelectionChanged;
+        }
+
+        private void CbCitysSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbCitys.SelectedIndex == -1)
+                return;
+
+            widget.CityID = (cbCitys.SelectedItem as City).ID;
+            widget.UpdateData();
         }
         private void cbCountrysSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (cbCountrys.SelectedIndex == -1)
+                return;
+
             LoadCitys(((sender as ComboBox).SelectedItem as Country).Path);
+        }
+        private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (delete)
+                widget.Destroy();
         }
     }
 }

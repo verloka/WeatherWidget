@@ -14,7 +14,7 @@
         Background="{x:Null}"
         AllowsTransparency="True"
         x:Name="mywindow" 
-        Icon="Icons/AppIcon.png">
+        Icon="Icons/AppIcon.png" Loaded="mywindowLoaded">
     <Grid x:Name="gridRoot">
         <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
             <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">

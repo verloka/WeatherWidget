@@ -9,22 +9,39 @@ namespace WeatherWidget2.Widget
 {
     public partial class TempWidget : Window
     {
-        public TempWidget()
+        Weather weather;
+        int id;
+        Model.Measure ms;
+
+        public TempWidget(int id, Model.Measure ms)
         {
             InitializeComponent();
+            this.id = id;
+            this.ms = ms;
+
+            weather = new Weather();
         }
 
-        public void UpdateInfo(string temp, string condit, string location)
+        public void UpdateWeatherData(int id, Model.Measure ms)
         {
-            tbThemperature.Text = temp;
-            tbCondition.Text = condit;
-            tbLocation.Text = location;
+            this.id = id;
+            this.ms = ms;
         }
-        public void SetIcon(string url)
+        public void UpdateInfo()
+        {
+            weather.SetCity(id);
+            weather.SetMeasure(ms);
+            weather.LoadCurrent();
+
+            tbThemperature.Text = weather.GetTemperature(weather.Current.Main.Temperature);
+            tbCondition.Text = weather.Current.WeatherList[0].WeatherParameters;
+            tbLocation.Text = weather.Current.Name;
+        }
+        public void SetIcon()
         {
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(url, UriKind.Absolute);
+            bitmap.UriSource = new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\WeatherIcons\\Standart\\64\\{weather.Current.WeatherList[0].Icon}.png", UriKind.RelativeOrAbsolute);
             bitmap.EndInit();
             imgIcon.Source = bitmap;
         }
@@ -54,11 +71,6 @@ namespace WeatherWidget2.Widget
                 SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
             }
             catch { }
-
-            Model.Point p = App.Settings.GetValue<Model.Point>("Temp_widgetPos");
-
-            Left = p.X;
-            Top = p.Y;
         }
     }
 }

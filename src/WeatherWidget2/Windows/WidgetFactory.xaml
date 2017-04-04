@@ -13,7 +13,7 @@
         AllowsTransparency="True"
         x:Name="mywindow" 
         Height="350" 
-        Width="525" Loaded="mywindowLoaded" >
+        Width="525" Loaded="mywindowLoaded" Closing="mywindowClosing" >
     <Grid x:Name="gridRoot">
         <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
             <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
@@ -41,9 +41,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryType, FallbackValue=type}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeDaily, FallbackValue=daily}"/>
-                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeForecast, FallbackValue=forecast}"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeForecast, FallbackValue=forecast}" IsEnabled="False"/>
                                 </ComboBox>
                             </Grid>
                             <Grid Margin="0,7,0,0">
@@ -52,7 +52,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeMeasures, FallbackValue=measure}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeMetrical, FallbackValue=metric}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeImperial, FallbackValue=imperial}"/>
                                 </ComboBox>
@@ -63,7 +63,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeSize, FallbackValue=size}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="1">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeBig, FallbackValue=big}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeMedium, FallbackValue=medium}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeSmall, FallbackValue=small}"/>
@@ -75,7 +75,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeTheme, FallbackValue=theme}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22">
+                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeThemeDark, FallbackValue=dark}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeThemeWhite, FallbackValue=white}"/>
                                 </ComboBox>
@@ -85,7 +85,7 @@
                                     <ColumnDefinition Width="150px"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding WidgetFactoryTypeIconTheme, FallbackValue=theme2}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding WidgetFactoryTypeIconTheme, FallbackValue=icons}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
                                 <ComboBox Grid.Column="1" Width="200" Height="22"/>
                             </Grid>
                             <Grid Margin="0,7,0,0">
@@ -94,7 +94,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryContry, FallbackValue=contry}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox x:Name="cbCountrys" Grid.Column="1" Width="200" Height="22" IsEditable="True" SelectionChanged="cbCountrysSelectionChanged"/>
+                                <ComboBox x:Name="cbCountrys" Grid.Column="1" Width="200" Height="22" SelectionChanged="cbCountrysSelectionChanged" IsEditable="True"/>
                             </Grid>
                             <Grid Margin="0,7,0,0">
                                 <Grid.ColumnDefinitions>
