@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\IconButton.xaml.cs">
+      <DependentUpon>IconButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MetroButton.xaml.cs">
       <DependentUpon>MetroButton.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,10 @@
     <Compile Include="Windows\WidgetFactory.xaml.cs">
       <DependentUpon>WidgetFactory.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\IconButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MetroButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -991,6 +998,14 @@
     <EmbeddedResource Include="WeatherIcons\Standart\64\13n.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\AddIcon.png" />
+    <Resource Include="Icons\RemoveIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\HiddenIcon.png" />
+    <Resource Include="Icons\VisibleIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

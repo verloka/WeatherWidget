@@ -1,0 +1,72 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WeatherWidget2.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="WeatherWidget2.Controls.IconButton"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" 
+             d:DesignWidth="300"
+             Name="iconButton">
+    <Grid MouseLeftButtonDown="gridMouseLeftButtonDown" MouseLeftButtonUp="gridMouseLeftButtonUp" MouseLeave="gridMouseLeave">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.2"/>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="Standart"/>
+                <VisualState x:Name="MousePressed">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="background">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="MouseEnter">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="background">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.1"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="IsEnabled">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="icon">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+                <ei:GoToStateAction x:Name="MouseOver" StateName="MouseEnter"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+                <ei:GoToStateAction x:Name="MouseLeave" StateName="Standart"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <ei:GoToStateAction x:Name="MouseLeftButtonDown" StateName="MousePressed"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonUp">
+                <ei:GoToStateAction x:Name="MouseLeftButtonUp" StateName="MouseEnter"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="background" Background="{StaticResource IconButtonBuckground}" Opacity="0"/>
+        <Image x:Name="icon" Source="{Binding Icon}" Margin="{Binding IconThickness}">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+    </Grid>
+</UserControl>

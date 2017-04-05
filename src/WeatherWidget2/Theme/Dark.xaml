@@ -10,10 +10,13 @@
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
     <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
     <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>
+    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="#3e3e42"/>
 
     <SolidColorBrush x:Key="MetroButtonBorderColor" Color="White"/>
     <SolidColorBrush x:Key="MetroButtonForegraund" Color="White"/>
     <SolidColorBrush x:Key="MetroButtonBackground" Color="White"/>
     <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#007acc"/>
+    
+    <SolidColorBrush x:Key="IconButtonBuckground" Color="White"/>
 
 </ResourceDictionary>

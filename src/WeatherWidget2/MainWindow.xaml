@@ -83,8 +83,17 @@
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{StaticResource WindowTextColor}">
                             <Grid>
-                                <Button Content="Add" Click="Button_Click_1" Margin="0,0,344,0"/>
-                                <Button Content="Open" Click="Button_Click_2" Margin="356,0,0,0"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40px"/>
+                                    <RowDefinition Height="40px"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/AddIcon.png" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
+                                <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/VisibleIcon.png" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
+                                <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/RemoveIcon.png" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False"/>
+                                <TextBlock Grid.Row="1" Text="{Binding TabWIdgetsYourWidget, FallbackValue=widgets:}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>
+                                <ListBox Grid.Row="2" Background="{StaticResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0"/>
+                                <TextBlock x:Name="tbZeroWidgets" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TabWIdgetsZeroWidgets, FallbackValue=zero}" VerticalAlignment="Center" Margin="20,0" TextAlignment="Center"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{StaticResource WindowTextColor}">

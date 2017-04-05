@@ -34,6 +34,11 @@ namespace WeatherWidget2.Model
         [DataMember(Name = "TabInfoDeveloped")]
         public string TabInfoDeveloped { get; set; } = "!developed in 2017 by Verloka Vadim";
 
+        [DataMember(Name = "TabWIdgetsYourWidget")]
+        public string TabWIdgetsYourWidget { get; set; } = "!your widgets:";
+        [DataMember(Name = "TabWIdgetsZeroWidgets")]
+        public string TabWIdgetsZeroWidgets { get; set; } = "!your have any widget, press green plus for create one:";
+
         [DataMember(Name = "WidgetFactoryTitle")]
         public string WidgetFactoryTitle { get; set; } = "!create widgt";
         [DataMember(Name = "WidgetFactoryType")]

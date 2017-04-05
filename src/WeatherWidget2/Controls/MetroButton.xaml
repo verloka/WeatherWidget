@@ -12,6 +12,20 @@
              d:DesignHeight="75" 
              d:DesignWidth="200">
     <Border x:Name="border" BorderThickness="1" BorderBrush="{StaticResource MetroButtonBorderColor}" MouseLeftButtonDown="gridMouseLeftButtonDown" MouseLeftButtonUp="gridMouseLeftButtonUp" MouseLeave="gridMouseLeave">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+                <ei:GoToStateAction x:Name="MouseOverTrigger" StateName="MouseOver"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+                <ei:GoToStateAction x:Name="MouseLeaveTrigger" StateName="Standart"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <ei:GoToStateAction x:Name="MouseDown" StateName="MousePressed" UseTransitions="False"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonUp">
+                <ei:GoToStateAction x:Name="MouseUp" StateName="MouseOver"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualStateGroup.Transitions>
@@ -41,20 +55,6 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid x:Name="gridRoot" Margin="0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseMove">
-                    <ei:GoToStateAction x:Name="MouseOverTrigger" StateName="MouseOver"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeave">
-                    <ei:GoToStateAction x:Name="MouseLeaveTrigger" StateName="Standart"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <ei:GoToStateAction x:Name="MouseDown" StateName="MousePressed"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <ei:GoToStateAction x:Name="MouseUp" StateName="MouseOver"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
             <Grid x:Name="gridBg1" Opacity="0" Background="{StaticResource MetroButtonBackground}"/>
             <Grid x:Name="gridBg2" Opacity="0" Background="{StaticResource MetroButtonBackgroundTop}"/>
             <Grid x:Name="gridBody">

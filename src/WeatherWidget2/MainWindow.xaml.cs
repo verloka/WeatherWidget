@@ -44,16 +44,10 @@ namespace WeatherWidget2
         {
             
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void bntAddWidgetClick()
         {
             Windows.WidgetFactory wf = new Windows.WidgetFactory();
             wf.Show();
-            
         }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-
-        }
-        
     }
 }
