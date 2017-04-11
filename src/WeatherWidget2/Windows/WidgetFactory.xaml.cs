@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,14 +26,10 @@ namespace WeatherWidget2.Windows
         void LoadCountrys()
         {
             countrys = JsonConvert.DeserializeObject<List<Country>>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\Countrys.json"));
-            cbCountrys.ItemsSource = countrys;
-            cbCountrys.SelectedIndex = 0;
         }
-        void LoadCitys(string city)
+        void LoadCitys(string countryName)
         {
-            country = JsonConvert.DeserializeObject<Country>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\{city}"));
-            cbCitys.ItemsSource = country.Сities;
-            cbCitys.SelectedIndex = 0;
+            country = JsonConvert.DeserializeObject<Country>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\{countryName}"));
         }
 
         #region Window Events
@@ -58,32 +55,40 @@ namespace WeatherWidget2.Windows
             LoadCountrys();
 
             widget = new Model.Widget();
-            widget.CityID = (cbCitys.SelectedItem as City).ID;
+            widget.CityID = 2172797;
             widget.WidgetMeasure = 0;
             widget.CreateWindow();
-
-            cbCitys.SelectionChanged += CbCitysSelectionChanged;
-        }
-
-        private void CbCitysSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbCitys.SelectedIndex == -1)
-                return;
-
-            widget.CityID = (cbCitys.SelectedItem as City).ID;
-            widget.UpdateData();
-        }
-        private void cbCountrysSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbCountrys.SelectedIndex == -1)
-                return;
-
-            LoadCitys(((sender as ComboBox).SelectedItem as Country).Path);
         }
         private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (delete)
                 widget.Destroy();
+        }
+        private void tbCountrysTextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<Country> itemsResult = countrys.Where(item => item.Name.StartsWith(tbCountrys.Text, StringComparison.CurrentCultureIgnoreCase));
+            lvSearchedCountrys.ItemsSource = tbCountrys.Text != "" ? itemsResult : null;
+        }
+        private void lvSearchedCountrysSeletionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvSearchedCountrys.SelectedIndex == -1)
+                return;
+
+            LoadCitys((lvSearchedCountrys.SelectedItem as Country).Path);
+            gridCity.Visibility = Visibility.Visible;
+        }
+        private void tbCitysTextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<City> itemsResult = country.Сities.Where(item => item.Name.StartsWith(tbCitys.Text, StringComparison.CurrentCultureIgnoreCase));
+            lvSearchedCitys.ItemsSource = tbCitys.Text != "" ? itemsResult : null;
+        }
+        private void lvSearchedCitysSeletionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvSearchedCitys.SelectedIndex == -1)
+                return;
+
+            widget.CityID = (lvSearchedCitys.SelectedItem as City).ID;
+            widget.UpdateData();
         }
     }
 }

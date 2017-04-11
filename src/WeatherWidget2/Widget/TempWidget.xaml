@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TempWidget" 
+        Title="Daily" 
         Height="300" 
         Width="300" 
         AllowsTransparency="True" 
@@ -12,7 +12,7 @@
         Background="{x:Null}"
         FontFamily="{StaticResource DefaultFontFamily}"
         Foreground="{StaticResource WindowTextColor}" 
-        Loaded="windowLoaded">
+        Loaded="windowLoaded" ShowInTaskbar="False" ResizeMode="NoResize">
     <Grid x:Name="rootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="20px"/>
