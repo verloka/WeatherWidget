@@ -55,7 +55,6 @@ namespace WeatherWidget2.Widget
             try
             {
                 DragMove();
-                App.Settings["Temp_widgetPos"] = new Model.Point((int)Left, (int)Top);
             }
             catch { }
         }

@@ -12,15 +12,17 @@ namespace WeatherWidget2.Windows
 {
     public partial class WidgetFactory : Window
     {
+        MainWindow mw;
         List<Country> countrys;
         Country country;
         Model.Widget widget;
         bool delete = true;
 
-        public WidgetFactory()
+        public WidgetFactory(MainWindow mw)
         {
             InitializeComponent();
             DataContext = App.Lang;
+            this.mw = mw;
         }
 
         void LoadCountrys()
@@ -55,9 +57,8 @@ namespace WeatherWidget2.Windows
             LoadCountrys();
 
             widget = new Model.Widget();
-            widget.CityID = 2172797;
-            widget.WidgetMeasure = 0;
             widget.CreateWindow();
+            widget.SetEditMode(true);
         }
         private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -89,6 +90,14 @@ namespace WeatherWidget2.Windows
 
             widget.CityID = (lvSearchedCitys.SelectedItem as City).ID;
             widget.UpdateData();
+        }
+        private void btnAddClick()
+        {
+            delete = false;
+            widget.SetEditMode(false);
+            widget.CopyPosition();
+            mw.wstorage.Add(widget);
+            Close();
         }
     }
 }

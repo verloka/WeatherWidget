@@ -112,9 +112,9 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryCity, FallbackValue=city}" Grid.Row="0" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,9,0" HorizontalAlignment="Right"/>
                                 <TextBox x:Name="tbCitys" Grid.Column="1" Grid.Row="0" Margin="0,0,10,0" Height="22" TextChanged="tbCitysTextChanged"/>
-                                <ListView x:Name="lvSearchedCitys" Grid.Row="1" MaxHeight="100"  Margin="10,5" Grid.ColumnSpan="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvSearchedCitysSeletionChanged"/>
+                                <ListView x:Name="lvSearchedCitys" Foreground="{StaticResource WindowTextColor}" Grid.Row="1" MaxHeight="100"  Margin="10,5" Grid.ColumnSpan="2" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvSearchedCitysSeletionChanged"/>
                             </Grid>
-                            <Controls:MetroButton x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150px" BorderThickness="0" Margin="0,25,0,0" FontSize="14"/>
+                            <Controls:MetroButton x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150px" BorderThickness="0" Margin="0,25,0,0" FontSize="14" Click="btnAddClick"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
