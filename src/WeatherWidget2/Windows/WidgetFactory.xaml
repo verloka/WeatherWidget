@@ -34,7 +34,7 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="{StaticResource DefaultFontFamily}" FontSize="14">
                         <StackPanel Margin="10,10,10,50">
                             <TextBlock Text="{Binding WidgetFactoryWidgetName, FallbackValue=name}" Foreground="{StaticResource WindowTextColor}" FontSize="16"/>
-                            <TextBox FontSize="16" Height="24" Margin="5"/>
+                            <TextBox x:Name="tbWidgetName" FontSize="16" Height="24" Margin="5"/>
                             <Grid Margin="0,7,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="150px"/>
@@ -52,7 +52,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeMeasures, FallbackValue=measure}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
+                                <ComboBox x:Name="cbMeasure" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeMetrical, FallbackValue=metric}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeImperial, FallbackValue=imperial}"/>
                                 </ComboBox>

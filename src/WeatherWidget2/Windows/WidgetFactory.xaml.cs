@@ -54,11 +54,22 @@ namespace WeatherWidget2.Windows
         {
             btnAdd.Text = App.Lang.WidgetFactoryAddWidget;
 
+            cbMeasure.SelectionChanged += CbMeasureSelectionChanged;
+
             LoadCountrys();
 
             widget = new Model.Widget();
             widget.CreateWindow();
             widget.SetEditMode(true);
+        }
+
+        private void CbMeasureSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbMeasure.SelectedIndex == -1)
+                return;
+
+            widget.WidgetMeasure = (Measure)cbMeasure.SelectedIndex;
+            widget.UpdateData();
         }
         private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -96,6 +107,7 @@ namespace WeatherWidget2.Windows
             delete = false;
             widget.SetEditMode(false);
             widget.CopyPosition();
+            widget.Name = string.IsNullOrWhiteSpace(tbWidgetName.Text) ? "NaN" : tbWidgetName.Text;
             mw.wstorage.Add(widget);
             Close();
         }
