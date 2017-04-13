@@ -24,12 +24,12 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="Icons/WindowHeadIcon.png" Margin="4" Stretch="UniformToFill"/>
+                    <Image Grid.Column="0" Source="{StaticResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
                     <Grid Grid.Column="1" MouseDown="DragWindow">
                         <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
                     </Grid>
-                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="Icons/CloseButtonIcon.png" HorizontalAlignment="Right" Click="btnCloseClick" />
-                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="Icons/MinimazeButton.png" HorizontalAlignment="Left" Click="btnMinimazeClick" />
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{StaticResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{StaticResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0">
                     <TabControl Margin="0" HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0" FontFamily="{StaticResource DefaultFontFamily}" FontSize="16">
@@ -88,11 +88,12 @@
                                     <RowDefinition Height="40px"/>
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
-                                <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/AddIcon.png" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
-                                <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/VisibleIcon.png" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
-                                <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="Icons/RemoveIcon.png" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False"/>
+                                <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconAddButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
+                                <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
+                                <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconVisibleButtonVisible}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False" Click="bntVisibleWidgetClick"/>
+                                <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconRemoveButton}" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="125,0,0,0" IsEnabled="False" Click="bntRemoveWidgetClick"/>
                                 <TextBlock Grid.Row="1" Text="{Binding TabWIdgetsYourWidget, FallbackValue=widgets:}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>
-                                <ListView x:Name="lvWidgets" Grid.Row="2" Background="{StaticResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0"/>
+                                <ListView x:Name="lvWidgets" Foreground="{StaticResource WindowTextColor}" Grid.Row="2" Background="{StaticResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvWidgetsSelectionChanged"/>
                                 <TextBlock x:Name="tbZeroWidgets" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TabWIdgetsZeroWidgets, FallbackValue=zero}" VerticalAlignment="Center" Margin="20,0" TextAlignment="Center"/>
                             </Grid>
                         </TabItem>

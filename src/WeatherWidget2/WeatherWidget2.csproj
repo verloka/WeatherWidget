@@ -1009,5 +1009,8 @@
     <Resource Include="Icons\HiddenIcon.png" />
     <Resource Include="Icons\VisibleIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\EditIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

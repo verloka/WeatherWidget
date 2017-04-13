@@ -19,9 +19,21 @@ namespace WeatherWidget2.Model
             Widgets.Add(widg);
             ListChangded?.Invoke();
         }
-        public void Remove()
+        public void Remove(string uid)
         {
+            var widg = GetByUID(uid);
+            if (widg == null)
+                return;
 
+            widg.Destroy();
+            Widgets.Remove(widg);
+        }
+        public Widget GetByUID(string uid)
+        {
+            foreach (var item in Widgets)
+                if (item.guid == uid)
+                    return item;
+            return null;
         }
 
         public string GetValue()

@@ -1,9 +1,11 @@
-﻿using Verloka.HelperLib.Settings;
+﻿using System;
+using Verloka.HelperLib.Settings;
 
 namespace WeatherWidget2.Model
 {
     public class Widget : ISettingStruct
     {
+        public string guid { get; private set; }
         public string Name { get; set; }
         public int Left { get; set; }
         public int Top { get; set; }
@@ -12,11 +14,22 @@ namespace WeatherWidget2.Model
         public Measure WidgetMeasure { get; set; }
         public IconSize Size { get; set; }
         public bool Visible { get; set; }
+        public bool IsCreated
+        {
+            get
+            {
+                if (Type == 0)
+                    return daily != null;
+                else
+                    return false;
+            }
+        }
 
         WeatherWidget2.Widget.TempWidget daily;
 
         public Widget()
         {
+            guid = Guid.NewGuid().ToString();
             Name = "NaN";
             Left = 100;
             Top = 100;
@@ -101,7 +114,7 @@ namespace WeatherWidget2.Model
 
         public string GetValue()
         {
-            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure}|{Size}|{Visible}|{CityID}";
+            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure}|{Size}|{Visible}|{CityID}|{guid}";
         }
         public void SetValue(string value)
         {
@@ -135,6 +148,8 @@ namespace WeatherWidget2.Model
             //CityID
             int.TryParse(strs[7], out num);
             CityID = num;
+            //guid
+            guid = strs[8];
         }
 
         public override string ToString()

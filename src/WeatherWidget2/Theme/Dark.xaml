@@ -19,4 +19,13 @@
     
     <SolidColorBrush x:Key="IconButtonBuckground" Color="White"/>
 
+    <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
+    <BitmapImage x:Key="IconVisibleButtonVisible" UriSource="/WeatherWidget2;component/Icons/VisibleIcon.png"/>
+    <BitmapImage x:Key="IconVisibleButtonHiden" UriSource="/WeatherWidget2;component/Icons/HiddenIcon.png"/>
+    <BitmapImage x:Key="IconRemoveButton" UriSource="/WeatherWidget2;component/Icons/RemoveIcon.png"/>
+    <BitmapImage x:Key="IconEditButton" UriSource="/WeatherWidget2;component/Icons/EditIcon.png"/>
+    <BitmapImage x:Key="IconWindowHead" UriSource="/WeatherWidget2;component/Icons/WindowHeadIcon.png"/>
+    <BitmapImage x:Key="IconCloseButton" UriSource="/WeatherWidget2;component/Icons/CloseButtonIcon.png"/>
+    <BitmapImage x:Key="IconMinimazingButton" UriSource="/WeatherWidget2;component/Icons/MinimazeButton.png"/>
+
 </ResourceDictionary>

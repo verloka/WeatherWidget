@@ -23,12 +23,12 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Margin="4" Stretch="UniformToFill"/>
+                    <Image Grid.Column="0" Source="{StaticResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
                     <Grid Grid.Column="1" MouseDown="DragWindow">
                         <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
                     </Grid>
-                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="/WeatherWidget2;component/Icons/CloseButtonIcon.png" HorizontalAlignment="Right" Click="btnCloseClick" />
-                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="/WeatherWidget2;component/Icons/MinimazeButton.png" HorizontalAlignment="Left" Click="btnMinimazeClick" />
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{StaticResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{StaticResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="{StaticResource DefaultFontFamily}" FontSize="14">
