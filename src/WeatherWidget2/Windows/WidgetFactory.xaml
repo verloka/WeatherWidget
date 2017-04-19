@@ -63,7 +63,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeSize, FallbackValue=size}" Foreground="{StaticResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                <ComboBox Grid.Column="1" Width="200" Height="22" SelectedIndex="1">
+                                <ComboBox x:Name="cbSize" Grid.Column="1" Width="200" Height="22" SelectedIndex="1">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeBig, FallbackValue=big}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeMedium, FallbackValue=medium}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeSmall, FallbackValue=small}"/>

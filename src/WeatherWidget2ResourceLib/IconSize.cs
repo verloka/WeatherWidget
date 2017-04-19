@@ -1,4 +1,4 @@
-﻿namespace WeatherWidget2.Model
+﻿namespace WeatherWidget2ResourceLib
 {
     public enum IconSize
     {

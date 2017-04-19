@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WeatherWidget2.Model;
+using WeatherWidget2ResourceLib;
 
 namespace WeatherWidget2.Windows
 {
@@ -56,13 +57,23 @@ namespace WeatherWidget2.Windows
 
             cbMeasure.SelectionChanged += CbMeasureSelectionChanged;
 
+            cbSize.SelectionChanged += CbSizeSelectionChanged;
+
             LoadCountrys();
 
             widget = new Model.Widget();
             widget.CreateWindow();
             widget.SetEditMode(true);
         }
+        private void CbSizeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbSize.SelectedIndex == -1)
+                return;
 
+            widget.Size = (IconSize)cbSize.SelectedIndex;
+            widget.UpdateLook();
+            widget.UpdateData();
+        }
         private void CbMeasureSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbMeasure.SelectedIndex == -1)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Verloka.HelperLib.Settings;
+using WeatherWidget2ResourceLib;
 
 namespace WeatherWidget2.Model
 {
@@ -14,6 +15,7 @@ namespace WeatherWidget2.Model
         public Measure WidgetMeasure { get; set; }
         public IconSize Size { get; set; }
         public bool Visible { get; set; }
+        public IconTheme Theme { get; set; }
         public bool IsCreated
         {
             get
@@ -36,6 +38,7 @@ namespace WeatherWidget2.Model
             Type = 0;
             CityID = 2172797;
             Size = IconSize.Medium;
+            Theme = IconTheme.Standart;
             WidgetMeasure = Measure.Metric;
             Visible = true;
         }
@@ -71,7 +74,7 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                daily = new WeatherWidget2.Widget.TempWidget(CityID, WidgetMeasure);
+                daily = new WeatherWidget2.Widget.TempWidget(CityID, WidgetMeasure, Size, Theme);
                 daily.UpdateInfo();
                 daily.SetIcon();
                 daily.Top = Top;
@@ -111,10 +114,24 @@ namespace WeatherWidget2.Model
 
             }
         }
+        public void UpdateLook()
+        {
+            if (Type == 0)
+            {
+                if (daily == null)
+                    return;
+
+                daily.icons.UpdateData(Size, Theme);
+            }
+            else
+            {
+
+            }
+        }
 
         public string GetValue()
         {
-            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure}|{Size}|{Visible}|{CityID}|{guid}";
+            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure.GetHashCode()}|{Size.GetHashCode()}|{Visible}|{CityID}|{guid}|{Theme.GetHashCode()}";
         }
         public void SetValue(string value)
         {
@@ -150,6 +167,9 @@ namespace WeatherWidget2.Model
             CityID = num;
             //guid
             guid = strs[8];
+            //Theme
+            int.TryParse(strs[9], out num);
+            Theme = (IconTheme)num;
         }
 
         public override string ToString()
