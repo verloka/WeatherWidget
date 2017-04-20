@@ -76,7 +76,7 @@ namespace WeatherWidget2.Model
             {
                 daily = new WeatherWidget2.Widget.TempWidget(CityID, WidgetMeasure, Size, Theme);
                 daily.UpdateInfo();
-                daily.SetIcon();
+                daily.UpdateLook();
                 daily.Top = Top;
                 daily.Left = Left;
                 daily.Show();
@@ -92,7 +92,7 @@ namespace WeatherWidget2.Model
             {
                 daily.UpdateWeatherData(CityID, WidgetMeasure);
                 daily.UpdateInfo();
-                daily.SetIcon();
+                daily.UpdateLook();
             }
             else
             {

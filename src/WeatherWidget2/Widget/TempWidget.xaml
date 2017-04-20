@@ -5,14 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Daily" 
-        Height="300" 
-        Width="300" 
         AllowsTransparency="True" 
         WindowStyle="None" 
         Background="{x:Null}"
         FontFamily="{StaticResource DefaultFontFamily}"
         Foreground="{StaticResource WindowTextColor}" 
-        Loaded="windowLoaded" ShowInTaskbar="False" ResizeMode="NoResize">
+        Loaded="windowLoaded" ShowInTaskbar="False" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Grid x:Name="rootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="20px"/>

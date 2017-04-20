@@ -59,11 +59,23 @@ namespace WeatherWidget2.Windows
 
             cbSize.SelectionChanged += CbSizeSelectionChanged;
 
+            cbIconTheme.SelectionChanged += CbIconThemeSelectionChanged;
+
             LoadCountrys();
 
             widget = new Model.Widget();
             widget.CreateWindow();
             widget.SetEditMode(true);
+        }
+
+        private void CbIconThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbIconTheme.SelectedIndex == -1)
+                return;
+
+            widget.Theme = (IconTheme)cbIconTheme.SelectedIndex;
+            widget.UpdateLook();
+            widget.UpdateData();
         }
         private void CbSizeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

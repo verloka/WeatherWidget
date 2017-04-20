@@ -36,11 +36,27 @@ namespace WeatherWidget2ResourceLib
                 case IconTheme.Standart:
                     this.theme = "Standart";
                     break;
+                case IconTheme.Thin:
+                    this.theme = "Thin";
+                    break;
             }
         }
         public Uri GetIcon(string name)
         {
             return new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Icons\\{theme}\\{size}\\{name}.png", UriKind.RelativeOrAbsolute);
+        }
+        public int GetSize()
+        {
+            switch (size)
+            {
+                case "128":
+                    return 128;
+                case "32":
+                    return 32;
+                case "64":
+                default:
+                    return 64;
+            }
         }
     }
 }
