@@ -6,9 +6,9 @@ using System.Windows.Media.Imaging;
 using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
 
-namespace WeatherWidget2.Widget
+namespace WeatherWidget2.Windows
 {
-    public partial class TempWidget : Window
+    public partial class WidgetCurrent : Window
     {
         public Icons icons;
 
@@ -16,7 +16,7 @@ namespace WeatherWidget2.Widget
         int id;
         Model.Measure ms;
 
-        public TempWidget(int id, Model.Measure ms, IconSize iconSize, IconTheme iconTheme)
+        public WidgetCurrent(int id, Model.Measure ms, IconSize iconSize, IconTheme iconTheme)
         {
             InitializeComponent();
             this.id = id;

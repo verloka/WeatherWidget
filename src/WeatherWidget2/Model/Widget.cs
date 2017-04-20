@@ -27,7 +27,7 @@ namespace WeatherWidget2.Model
             }
         }
 
-        WeatherWidget2.Widget.TempWidget daily;
+        WeatherWidget2.Windows.WidgetCurrent daily;
 
         public Widget()
         {
@@ -74,7 +74,7 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                daily = new WeatherWidget2.Widget.TempWidget(CityID, WidgetMeasure, Size, Theme);
+                daily = new WeatherWidget2.Windows.WidgetCurrent(CityID, WidgetMeasure, Size, Theme);
                 daily.UpdateInfo();
                 daily.UpdateLook();
                 daily.Top = Top;

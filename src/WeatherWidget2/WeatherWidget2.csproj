@@ -94,8 +94,8 @@
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Model\WidgetStorage.cs" />
-    <Compile Include="Widget\TempWidget.xaml.cs">
-      <DependentUpon>TempWidget.xaml</DependentUpon>
+    <Compile Include="Windows\WidgetCurrent.xaml.cs">
+      <DependentUpon>WidgetCurrent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Win32.cs" />
     <Compile Include="Windows\WidgetFactory.xaml.cs">
@@ -132,7 +132,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Widget\TempWidget.xaml">
+    <Page Include="Windows\WidgetCurrent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
