@@ -16,7 +16,7 @@ namespace WeatherWidget2.Windows
         MainWindow mw;
         List<Country> countrys;
         Country country;
-        Model.Widget widget;
+        Widget widget;
         bool delete = true;
 
         public WidgetFactory(MainWindow mw)
@@ -28,11 +28,11 @@ namespace WeatherWidget2.Windows
 
         void LoadCountrys()
         {
-            countrys = JsonConvert.DeserializeObject<List<Country>>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\Countrys.json"));
+            countrys = JsonConvert.DeserializeObject<List<Country>>(Geonames.GetCoutrysJson());
         }
         void LoadCitys(string countryName)
         {
-            country = JsonConvert.DeserializeObject<Country>(File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}\\Data\\{countryName}"));
+            country = JsonConvert.DeserializeObject<Country>(Geonames.GetCoutryJson(countryName));
         }
 
         #region Window Events
