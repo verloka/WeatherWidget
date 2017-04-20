@@ -16,6 +16,7 @@ namespace WeatherWidget2.Model
         public IconSize Size { get; set; }
         public bool Visible { get; set; }
         public IconTheme Theme { get; set; }
+        public string TextColor { get; set; }
         public bool IsCreated
         {
             get
@@ -27,7 +28,7 @@ namespace WeatherWidget2.Model
             }
         }
 
-        WeatherWidget2.Windows.WidgetCurrent daily;
+        Windows.WidgetCurrent daily;
 
         public Widget()
         {
@@ -40,6 +41,7 @@ namespace WeatherWidget2.Model
             Size = IconSize.Medium;
             Theme = IconTheme.Standart;
             WidgetMeasure = Measure.Metric;
+            TextColor = "White";
             Visible = true;
         }
         public Widget(string value)
@@ -122,6 +124,7 @@ namespace WeatherWidget2.Model
                     return;
 
                 daily.icons.UpdateData(Size, Theme);
+                daily.UpdateTextColor(TextColor);
             }
             else
             {
@@ -131,7 +134,7 @@ namespace WeatherWidget2.Model
 
         public string GetValue()
         {
-            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure.GetHashCode()}|{Size.GetHashCode()}|{Visible}|{CityID}|{guid}|{Theme.GetHashCode()}";
+            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure.GetHashCode()}|{Size.GetHashCode()}|{Visible}|{CityID}|{guid}|{Theme.GetHashCode()}|{TextColor}";
         }
         public void SetValue(string value)
         {
@@ -170,11 +173,13 @@ namespace WeatherWidget2.Model
             //Theme
             int.TryParse(strs[9], out num);
             Theme = (IconTheme)num;
+            //Text color
+            TextColor = strs[10];
         }
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name}";
         }
     }
 }

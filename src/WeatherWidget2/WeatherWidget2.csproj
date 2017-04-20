@@ -92,6 +92,7 @@
       <DependentUpon>MetroButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\City.cs" />
+    <Compile Include="Model\ColorParser.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />

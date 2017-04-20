@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,13 +61,24 @@ namespace WeatherWidget2.Windows
 
             cbIconTheme.SelectionChanged += CbIconThemeSelectionChanged;
 
+            cbTextColors.ItemsSource = ColorParser.ColorLibrary;
+            cbTextColors.SelectedItem = ColorParser.ColorLibrary.Where(item => item.Name == "White").First();
+            cbTextColors.SelectionChanged += CbTextColorsSelectionChanged;
+
             LoadCountrys();
 
-            widget = new Model.Widget();
+            widget = new Widget();
             widget.CreateWindow();
             widget.SetEditMode(true);
         }
+        private void CbTextColorsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbTextColors.SelectedIndex == -1)
+                return;
 
+            widget.TextColor = (cbTextColors.SelectedItem as PropertyInfo).Name;
+            widget.UpdateLook();
+        }
         private void CbIconThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbIconTheme.SelectedIndex == -1)

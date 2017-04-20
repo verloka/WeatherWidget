@@ -61,12 +61,8 @@ namespace WeatherWidget2.Model
         public string WidgetFactoryTypeSizeMedium { get; set; } = "!medium";
         [DataMember(Name = "WidgetFactoryTypeSizeSmall")]
         public string WidgetFactoryTypeSizeSmall { get; set; } = "!small";
-        [DataMember(Name = "WidgetFactoryTypeTheme")]
-        public string WidgetFactoryTypeTheme { get; set; } = "!theme of widget";
-        [DataMember(Name = "WidgetFactoryTypeThemeDark")]
-        public string WidgetFactoryTypeThemeDark { get; set; } = "!dark";
-        [DataMember(Name = "WidgetFactoryTypeThemeWhite")]
-        public string WidgetFactoryTypeThemeWhite { get; set; } = "!white";
+        [DataMember(Name = "WidgetFactoryTextColor")]
+        public string WidgetFactoryTextColor { get; set; } = "!text color";
         [DataMember(Name = "WidgetFactoryTypeIconTheme")]
         public string WidgetFactoryTypeIconTheme { get; set; } = "!theme of icons";
         [DataMember(Name = "WidgetFactoryContry")]

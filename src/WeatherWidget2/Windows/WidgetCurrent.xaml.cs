@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
@@ -77,6 +78,13 @@ namespace WeatherWidget2.Windows
                     tbLocation.FontSize = 24;
                     break;
             }
+        }
+        public void UpdateTextColor(string name)
+        {
+            SolidColorBrush scb = new SolidColorBrush(Model.ColorParser.FromName(name));
+            tbThemperature.Foreground = scb;
+            tbCondition.Foreground = scb;
+            tbLocation.Foreground = scb;
         }
         public void Edit(bool edit)
         {

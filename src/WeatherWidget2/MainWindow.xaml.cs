@@ -17,6 +17,7 @@ namespace WeatherWidget2
         {
             InitializeComponent();
             DataContext = App.Lang;
+            Model.ColorParser.Load();
             settings = new RegSettings("Weather Widget 2");
         }
 
