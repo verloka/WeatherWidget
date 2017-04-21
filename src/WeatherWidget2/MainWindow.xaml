@@ -16,23 +16,23 @@
         x:Name="mywindow" 
         Icon="Icons/AppIcon.png" Loaded="mywindowLoaded">
     <Grid x:Name="gridRoot">
-        <Border Margin="3" BorderBrush="{StaticResource WindowBorderColor}" BorderThickness="1">
-            <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
+        <Border Margin="3" BorderBrush="{DynamicResource WindowBorderColor}" BorderThickness="1">
+            <Grid x:Name="gridWindow" Background="{DynamicResource WindowBackgroundColor}">
                 <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="{StaticResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
+                    <Image Grid.Column="0" Source="{DynamicResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
                     <Grid Grid.Column="1" MouseDown="DragWindow">
-                        <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
+                        <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{DynamicResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{DynamicResource DefaultFontFamily}"/>
                     </Grid>
-                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{StaticResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
-                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{StaticResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{DynamicResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{DynamicResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0">
-                    <TabControl Margin="0" HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0" FontFamily="{StaticResource DefaultFontFamily}" FontSize="16">
+                    <TabControl Margin="0" HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="16">
                         <TabControl.Resources>
                             <Style TargetType="TabItem">
                                 <Setter Property="Template">
@@ -55,7 +55,7 @@
                                                     </Grid.Style>
                                                 </Grid>
                                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2" IsHitTestVisible="False"/>
-                                                <Border x:Name="HeaderLine" VerticalAlignment="Bottom" Margin="10,0,10,0" BorderThickness="0,2,0,0" BorderBrush="{StaticResource WindowBorderColor}" IsHitTestVisible="False"/>
+                                                <Border x:Name="HeaderLine" VerticalAlignment="Bottom" Margin="10,0,10,0" BorderThickness="0,2,0,0" BorderBrush="{DynamicResource WindowBorderColor}" IsHitTestVisible="False"/>
                                             </Grid>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
@@ -70,10 +70,10 @@
                                 </Setter>
                             </Style>
                         </TabControl.Resources>
-                        <TabItem Header="{Binding GeneralTabHome, FallbackValue=home}" Foreground="{StaticResource WindowTextColor}">
+                        <TabItem Header="{Binding GeneralTabHome, FallbackValue=home}" Foreground="{DynamicResource WindowTextColor}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=weatherwidget}" FontSize="28" TextAlignment="Center" />
-                                <TextBlock Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{StaticResource WindowTextLinkColor}" />
+                                <TextBlock Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{DynamicResource WindowTextLinkColor}" />
                                 <StackPanel MinWidth="250" Margin="0,25,0,0">
                                     <TextBlock Text="active widgets - 0" Margin="0,5,0,0"/>
                                     <TextBlock Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
@@ -81,28 +81,28 @@
                                 </StackPanel>
                             </StackPanel>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{StaticResource WindowTextColor}">
+                        <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{DynamicResource WindowTextColor}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40px"/>
                                     <RowDefinition Height="40px"/>
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
-                                <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconAddButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
-                                <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
-                                <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconVisibleButtonVisible}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False" Click="bntVisibleWidgetClick"/>
-                                <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{StaticResource IconRemoveButton}" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="125,0,0,0" IsEnabled="False" Click="bntRemoveWidgetClick"/>
+                                <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconAddButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
+                                <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
+                                <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconVisibleButtonVisible}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False" Click="bntVisibleWidgetClick"/>
+                                <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconRemoveButton}" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="125,0,0,0" IsEnabled="False" Click="bntRemoveWidgetClick"/>
                                 <TextBlock Grid.Row="1" Text="{Binding TabWIdgetsYourWidget, FallbackValue=widgets:}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>
-                                <ListView x:Name="lvWidgets" Foreground="{StaticResource WindowTextColor}" Grid.Row="2" Background="{StaticResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvWidgetsSelectionChanged"/>
+                                <ListView x:Name="lvWidgets" Foreground="{DynamicResource WindowTextColor}" Grid.Row="2" Background="{DynamicResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvWidgetsSelectionChanged"/>
                                 <TextBlock x:Name="tbZeroWidgets" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TabWIdgetsZeroWidgets, FallbackValue=zero}" VerticalAlignment="Center" Margin="20,0" TextAlignment="Center"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{StaticResource WindowTextColor}">
+                        <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{DynamicResource WindowTextColor}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <StackPanel Margin="10,10,10,50">
-                                    <CheckBox Content="{Binding TabOptionsAutorun, FallbackValue=startup}" Foreground="{StaticResource WindowTextColor}"/>
-                                    <CheckBox Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{StaticResource WindowTextColor}" Margin="0,7,0,0"/>
-                                    <CheckBox Content="{Binding TabOptionsCheckUpdate, FallbackValue=check-update}" Foreground="{StaticResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <CheckBox x:Name="cbStartup" Content="{Binding TabOptionsAutorun, FallbackValue=startup}" Foreground="{DynamicResource WindowTextColor}"/>
+                                    <CheckBox x:Name="cbAlertInternet" Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <CheckBox x:Name="cbUpdateChekc" Content="{Binding TabOptionsCheckUpdate, FallbackValue=check-update}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="150px"/>
@@ -117,12 +117,15 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding TabOptionsTheme, FallbackValue=theme}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                        <ComboBox Grid.Column="1" Width="200" Height="22"/>
+                                        <ComboBox x:Name="cbTheme" Grid.Column="1" Width="200" Height="22">
+                                            <ComboBoxItem Content="{Binding TabOptionsThemeDark, FallbackValue=dark}"/>
+                                            <ComboBoxItem Content="{Binding TabOptionsThemeLight, FallbackValue=light}"/>
+                                        </ComboBox>
                                     </Grid>
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabInformation, FallbackValue=information}" Foreground="{StaticResource WindowTextColor}">
+                        <TabItem Header="{Binding GeneralTabInformation, FallbackValue=information}" Foreground="{DynamicResource WindowTextColor}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="170px"/>

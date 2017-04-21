@@ -30,6 +30,10 @@ namespace WeatherWidget2.Model
         public string TabOptionsLanguage { get; set; } = "!lang";
         [DataMember(Name = "TabOptionsTheme")]
         public string TabOptionsTheme { get; set; } = "!theme";
+        [DataMember(Name = "TabOptionsThemeDark")]
+        public string TabOptionsThemeDark { get; set; } = "!dark";
+        [DataMember(Name = "TabOptionsThemeLight")]
+        public string TabOptionsThemeLight { get; set; } = "!light";
 
         [DataMember(Name = "TabInfoDeveloped")]
         public string TabInfoDeveloped { get; set; } = "!developed in 2017 by Verloka Vadim";

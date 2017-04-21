@@ -52,7 +52,7 @@
     <StartupObject>WeatherWidget2.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Icons\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HelperLib, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
@@ -135,6 +135,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Theme\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\WidgetCurrent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,7 +204,7 @@
     <Resource Include="Icons\AppIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="AppIcon.ico" />
+    <Resource Include="Icons\AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Moon.png" />

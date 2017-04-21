@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Verloka.HelperLib.Settings;
 
 namespace WeatherWidget2
 {
     public partial class MainWindow : Window
     {
-        public RegSettings settings;
         public Model.WidgetStorage wstorage;
 
         public MainWindow()
@@ -18,7 +18,6 @@ namespace WeatherWidget2
             InitializeComponent();
             DataContext = App.Lang;
             Model.ColorParser.Load();
-            settings = new RegSettings("Weather Widget 2");
         }
 
         public void Load(bool reload)
@@ -38,6 +37,10 @@ namespace WeatherWidget2
         }
         public void UpdateData()
         {
+            //checkintertn
+            //if(settings.GetValue<bool>("ShowAlertInternetMsg"))
+            //show alert
+
             foreach (var item in wstorage.Widgets)
                 if (item.Visible)
                     item.UpdateData();
@@ -75,15 +78,61 @@ namespace WeatherWidget2
 
         private void mywindowLoaded(object sender, RoutedEventArgs e)
         {
-            wstorage = settings.GetValue("widgets", new Model.WidgetStorage());
+            //widget storage
+            wstorage = App.Settings.GetValue("widgets", new Model.WidgetStorage());
             wstorage.ListChangded += WstorageListChangded;
+            
+            //startup
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if ((string)key.GetValue("Weather Widget 2") == null)
+                cbStartup.IsChecked = false;
+            else
+                cbStartup.IsChecked = true;
+            cbStartup.Click += CbStartupClick;
 
+            //check updates
+            cbUpdateChekc.IsChecked = App.Settings.GetValue("CheckUpdateInStart", true);
+            cbUpdateChekc.Click += CbUpdateChekc_Click;
+
+            //wrong internet connection
+            cbAlertInternet.IsChecked = App.Settings.GetValue("ShowAlertInternetMsg", false);
+            cbAlertInternet.Click += CbAlertInternetClick;
+
+            //theme
+            cbTheme.SelectedIndex = App.Settings.GetValue<int>("Theme");
+            cbTheme.SelectionChanged += CbThemeSelectionChanged;
+
+            //load widgets
             Load(false);
+            //load weather data
             UpdateData();
+        }
+
+        private void CbThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings["Theme"] = cbTheme.SelectedIndex;
+            App.UpdateTheme(cbTheme.SelectedIndex);
+            this.UpdateDefaultStyle();
+        }
+        private void CbAlertInternetClick(object sender, RoutedEventArgs e)
+        {
+            App.Settings["ShowAlertInternetMsg"] = cbAlertInternet.IsChecked.Value;
+        }
+        private void CbUpdateChekc_Click(object sender, RoutedEventArgs e)
+        {
+            App.Settings["CheckUpdateInStart"] = cbUpdateChekc.IsChecked.Value;
+        }
+        private void CbStartupClick(object sender, RoutedEventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (!cbStartup.IsChecked.Value)
+                key.DeleteValue("Weather Widget 2", false);
+            else
+                key.SetValue("Weather Widget 2", $"\"{Assembly.GetExecutingAssembly().Location}\" -silent");
         }
         private void WstorageListChangded()
         {
-            settings["widgets"] = wstorage;
+            App.Settings["widgets"] = wstorage;
             UpdateItemSource();
         }
         private void bntAddWidgetClick()
@@ -114,7 +163,7 @@ namespace WeatherWidget2
             wstorage.GetByUID((lvWidgets.SelectedItem as Model.Widget).guid).Visible = !wstorage.GetByUID((lvWidgets.SelectedItem as Model.Widget).guid).Visible;
             bntVisibleWidget.Icon = (lvWidgets.SelectedItem as Model.Widget).Visible ? GetIconFromRes("VisibleIcon") : GetIconFromRes("HiddenIcon");
 
-            settings["widgets"] = wstorage;
+            App.Settings["widgets"] = wstorage;
             Load(true);
         }
         private void bntRemoveWidgetClick()
@@ -124,7 +173,7 @@ namespace WeatherWidget2
 
             wstorage.Remove((lvWidgets.SelectedItem as Model.Widget).guid);
 
-            settings["widgets"] = wstorage;
+            App.Settings["widgets"] = wstorage;
             Load(true);
             UpdateItemSource();
         }
