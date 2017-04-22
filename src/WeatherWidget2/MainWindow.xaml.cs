@@ -13,6 +13,9 @@ namespace WeatherWidget2
     {
         public Model.WidgetStorage wstorage;
 
+        System.Timers.Timer timer;
+        System.Windows.Forms.NotifyIcon notifyIcon;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +61,10 @@ namespace WeatherWidget2
             lvWidgets.ItemsSource = wstorage.Widgets;
             lvWidgets.SelectedIndex = selected;
         }
+        public double GetInMilisec(int minunte)
+        {
+            return 60000 * minunte;
+        }
 
         #region Window Events
         private void DragWindow(object sender, MouseButtonEventArgs e)
@@ -67,8 +74,14 @@ namespace WeatherWidget2
         }
         private void btnCloseClick()
         {
-            //TODO
-            Application.Current.Shutdown(0);
+            if (App.Settings.GetValue<bool>("AppExit"))
+            {
+                Application.Current.Shutdown(0);
+            }
+            else
+            {
+                Hide();
+            }
         }
         private void btnMinimazeClick()
         {
@@ -102,12 +115,52 @@ namespace WeatherWidget2
             cbTheme.SelectedIndex = App.Settings.GetValue<int>("Theme");
             cbTheme.SelectionChanged += CbThemeSelectionChanged;
 
+            //app exit
+            cbExit.IsChecked = App.Settings.GetValue("AppExit", false);
+            cbExit.Click += CbExitClick;
+
+            //set timer
+            timer = new System.Timers.Timer(GetInMilisec(15));
+            timer.Elapsed += TimerElapsed;
+            timer.Enabled = true;
+
+            //set notyfi
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Text = "Weather Widget 2";
+            notifyIcon.Icon = Properties.Resources.AppIcon;
+            notifyIcon.DoubleClick += NotifyIconDoubleClick;
+            notifyIcon.Visible = true;
+
+            //app exit
+            Application.Current.Exit += CurrentExit;
+
             //load widgets
             Load(false);
             //load weather data
             UpdateData();
         }
-
+        private void CbExitClick(object sender, RoutedEventArgs e)
+        {
+            App.Settings["AppExit"] = cbExit.IsChecked.Value;
+        }
+        private void NotifyIconDoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            if (WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
+        }
+        private void CurrentExit(object sender, ExitEventArgs e)
+        {
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose();
+            notifyIcon = null;
+            timer.Dispose();
+            timer = null;
+        }
+        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            UpdateData();
+        }
         private void CbThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             App.Settings["Theme"] = cbTheme.SelectedIndex;

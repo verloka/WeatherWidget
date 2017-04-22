@@ -14,7 +14,8 @@
         Background="{x:Null}"
         AllowsTransparency="True"
         x:Name="mywindow" 
-        Icon="Icons/AppIcon.png" Loaded="mywindowLoaded">
+        Icon="Icons/AppIcon.png" 
+        Loaded="mywindowLoaded">
     <Grid x:Name="gridRoot">
         <Border Margin="3" BorderBrush="{DynamicResource WindowBorderColor}" BorderThickness="1">
             <Grid x:Name="gridWindow" Background="{DynamicResource WindowBackgroundColor}">
@@ -101,6 +102,7 @@
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <StackPanel Margin="10,10,10,50">
                                     <CheckBox x:Name="cbStartup" Content="{Binding TabOptionsAutorun, FallbackValue=startup}" Foreground="{DynamicResource WindowTextColor}"/>
+                                    <CheckBox x:Name="cbExit" Content="{Binding TabOptionsExit, FallbackValue=exit}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <CheckBox x:Name="cbAlertInternet" Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <CheckBox x:Name="cbUpdateChekc" Content="{Binding TabOptionsCheckUpdate, FallbackValue=check-update}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0">

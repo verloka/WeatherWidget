@@ -20,6 +20,8 @@ namespace WeatherWidget2.Model
         [DataMember(Name = "TabHomeWhatNew")]
         public string TabHomeWhatNew { get; set; } = "!what new?";
 
+        [DataMember(Name = "TabOptionsExit")]
+        public string TabOptionsExit { get; set; } = "!exit from app when closing window";
         [DataMember(Name = "TabOptionsAutorun")]
         public string TabOptionsAutorun { get; set; } = "!startup with windows";
         [DataMember(Name = "TabOptionsMsgInet")]
