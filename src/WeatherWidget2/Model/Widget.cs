@@ -22,13 +22,13 @@ namespace WeatherWidget2.Model
             get
             {
                 if (Type == 0)
-                    return daily != null;
+                    return current != null;
                 else
                     return false;
             }
         }
 
-        Windows.WidgetCurrent daily;
+        Windows.WidgetCurrent current;
 
         public Widget()
         {
@@ -53,7 +53,7 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                daily.Edit(mode);
+                current.Edit(mode);
             }
             else
             {
@@ -64,8 +64,8 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                Left = (int)daily.Left;
-                Top = (int)daily.Top;
+                Left = (int)current.Left;
+                Top = (int)current.Top;
             }
             else
             {
@@ -76,12 +76,12 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                daily = new WeatherWidget2.Windows.WidgetCurrent(CityID, WidgetMeasure, Size, Theme);
-                daily.UpdateInfo();
-                daily.UpdateLook();
-                daily.Top = Top;
-                daily.Left = Left;
-                daily.Show();
+                current = new WeatherWidget2.Windows.WidgetCurrent(CityID, WidgetMeasure, Size, Theme);
+                current.UpdateInfo();
+                current.UpdateLook();
+                current.Top = Top;
+                current.Left = Left;
+                current.Show();
             }
             else
             {
@@ -92,9 +92,9 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                daily.UpdateWeatherData(CityID, WidgetMeasure);
-                daily.UpdateInfo();
-                daily.UpdateLook();
+                current.UpdateWeatherData(CityID, WidgetMeasure);
+                current.UpdateInfo();
+                current.UpdateLook();
             }
             else
             {
@@ -105,10 +105,10 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                if (daily != null)
+                if (current != null)
                 {
-                    daily.Close();
-                    daily = null;
+                    current.Close();
+                    current = null;
                 }
             }
             else
@@ -120,11 +120,11 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                if (daily == null)
+                if (current == null)
                     return;
 
-                daily.icons.UpdateData(Size, Theme);
-                daily.UpdateTextColor(TextColor);
+                current.icons.UpdateData(Size, Theme);
+                current.UpdateTextColor(TextColor);
             }
             else
             {

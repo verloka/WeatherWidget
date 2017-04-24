@@ -120,7 +120,7 @@ namespace WeatherWidget2
             cbExit.Click += CbExitClick;
 
             //set timer
-            timer = new System.Timers.Timer(GetInMilisec(15));
+            timer = new System.Timers.Timer(GetInMilisec(10));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 

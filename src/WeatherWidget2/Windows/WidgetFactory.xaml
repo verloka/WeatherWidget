@@ -98,6 +98,7 @@
                                 <ComboBox x:Name="cbIconTheme" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="Standart"/>
                                     <ComboBoxItem Content="Thin"/>
+                                    <ComboBoxItem Content="Square"/>
                                 </ComboBox>
                             </Grid>
                             <Grid Margin="0,7,0,0">

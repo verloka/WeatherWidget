@@ -3,6 +3,7 @@
     public enum IconTheme
     {
         Standart,
-        Thin
+        Thin,
+        Square
     }
 }
