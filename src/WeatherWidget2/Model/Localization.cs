@@ -19,6 +19,14 @@ namespace WeatherWidget2.Model
 
         [DataMember(Name = "TabHomeWhatNew")]
         public string TabHomeWhatNew { get; set; } = "!what new?";
+        [DataMember(Name = "TabHomeActiveWidgets")]
+        public string TabHomeActiveWidgets { get; set; } = "!active widgets - ";
+        [DataMember(Name = "TabHomeConnection")]
+        public string TabHomeConnection { get; set; } = "!connection status - ";
+        [DataMember(Name = "TabHomeConnectionOK")]
+        public string TabHomeConnectionOK { get; set; } = "!ok";
+        [DataMember(Name = "TabHomeConnectionNO")]
+        public string TabHomeConnectionNO { get; set; } = "!fail";
 
         [DataMember(Name = "TabOptionsExit")]
         public string TabOptionsExit { get; set; } = "!exit from app when closing window";
@@ -79,5 +87,12 @@ namespace WeatherWidget2.Model
         public string WidgetFactoryWidgetName { get; set; } = "!name of widget";
         [DataMember(Name = "WidgetFactoryAddWidget")]
         public string WidgetFactoryAddWidget { get; set; } = "!add this";
+
+        [DataMember(Name = "AlertTitle")]
+        public string AlertTitle { get; set; } = "!alert";
+        [DataMember(Name = "AlertNoInternet")]
+        public string AlertNoInternet { get; set; } = "!To update the information you need to connect to the Internet.";
+        [DataMember(Name = "AlertNeedInternet")]
+        public string AlertNeedInternet { get; set; } = "!For further action, you need an internet connection.";
     }
 }

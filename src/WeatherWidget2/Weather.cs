@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Net;
+using System.Windows;
 
 namespace WeatherWidget2
 {

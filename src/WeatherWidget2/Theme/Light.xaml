@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="White"/>
     <SolidColorBrush x:Key="WindowHeadTextColor" Color="#999999"/>
     <SolidColorBrush x:Key="WindowBorderColor" Color="#007acc"/>
+    <SolidColorBrush x:Key="WindowAlertBorderColor" Color="#e74c3c"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
     <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
     <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>

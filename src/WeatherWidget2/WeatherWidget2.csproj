@@ -99,6 +99,9 @@
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Model\WidgetStorage.cs" />
+    <Compile Include="Windows\Alert.xaml.cs">
+      <DependentUpon>Alert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WidgetCurrent.xaml.cs">
       <DependentUpon>WidgetCurrent.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Alert.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

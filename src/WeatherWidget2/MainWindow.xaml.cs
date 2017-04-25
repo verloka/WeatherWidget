@@ -1,11 +1,13 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Net;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WeatherWidget2.Windows;
 
 namespace WeatherWidget2
 {
@@ -34,19 +36,30 @@ namespace WeatherWidget2
 
             foreach (var item in wstorage.Widgets)
                 if (item.Visible && !item.IsCreated)
-                    item.CreateWindow();
+                {
+                    if (GetConnection())
+                    {
+                        item.CreateWindow();
+                    }
+                    else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
+                        Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background,
+                                          new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
+                }
 
+            tbActiveWidgets.Text = $"{App.Lang.TabHomeActiveWidgets}{wstorage.Widgets.Count}";
             UpdateItemSource();
         }
         public void UpdateData()
         {
-            //checkintertn
-            //if(settings.GetValue<bool>("ShowAlertInternetMsg"))
-            //show alert
-
-            foreach (var item in wstorage.Widgets)
-                if (item.Visible)
-                    item.UpdateData();
+            if (GetConnection())
+            {
+                foreach (var item in wstorage.Widgets)
+                    if (item.Visible)
+                        item.UpdateData();
+            }
+            else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, 
+                                  new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
         }
         public ImageSource GetIconFromRes(string name)
         {
@@ -64,6 +77,21 @@ namespace WeatherWidget2
         public double GetInMilisec(int minunte)
         {
             return 60000 * minunte;
+        }
+        public bool GetConnection()
+        {
+            bool result;
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = client.OpenRead("http://www.google.com"))
+                    result = true;
+            }
+            catch { result = false; }
+
+            tbConnectionStatus.Text = result ? $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" : $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionNO}";
+
+            return result;
         }
 
         #region Window Events
@@ -94,7 +122,7 @@ namespace WeatherWidget2
             //widget storage
             wstorage = App.Settings.GetValue("widgets", new Model.WidgetStorage());
             wstorage.ListChangded += WstorageListChangded;
-            
+
             //startup
             RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if ((string)key.GetValue("Weather Widget 2") == null)
@@ -120,7 +148,7 @@ namespace WeatherWidget2
             cbExit.Click += CbExitClick;
 
             //set timer
-            timer = new System.Timers.Timer(GetInMilisec(10));
+            timer = new System.Timers.Timer(GetInMilisec(1));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 
@@ -186,12 +214,19 @@ namespace WeatherWidget2
         private void WstorageListChangded()
         {
             App.Settings["widgets"] = wstorage;
+            tbActiveWidgets.Text = $"{App.Lang.TabHomeActiveWidgets}{wstorage.Widgets.Count}";
             UpdateItemSource();
         }
         private void bntAddWidgetClick()
         {
-            Windows.WidgetFactory wf = new Windows.WidgetFactory(this);
-            wf.Show();
+            if (GetConnection())
+            {
+                WidgetFactory wf = new WidgetFactory(this);
+                wf.Show();
+            }
+            else
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background,
+                                          new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
         }
         private void lvWidgetsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

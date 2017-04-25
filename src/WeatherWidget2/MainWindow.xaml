@@ -76,9 +76,9 @@
                                 <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=weatherwidget}" FontSize="28" TextAlignment="Center" />
                                 <TextBlock Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{DynamicResource WindowTextLinkColor}" />
                                 <StackPanel MinWidth="250" Margin="0,25,0,0">
-                                    <TextBlock Text="active widgets - 0" Margin="0,5,0,0"/>
+                                    <TextBlock x:Name="tbActiveWidgets" Text="active widgets - 0" Margin="0,5,0,0"/>
                                     <TextBlock Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
-                                    <TextBlock Text="conection status - ok/fail" Margin="0,5,0,0"/>
+                                    <TextBlock x:Name="tbConnectionStatus" Text="conection status - ok/fail" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </StackPanel>
                         </TabItem>
