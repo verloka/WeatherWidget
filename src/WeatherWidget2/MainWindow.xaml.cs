@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WeatherWidget2.Windows;
 
 namespace WeatherWidget2
@@ -74,7 +75,7 @@ namespace WeatherWidget2
             lvWidgets.ItemsSource = wstorage.Widgets;
             lvWidgets.SelectedIndex = selected;
         }
-        public double GetInMilisec(int minunte)
+        public double GetInMilisec(double minunte)
         {
             return 60000 * minunte;
         }
@@ -89,7 +90,13 @@ namespace WeatherWidget2
             }
             catch { result = false; }
 
-            tbConnectionStatus.Text = result ? $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" : $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionNO}";
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 tbConnectionStatus.Text = result ? 
+                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" : 
+                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionNO}";
+             }));
 
             return result;
         }
@@ -148,7 +155,7 @@ namespace WeatherWidget2
             cbExit.Click += CbExitClick;
 
             //set timer
-            timer = new System.Timers.Timer(GetInMilisec(1));
+            timer = new System.Timers.Timer(GetInMilisec(10d));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 

@@ -28,7 +28,10 @@ namespace WeatherWidget2.Model
             }
         }
 
+        Weather weather;
         Windows.WidgetCurrent current;
+
+        int updated = -2;
 
         public Widget()
         {
@@ -43,10 +46,18 @@ namespace WeatherWidget2.Model
             WidgetMeasure = Measure.Metric;
             TextColor = "White";
             Visible = true;
+
+            weather = new Weather();
+            weather.SetCity(CityID);
+            weather.SetMeasure(WidgetMeasure);
         }
         public Widget(string value)
         {
             SetValue(value);
+
+            weather = new Weather();
+            weather.SetCity(CityID);
+            weather.SetMeasure(WidgetMeasure);
         }
 
         public void SetEditMode(bool mode)
@@ -76,9 +87,10 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                current = new WeatherWidget2.Windows.WidgetCurrent(CityID, WidgetMeasure, Size, Theme);
-                current.UpdateInfo();
-                current.UpdateLook();
+                weather.LoadCurrent();
+
+                current = new Windows.WidgetCurrent(Size, Theme);
+                UpdateData();
                 current.Top = Top;
                 current.Left = Left;
                 current.Show();
@@ -92,9 +104,13 @@ namespace WeatherWidget2.Model
         {
             if (Type == 0)
             {
-                current.UpdateWeatherData(CityID, WidgetMeasure);
-                current.UpdateInfo();
-                current.UpdateLook();
+                weather.LoadCurrent();
+                updated++;
+
+                current.UpdateInfo(weather.GetTemperature(weather.Current.Main.Temperature),
+                                   $"{weather.Current.WeatherList[0].WeatherParameters}, up={updated}",
+                                   $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
+                current.UpdateLook(weather.Current.WeatherList[0].Icon);
             }
             else
             {

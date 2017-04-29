@@ -14,47 +14,31 @@ namespace WeatherWidget2.Windows
     {
         public Icons icons;
 
-        Weather weather;
-        int id;
-        Model.Measure ms;
-
-        public WidgetCurrent(int id, Model.Measure ms, IconSize iconSize, IconTheme iconTheme)
+        public WidgetCurrent(IconSize iconSize, IconTheme iconTheme)
         {
             InitializeComponent();
-            this.id = id;
-            this.ms = ms;
 
             icons = new Icons(iconSize, iconTheme);
-            weather = new Weather();
         }
 
-        public void UpdateWeatherData(int id, Model.Measure ms)
+        public void UpdateInfo(string temp, string condi, string loc)
         {
-            this.id = id;
-            this.ms = ms;
-        }
-        public void UpdateInfo()
-        {
-            weather.SetCity(id);
-            weather.SetMeasure(ms);
-            weather.LoadCurrent();
-
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
-                 tbThemperature.Text = weather.GetTemperature(weather.Current.Main.Temperature);
-                 tbCondition.Text = weather.Current.WeatherList[0].WeatherParameters;
-                 tbLocation.Text = weather.Current.Name;
+                 tbThemperature.Text = temp;
+                 tbCondition.Text = condi;
+                 tbLocation.Text = loc;
              }));
         }
-        public void UpdateLook()
+        public void UpdateLook(string icon)
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
                  BitmapImage bitmap = new BitmapImage();
                  bitmap.BeginInit();
-                 bitmap.UriSource = icons.GetIcon(weather.Current.WeatherList[0].Icon);
+                 bitmap.UriSource = icons.GetIcon(icon);
                  bitmap.EndInit();
                  imgIcon.Source = bitmap;
 
