@@ -3,30 +3,30 @@
                     x:Name="ThemeDictionary">
     <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#HelveticaNeueCyr</FontFamily>
 
-    <SolidColorBrush x:Key="WindowBackgroundColor" Color="Red"/>
-    <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="White"/>
-    <SolidColorBrush x:Key="WindowHeadTextColor" Color="#999999"/>
-    <SolidColorBrush x:Key="WindowBorderColor" Color="#007acc"/>
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#eeeef2"/>
+    <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="Black"/>
+    <SolidColorBrush x:Key="WindowHeadTextColor" Color="#525252"/>
+    <SolidColorBrush x:Key="WindowBorderColor" Color="#865fc5"/>
     <SolidColorBrush x:Key="WindowAlertBorderColor" Color="#e74c3c"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
-    <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
-    <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>
-    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="#3e3e42"/>
+    <SolidColorBrush x:Key="WindowTextColor" Color="Black"/>
+    <SolidColorBrush x:Key="WindowTextLinkColor" Color="#6ce26c"/>
+    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="White"/>
 
-    <SolidColorBrush x:Key="MetroButtonBorderColor" Color="White"/>
-    <SolidColorBrush x:Key="MetroButtonForegraund" Color="White"/>
-    <SolidColorBrush x:Key="MetroButtonBackground" Color="White"/>
-    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#007acc"/>
+    <SolidColorBrush x:Key="MetroButtonBorderColor" Color="Black"/>
+    <SolidColorBrush x:Key="MetroButtonForegraund" Color="Black"/>
+    <SolidColorBrush x:Key="MetroButtonBackground" Color="Black"/>
+    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#865fc5"/>
 
-    <SolidColorBrush x:Key="IconButtonBuckground" Color="White"/>
+    <SolidColorBrush x:Key="IconButtonBuckground" Color="Black"/>
 
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonVisible" UriSource="/WeatherWidget2;component/Icons/VisibleIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonHiden" UriSource="/WeatherWidget2;component/Icons/HiddenIcon.png"/>
     <BitmapImage x:Key="IconRemoveButton" UriSource="/WeatherWidget2;component/Icons/RemoveIcon.png"/>
     <BitmapImage x:Key="IconEditButton" UriSource="/WeatherWidget2;component/Icons/EditIcon.png"/>
-    <BitmapImage x:Key="IconWindowHead" UriSource="/WeatherWidget2;component/Icons/WindowHeadIcon.png"/>
-    <BitmapImage x:Key="IconCloseButton" UriSource="/WeatherWidget2;component/Icons/CloseButtonIcon.png"/>
-    <BitmapImage x:Key="IconMinimazingButton" UriSource="/WeatherWidget2;component/Icons/MinimazeButton.png"/>
+    <BitmapImage x:Key="IconWindowHead" UriSource="/WeatherWidget2;component/Icons/WindowHeadIconLight.png"/>
+    <BitmapImage x:Key="IconCloseButton" UriSource="/WeatherWidget2;component/Icons/CloseButtonIconLight.png"/>
+    <BitmapImage x:Key="IconMinimazingButton" UriSource="/WeatherWidget2;component/Icons/MinimazeButtonLight.png"/>
 
 </ResourceDictionary>

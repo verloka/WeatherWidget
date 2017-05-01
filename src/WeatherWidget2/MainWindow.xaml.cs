@@ -59,8 +59,7 @@ namespace WeatherWidget2
                         item.UpdateData();
             }
             else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
-                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, 
-                                  new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
         }
         public ImageSource GetIconFromRes(string name)
         {
@@ -173,6 +172,8 @@ namespace WeatherWidget2
             Load(false);
             //load weather data
             UpdateData();
+
+            new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
         }
         private void CbExitClick(object sender, RoutedEventArgs e)
         {

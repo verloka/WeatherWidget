@@ -247,6 +247,15 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\CloseButtonIconLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\MinimazeButtonLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\WindowHeadIconLight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
