@@ -90,7 +90,7 @@
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
                                 <Controls:IconButton x:Name="bntAddWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconAddButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Click="bntAddWidgetClick"/>
-                                <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False"/>
+                                <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False" Click="bntEditWidgetClick"/>
                                 <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconVisibleButtonVisible}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False" Click="bntVisibleWidgetClick"/>
                                 <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconRemoveButton}" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="125,0,0,0" IsEnabled="False" Click="bntRemoveWidgetClick"/>
                                 <TextBlock Grid.Row="1" Text="{Binding TabWIdgetsYourWidget, FallbackValue=widgets:}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>

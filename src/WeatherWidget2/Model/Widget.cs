@@ -31,8 +31,6 @@ namespace WeatherWidget2.Model
         Weather weather;
         Windows.WidgetCurrent current;
 
-        int updated = -2;
-
         public Widget()
         {
             guid = Guid.NewGuid().ToString();
@@ -54,6 +52,14 @@ namespace WeatherWidget2.Model
         public Widget(string value)
         {
             SetValue(value);
+
+            weather = new Weather();
+            weather.SetCity(CityID);
+            weather.SetMeasure(WidgetMeasure);
+        }
+        public Widget(Widget copy)
+        {
+            SetValue(copy.GetValue());
 
             weather = new Weather();
             weather.SetCity(CityID);
@@ -91,6 +97,7 @@ namespace WeatherWidget2.Model
 
                 current = new Windows.WidgetCurrent(Size, Theme);
                 UpdateData();
+                UpdateLook();
                 current.Top = Top;
                 current.Left = Left;
                 current.Show();
@@ -100,15 +107,19 @@ namespace WeatherWidget2.Model
                 //TODO
             }
         }
-        public void UpdateData()
+        public void UpdateData(bool updateCity = false, bool updateMeasure = false)
         {
             if (Type == 0)
             {
+                if (updateCity)
+                    weather.SetCity(CityID);
+                if (updateMeasure)
+                    weather.SetMeasure(WidgetMeasure);
+
                 weather.LoadCurrent();
-                updated++;
 
                 current.UpdateInfo(weather.GetTemperature(weather.Current.Main.Temperature),
-                                   $"{weather.Current.WeatherList[0].WeatherParameters}, up={updated}",
+                                   $"{weather.Current.WeatherList[0].WeatherParameters}",
                                    $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
                 current.UpdateLook(weather.Current.WeatherList[0].Icon);
             }
@@ -146,6 +157,10 @@ namespace WeatherWidget2.Model
             {
 
             }
+        }
+        public void NewGUID()
+        {
+            guid = Guid.NewGuid().ToString();
         }
 
         public string GetValue()

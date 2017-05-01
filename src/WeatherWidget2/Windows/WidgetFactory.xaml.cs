@@ -17,13 +17,23 @@ namespace WeatherWidget2.Windows
         List<Country> countrys;
         Country country;
         Widget widget;
+        Widget copy = null;
         bool delete = true;
+        bool EditMode = false;
 
         public WidgetFactory(MainWindow mw)
         {
             InitializeComponent();
             DataContext = App.Lang;
             this.mw = mw;
+        }
+        public WidgetFactory(MainWindow mw, Widget widget)
+        {
+            InitializeComponent();
+            DataContext = App.Lang;
+            this.mw = mw;
+            this.widget = new Widget(widget);
+            copy = widget;
         }
 
         void LoadCountrys()
@@ -43,6 +53,9 @@ namespace WeatherWidget2.Windows
         }
         private void btnCloseClick()
         {
+            if (EditMode)
+                copy.CreateWindow();
+
             Close();
         }
         private void btnMinimazeClick()
@@ -53,21 +66,34 @@ namespace WeatherWidget2.Windows
 
         private void mywindowLoaded(object sender, RoutedEventArgs e)
         {
-            btnAdd.Text = App.Lang.WidgetFactoryAddWidget;
+            cbTextColors.ItemsSource = ColorParser.ColorLibrary;
+
+            if (copy == null)
+            {
+                widget = new Widget();
+                cbTextColors.SelectedItem = ColorParser.ColorLibrary.Where(item => item.Name == "White").First();
+            }
+            else
+            {
+                copy.Destroy();
+                EditMode = true;
+
+                tbWidgetName.Text = widget.Name;
+                cbTextColors.SelectedItem = ColorParser.ColorLibrary.Where(item => item.Name == widget.TextColor).First();
+                cbMeasure.SelectedIndex = (int)widget.WidgetMeasure;
+                cbSize.SelectedIndex = (int)widget.Size;
+                cbIconTheme.SelectedIndex = (int)widget.Theme;
+            }
+
+            btnAdd.Text = EditMode ? App.Lang.WidgetFactoryEditWidget : App.Lang.WidgetFactoryAddWidget;
 
             cbMeasure.SelectionChanged += CbMeasureSelectionChanged;
-
             cbSize.SelectionChanged += CbSizeSelectionChanged;
-
             cbIconTheme.SelectionChanged += CbIconThemeSelectionChanged;
-
-            cbTextColors.ItemsSource = ColorParser.ColorLibrary;
-            cbTextColors.SelectedItem = ColorParser.ColorLibrary.Where(item => item.Name == "White").First();
             cbTextColors.SelectionChanged += CbTextColorsSelectionChanged;
 
             LoadCountrys();
 
-            widget = new Widget();
             widget.CreateWindow();
             widget.SetEditMode(true);
         }
@@ -103,7 +129,7 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.WidgetMeasure = (Measure)cbMeasure.SelectedIndex;
-            widget.UpdateData();
+            widget.UpdateData(updateMeasure: true);
         }
         private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -134,15 +160,24 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.CityID = (lvSearchedCitys.SelectedItem as City).ID;
-            widget.UpdateData();
+            widget.UpdateData(updateCity: true);
         }
         private void btnAddClick()
         {
             delete = false;
+
+            if (EditMode)
+            {
+                mw.wstorage.Remove(copy.guid);
+                widget.NewGUID();
+            }
+
             widget.SetEditMode(false);
             widget.CopyPosition();
             widget.Name = string.IsNullOrWhiteSpace(tbWidgetName.Text) ? "NaN" : tbWidgetName.Text;
             mw.wstorage.Add(widget);
+            if (!widget.Visible)
+                widget.Destroy();
             Close();
         }
     }

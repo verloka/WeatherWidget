@@ -87,6 +87,8 @@ namespace WeatherWidget2.Model
         public string WidgetFactoryWidgetName { get; set; } = "!name of widget";
         [DataMember(Name = "WidgetFactoryAddWidget")]
         public string WidgetFactoryAddWidget { get; set; } = "!add this";
+        [DataMember(Name = "WidgetFactoryEditWidget")]
+        public string WidgetFactoryEditWidget { get; set; } = "!edit this";
 
         [DataMember(Name = "AlertTitle")]
         public string AlertTitle { get; set; } = "!alert";

@@ -155,7 +155,7 @@ namespace WeatherWidget2
             cbExit.Click += CbExitClick;
 
             //set timer
-            timer = new System.Timers.Timer(GetInMilisec(10d));
+            timer = new System.Timers.Timer(GetInMilisec(15d));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 
@@ -232,8 +232,7 @@ namespace WeatherWidget2
                 wf.Show();
             }
             else
-                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background,
-                                          new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
         }
         private void lvWidgetsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -271,6 +270,19 @@ namespace WeatherWidget2
             App.Settings["widgets"] = wstorage;
             Load(true);
             UpdateItemSource();
+        }
+        private void bntEditWidgetClick()
+        {
+            if (lvWidgets.SelectedIndex == -1)
+                return;
+
+            if (GetConnection())
+            {
+                WidgetFactory wf = new WidgetFactory(this, (lvWidgets.SelectedItem as Model.Widget));
+                wf.Show();
+            }
+            else
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
         }
     }
 }
