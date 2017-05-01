@@ -99,6 +99,7 @@
                                     <ComboBoxItem Content="Standart"/>
                                     <ComboBoxItem Content="Thin"/>
                                     <ComboBoxItem Content="Square"/>
+                                    <ComboBoxItem Content="Ring"/>
                                 </ComboBox>
                             </Grid>
                             <Grid Margin="0,7,0,0">

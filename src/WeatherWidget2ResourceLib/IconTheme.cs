@@ -4,6 +4,7 @@
     {
         Standart,
         Thin,
-        Square
+        Square,
+        Ring
     }
 }

@@ -42,6 +42,9 @@ namespace WeatherWidget2ResourceLib
                 case IconTheme.Square:
                     this.theme = "Square";
                     break;
+                case IconTheme.Ring:
+                    this.theme = "Ring";
+                    break;
             }
         }
         public Uri GetIcon(string name)
