@@ -173,7 +173,7 @@ namespace WeatherWidget2
             //load weather data
             UpdateData();
 
-            new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+            //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
         }
         private void CbExitClick(object sender, RoutedEventArgs e)
         {
