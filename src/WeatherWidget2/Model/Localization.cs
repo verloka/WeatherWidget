@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace WeatherWidget2.Model
 {
@@ -27,6 +28,12 @@ namespace WeatherWidget2.Model
         public string TabHomeConnectionOK { get; set; } = "!ok";
         [DataMember(Name = "TabHomeConnectionNO")]
         public string TabHomeConnectionNO { get; set; } = "!fail";
+        [DataMember(Name = "TabHomeVersionOK")]
+        public string TabHomeVersionOK { get; set; } = "!your version is latest";
+        [DataMember(Name = "TabHomeVersionNO")]
+        public string TabHomeVersionNO { get; set; } = "!your version is'n latest, need to update";
+        [DataMember(Name = "TabHomeVersionBtnUpdate")]
+        public string TabHomeVersionBtnUpdate { get; set; } = "!update";
 
         [DataMember(Name = "TabOptionsExit")]
         public string TabOptionsExit { get; set; } = "!exit from app when closing window";
@@ -46,7 +53,9 @@ namespace WeatherWidget2.Model
         public string TabOptionsThemeLight { get; set; } = "!light";
 
         [DataMember(Name = "TabInfoDeveloped")]
-        public string TabInfoDeveloped { get; set; } = "!developed in 2017 by Verloka Vadim";
+        public string TabInfoDeveloped { get; set; } = "!developed in 2017 by";
+        [DataMember(Name = "TabInfoVersion")]
+        public string TabInfoVersion { get; set; } = "!version";
 
         [DataMember(Name = "TabWIdgetsYourWidget")]
         public string TabWIdgetsYourWidget { get; set; } = "!your widgets:";
@@ -96,5 +105,15 @@ namespace WeatherWidget2.Model
         public string AlertNoInternet { get; set; } = "!To update the information you need to connect to the Internet.";
         [DataMember(Name = "AlertNeedInternet")]
         public string AlertNeedInternet { get; set; } = "!For further action, you need an internet connection.";
+
+        [DataMember(Name = "UpdateWindowTitle")]
+        public string UpdateWindowTitle { get; set; } = "!update";
+        [DataMember(Name = "UpdateWindowMessage")]
+        public string UpdateWindowMessage { get; set; } = "!wait a minute...";
+
+        public static string Create()
+        {
+            return JsonConvert.SerializeObject(new Localization());
+        }
     }
 }

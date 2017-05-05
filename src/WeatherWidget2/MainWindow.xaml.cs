@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Windows;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Verloka.HelperLib.Update;
 using WeatherWidget2.Windows;
 
 namespace WeatherWidget2
@@ -18,6 +20,9 @@ namespace WeatherWidget2
 
         System.Timers.Timer timer;
         System.Windows.Forms.NotifyIcon notifyIcon;
+        UpdateClient updateClient;
+        UpdateItem updateContent;
+        const string UpdateUrl = "https://ogycode.github.io/WeatherWidget/update.json";
 
         public MainWindow()
         {
@@ -145,6 +150,11 @@ namespace WeatherWidget2
             cbAlertInternet.IsChecked = App.Settings.GetValue("ShowAlertInternetMsg", false);
             cbAlertInternet.Click += CbAlertInternetClick;
 
+            //lang
+            cbLang.ItemsSource = App.Languages;
+            cbLang.SelectedItem = App.Languages.Where(item => item == App.Settings.GetValue<string>("Language")).First();
+            cbLang.SelectionChanged += CbLangSelectionChanged;
+
             //theme
             cbTheme.SelectedIndex = App.Settings.GetValue<int>("Theme");
             cbTheme.SelectionChanged += CbThemeSelectionChanged;
@@ -165,6 +175,12 @@ namespace WeatherWidget2
             notifyIcon.DoubleClick += NotifyIconDoubleClick;
             notifyIcon.Visible = true;
 
+            //info tab
+            tbDevInfo.Text = $"{App.Lang.TabInfoDeveloped} Verloka";
+            var assembly = Assembly.GetExecutingAssembly();
+            var version = assembly.GetName().Version;
+            tbVersion.Text = $"{App.Lang.TabInfoVersion} {version.Major}.{version.Minor}.{version.MajorRevision}.{version.MinorRevision}";
+
             //app exit
             Application.Current.Exit += CurrentExit;
 
@@ -173,7 +189,26 @@ namespace WeatherWidget2
             //load weather data
             UpdateData();
 
+            //check update
+            updateClient = new UpdateClient(UpdateUrl);
+            updateClient.NewVersion += UpdateClientNewVersion;
+            btnUpdate.Text = App.Lang.TabHomeVersionBtnUpdate;
+            tbUpdateInfo.Text = App.Lang.TabHomeVersionOK;
+            if(App.Settings.GetValue<bool>("CheckUpdateInStart") == true)
+                updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.MajorRevision, version.MinorRevision));
+
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+        }
+        private void CbLangSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings["Language"] = cbLang.SelectedItem as string;
+            App.UpdateLang(App.Settings.GetValue("Language", "English"));
+        }
+        private void UpdateClientNewVersion(UpdateItem obj)
+        {
+            tbUpdateInfo.Text = App.Lang.TabHomeVersionNO;
+            btnUpdate.Visibility = Visibility.Visible;
+            updateContent = obj;
         }
         private void CbExitClick(object sender, RoutedEventArgs e)
         {
@@ -284,6 +319,16 @@ namespace WeatherWidget2
             }
             else
                 Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
+        }
+        private void btnUpdateClick()
+        {
+            if (updateContent == null)
+                return;
+
+            notifyIcon.Visible = false;
+            Hide();
+
+            new UpdateWindow(updateContent).Show();
         }
     }
 }

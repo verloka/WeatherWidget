@@ -73,12 +73,15 @@
                         </TabControl.Resources>
                         <TabItem Header="{Binding GeneralTabHome, FallbackValue=home}" Foreground="{DynamicResource WindowTextColor}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding ElementName=window, Path=Title, FallbackValue=weatherwidget}" FontSize="28" TextAlignment="Center" />
+                                <TextBlock Text="Weather Widget 2" FontSize="28" TextAlignment="Center" />
                                 <TextBlock Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{DynamicResource WindowTextLinkColor}" />
                                 <StackPanel MinWidth="250" Margin="0,25,0,0">
                                     <TextBlock x:Name="tbActiveWidgets" Text="active widgets - 0" Margin="0,5,0,0"/>
-                                    <TextBlock Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
                                     <TextBlock x:Name="tbConnectionStatus" Text="conection status - ok/fail" Margin="0,5,0,0"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="tbUpdateInfo" Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
+                                        <Controls:MetroButton x:Name="btnUpdate" BorderThickness="0" Margin="15,0,0,0" Visibility="Collapsed" HorizontalAlignment="Left" VerticalContentAlignment="Center" Click="btnUpdateClick" />
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </TabItem>
@@ -105,13 +108,13 @@
                                     <CheckBox x:Name="cbExit" Content="{Binding TabOptionsExit, FallbackValue=exit}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <CheckBox x:Name="cbAlertInternet" Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
                                     <CheckBox x:Name="cbUpdateChekc" Content="{Binding TabOptionsCheckUpdate, FallbackValue=check-update}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
-                                    <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0">
+                                    <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0" IsEnabled="False">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="150px"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding TabOptionsLanguage, FallbackValue=lang}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                        <ComboBox Grid.Column="1" Width="200" Height="22"/>
+                                        <ComboBox x:Name="cbLang" Grid.Column="1" Width="200" Height="22"/>
                                     </Grid>
                                     <Grid x:Name="gridSettingTheme" Margin="0,7,0,0">
                                         <Grid.ColumnDefinitions>
@@ -132,9 +135,11 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="170px"/>
                                     <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
                                 <Image Source="Icons/Moon.png" Width="150" Height="150" Grid.Row="0" Margin="182,10,181,10" />
-                                <TextBlock Text="{Binding TabInfoDeveloped, FallbackValue=developed}" Grid.Row="1" VerticalAlignment="Bottom" TextAlignment="Center" Margin="0,0,0,10"/>
+                                <TextBlock x:Name="tbVersion" Text="version" Grid.Row="1" VerticalAlignment="Center" TextAlignment="Center" FontSize="24"/>
+                                <TextBlock x:Name="tbDevInfo" Text="dev" Grid.Row="2" VerticalAlignment="Bottom" TextAlignment="Center" Margin="0,0,0,10"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

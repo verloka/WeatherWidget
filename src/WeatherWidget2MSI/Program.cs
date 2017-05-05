@@ -13,9 +13,10 @@ namespace WeatherWidget2MSI
             const string Company = "Verloka";
             const string Owner = "Verloka Vadim";
             const string Product = "Weather Widget 2";
-            const string RootPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Debug\";
-            const string ExeIconPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Debug\";
+            const string RootPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Release\";
+            const string ExeIconPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
             const string ExeNameThisMoment = "WeatherWidget2.exe";
+            const string LicencePathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
 
             ProductInfo pi = new ProductInfo();
             pi.Manufacturer = Company;
@@ -25,7 +26,7 @@ namespace WeatherWidget2MSI
             pi.UrlInfoAbout = "https://ogycode.github.io/WeatherWidget/";
             pi.UrlUpdateInfo = "https://ogycode.github.io/WeatherWidget/";
             pi.ProductIcon = ExeIconPathThisMoment;
-
+            
             Feature Conmplete = new Feature("Conmplete", "All files from project for Wiget can work", true);
 
             Project prj = new Project();
@@ -35,6 +36,7 @@ namespace WeatherWidget2MSI
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
             prj.Version = new Version(2, 0, 0, 0);
+            prj.LicenceFile = LicencePathThisMoment;
 
             Dir installDir = new Dir("%ProgramFiles%");
             Dir root = new Dir(Company);

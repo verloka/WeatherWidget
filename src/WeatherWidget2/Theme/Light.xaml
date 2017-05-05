@@ -8,6 +8,7 @@
     <SolidColorBrush x:Key="WindowHeadTextColor" Color="#525252"/>
     <SolidColorBrush x:Key="WindowBorderColor" Color="#865fc5"/>
     <SolidColorBrush x:Key="WindowAlertBorderColor" Color="#e74c3c"/>
+    <SolidColorBrush x:Key="WindowUpdateBorderColor" Color="#2ecc71"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
     <SolidColorBrush x:Key="WindowTextColor" Color="Black"/>
     <SolidColorBrush x:Key="WindowTextLinkColor" Color="#6ce26c"/>
