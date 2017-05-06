@@ -53,7 +53,7 @@
                 <ei:GoToStateAction x:Name="MouseLeftButtonUp" StateName="MouseEnter"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Grid x:Name="background" Background="{StaticResource IconButtonBuckground}" Opacity="0"/>
+        <Grid x:Name="background" Background="{DynamicResource IconButtonBuckground}" Opacity="0"/>
         <Image x:Name="icon" Source="{Binding Icon}" Margin="{Binding IconThickness}">
             <Image.Style>
                 <Style TargetType="Image">

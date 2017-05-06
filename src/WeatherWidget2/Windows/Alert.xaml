@@ -15,23 +15,23 @@
         SizeToContent="WidthAndHeight"
         MaxWidth="350">
     <Grid x:Name="gridRoot">
-        <Border Margin="3" BorderBrush="{StaticResource WindowAlertBorderColor}" BorderThickness="1">
-            <Grid x:Name="gridWindow" Background="{StaticResource WindowBackgroundColor}">
+        <Border Margin="3" BorderBrush="{DynamicResource WindowAlertBorderColor}" BorderThickness="1">
+            <Grid x:Name="gridWindow" Background="{DynamicResource WindowBackgroundColor}">
                 <Grid x:Name="gridHead" Height="30" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="{StaticResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
+                    <Image Grid.Column="0" Source="{DynamicResource IconWindowHead}" Margin="4" Stretch="UniformToFill"/>
                     <Grid Grid.Column="1" MouseDown="DragWindow">
-                        <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{StaticResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{StaticResource DefaultFontFamily}"/>
+                        <TextBlock Text="{Binding ElementName=mywindow, Path=Title, FallbackValue=window}" Foreground="{DynamicResource WindowHeadTextColor}" VerticalAlignment="Center" Margin="10,0" FontSize="16" FontFamily="{DynamicResource DefaultFontFamily}"/>
                     </Grid>
-                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{StaticResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
-                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{StaticResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
+                    <Controls:WindowHeaderButton x:Name="btnClose" Grid.Column="2" Icon="{DynamicResource IconCloseButton}" HorizontalAlignment="Right" Click="btnCloseClick" />
+                    <Controls:WindowHeaderButton x:Name="btnMinimaze" Grid.Column="2" Icon="{DynamicResource IconMinimazingButton}" HorizontalAlignment="Left" Click="btnMinimazeClick" />
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0">
-                    <TextBlock x:Name="tbMessage" Text="test" TextWrapping="Wrap" Foreground="{StaticResource WindowTextColor}" FontFamily="{StaticResource DefaultFontFamily}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" TextAlignment="Center"/>
+                    <TextBlock x:Name="tbMessage" Text="test" TextWrapping="Wrap" Foreground="{DynamicResource WindowTextColor}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" TextAlignment="Center"/>
                 </Grid>
             </Grid>
         </Border>

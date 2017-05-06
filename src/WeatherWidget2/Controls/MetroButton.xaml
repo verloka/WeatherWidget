@@ -11,7 +11,7 @@
              Background="{x:Null}"
              d:DesignHeight="75" 
              d:DesignWidth="200">
-    <Border x:Name="border" BorderThickness="1" BorderBrush="{StaticResource MetroButtonBorderColor}" MouseLeftButtonDown="gridMouseLeftButtonDown" MouseLeftButtonUp="gridMouseLeftButtonUp" MouseLeave="gridMouseLeave">
+    <Border x:Name="border" BorderThickness="1" BorderBrush="{DynamicResource MetroButtonBorderColor}" MouseLeftButtonDown="gridMouseLeftButtonDown" MouseLeftButtonUp="gridMouseLeftButtonUp" MouseLeave="gridMouseLeave">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
                 <ei:GoToStateAction x:Name="MouseOverTrigger" StateName="MouseOver"/>
@@ -55,10 +55,10 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid x:Name="gridRoot" Margin="0">
-            <Grid x:Name="gridBg1" Opacity="0" Background="{StaticResource MetroButtonBackground}"/>
-            <Grid x:Name="gridBg2" Opacity="0" Background="{StaticResource MetroButtonBackgroundTop}"/>
+            <Grid x:Name="gridBg1" Opacity="0" Background="{DynamicResource MetroButtonBackground}"/>
+            <Grid x:Name="gridBg2" Opacity="0" Background="{DynamicResource MetroButtonBackgroundTop}"/>
             <Grid x:Name="gridBody">
-                <TextBlock Text="{Binding Text, FallbackValue=text}" FontFamily="{Binding FontFamily, ElementName=controll}" Foreground="{StaticResource MetroButtonForegraund}" FontSize="{Binding FontSize, ElementName=controll}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{Binding Text, FallbackValue=text}" FontFamily="{Binding FontFamily, ElementName=controll}" Foreground="{DynamicResource MetroButtonForegraund}" FontSize="{Binding FontSize, ElementName=controll}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
             </Grid>
         </Grid>
     </Border>

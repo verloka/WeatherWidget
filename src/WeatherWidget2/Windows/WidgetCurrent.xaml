@@ -8,8 +8,8 @@
         AllowsTransparency="True" 
         WindowStyle="None" 
         Background="{x:Null}"
-        FontFamily="{StaticResource DefaultFontFamily}"
-        Foreground="{StaticResource WindowTextColor}" 
+        FontFamily="{DynamicResource DefaultFontFamily}"
+        Foreground="{DynamicResource WindowTextColor}" 
         Loaded="windowLoaded" ShowInTaskbar="False" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Grid x:Name="rootGrid">
         <Grid.RowDefinitions>

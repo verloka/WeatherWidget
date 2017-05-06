@@ -45,8 +45,8 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="gridBg" Background="{StaticResource WindowCloseButtonBackground}" Opacity="0"/>
-        <Grid x:Name="gridBg2" Background="{StaticResource WindowBorderColor}" Opacity="0"/>
+        <Grid x:Name="gridBg" Background="{DynamicResource WindowCloseButtonBackground}" Opacity="0"/>
+        <Grid x:Name="gridBg2" Background="{DynamicResource WindowBorderColor}" Opacity="0"/>
         <Image Source="{Binding Icon}" Margin="10"/>
     </Grid>
 </UserControl>
