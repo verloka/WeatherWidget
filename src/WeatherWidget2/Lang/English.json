@@ -46,5 +46,7 @@
   "AlertNoInternet": "To update the information you need to connect to the Internet.",
   "AlertNeedInternet": "For further action, you need an internet connection.",
   "UpdateWindowTitle": "Update",
-  "UpdateWindowMessage": "wait a minute..."
+  "UpdateWindowMessage": "wait a minute...",
+  "NotifyIconUpdate": "Update widgets",
+  "NotifyIconExit": "Exit"
 }

@@ -174,6 +174,9 @@ namespace WeatherWidget2
             notifyIcon.Icon = Properties.Resources.AppIcon;
             notifyIcon.DoubleClick += NotifyIconDoubleClick;
             notifyIcon.Visible = true;
+            notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            notifyIcon.ContextMenuStrip.Items.Add(App.Lang.NotifyIconUpdate).Click += UpdateWidgetClick;
+            notifyIcon.ContextMenuStrip.Items.Add(App.Lang.NotifyIconExit).Click += ExitAppClick;
 
             //info tab
             tbDevInfo.Text = $"{App.Lang.TabInfoDeveloped} Verloka";
@@ -198,6 +201,14 @@ namespace WeatherWidget2
                 updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.MajorRevision, version.MinorRevision));
 
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+        }
+        private void ExitAppClick(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown(0);
+        }
+        private void UpdateWidgetClick(object sender, EventArgs e)
+        {
+            UpdateData();
         }
         private void CbLangSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

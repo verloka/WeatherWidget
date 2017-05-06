@@ -111,6 +111,11 @@ namespace WeatherWidget2.Model
         [DataMember(Name = "UpdateWindowMessage")]
         public string UpdateWindowMessage { get; set; } = "!wait a minute...";
 
+        [DataMember(Name = "NotifyIconUpdate")]
+        public string NotifyIconUpdate { get; set; } = "!update widget";
+        [DataMember(Name = "NotifyIconExit")]
+        public string NotifyIconExit { get; set; } = "!exit";
+
         public static string Create()
         {
             return JsonConvert.SerializeObject(new Localization());

@@ -5,6 +5,7 @@
         Standart,
         Thin,
         Square,
-        Ring
+        Ring,
+        Pixel
     }
 }

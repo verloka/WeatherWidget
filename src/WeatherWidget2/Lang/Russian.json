@@ -46,5 +46,7 @@
   "AlertNoInternet": "Для обновления информации о погоде нужен интернет",
   "AlertNeedInternet": "Для дальнейших действий нужен интернет",
   "UpdateWindowTitle": "Обновления",
-  "UpdateWindowMessage": "подождите минутку..."
+  "UpdateWindowMessage": "подождите минутку...",
+  "NotifyIconUpdate": "Обновить виджеты",
+  "NotifyIconExit": "Выйти"
 }
