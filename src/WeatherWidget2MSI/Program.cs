@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Deployment.WindowsInstaller;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,16 +9,16 @@ namespace WeatherWidget2MSI
 {
     class Program
     {
+        public const string Company = "Verloka";
+        public const string Owner = "Verloka Vadim";
+        public const string Product = "Weather Widget 2";
+        public const string RootPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Release\";
+        public const string ExeIconPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
+        public const string ExeNameThisMoment = "WeatherWidget2.exe";
+        public const string LicencePathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
+
         static void Main(string[] args)
         {
-            const string Company = "Verloka";
-            const string Owner = "Verloka Vadim";
-            const string Product = "Weather Widget 2";
-            const string RootPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Release\";
-            const string ExeIconPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
-            const string ExeNameThisMoment = "WeatherWidget2.exe";
-            const string LicencePathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
-
             ProductInfo pi = new ProductInfo();
             pi.Manufacturer = Company;
             pi.Name = Product;
@@ -35,7 +36,7 @@ namespace WeatherWidget2MSI
             prj.UI = WUI.WixUI_InstallDir;
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
-            prj.Version = new Version(2, 0, 0, 0);
+            prj.Version = new Version(2, 0, 0, 1);
             prj.LicenceFile = LicencePathThisMoment;
 
             Dir installDir = new Dir("%ProgramFiles%");
@@ -49,6 +50,12 @@ namespace WeatherWidget2MSI
                         new ExeFileShortcut(Product, $"[INSTALLDIR]{ExeNameThisMoment}", ""));
 
             prj.Dirs = new Dir[] { installDir, shortcuts };
+
+            prj.MajorUpgradeStrategy = MajorUpgradeStrategy.Default;
+            prj.MajorUpgradeStrategy.RemoveExistingProductAfter = Step.InstallInitialize;
+            prj.MajorUpgradeStrategy.PreventDowngradingVersions.OnlyDetect = false;
+
+            prj.Actions = new WixSharp.Action[] { new ManagedAction("RunApp") };
 
             Compiler.BuildMsi(prj);
         }
@@ -81,6 +88,16 @@ namespace WeatherWidget2MSI
             foreach (string FileFilter in MultipleFilters)
                 alFiles.AddRange(Directory.GetFiles(SourceFolder, FileFilter, searchOption));
             return (string[])alFiles.ToArray(typeof(string));
+        }
+    }
+
+    public class CustonActions
+    {
+        [CustomAction]
+        public static ActionResult RunApp(Session session)
+        {
+            System.Diagnostics.Process.Start($"{session["INSTALLDIR"]}/{Program.ExeNameThisMoment}");
+            return ActionResult.Success;
         }
     }
 }

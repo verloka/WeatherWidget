@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -340,6 +341,10 @@ namespace WeatherWidget2
             Hide();
 
             new UpdateWindow(updateContent).Show();
+        }
+        private void tbWhatNewClick(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://ogycode.github.io/WeatherWidget/new.html");
         }
     }
 }
