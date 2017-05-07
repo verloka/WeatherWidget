@@ -114,3 +114,6 @@ src/Windows/.vs/
 
 *.msi
 *.wxs
+*.config
+*.exe
+*.dll

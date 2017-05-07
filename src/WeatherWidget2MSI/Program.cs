@@ -33,7 +33,7 @@ namespace WeatherWidget2MSI
             Project prj = new Project();
 
             prj.Name = "Weather Widget 2";
-            prj.UI = WUI.WixUI_InstallDir;
+            prj.UI = WUI.WixUI_ProgressOnly;
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
             prj.Version = new Version(2, 0, 0, 1);
@@ -55,8 +55,13 @@ namespace WeatherWidget2MSI
             prj.MajorUpgradeStrategy.RemoveExistingProductAfter = Step.InstallInitialize;
             prj.MajorUpgradeStrategy.PreventDowngradingVersions.OnlyDetect = false;
 
-            prj.Actions = new WixSharp.Action[] { new ManagedAction("RunApp") };
+            prj.Actions = new WixSharp.Action[]
+            {
+                //new InstalledFileAction(ExeNameThisMoment, "", Return.ignore, When.After, Step.InstallFinalize, Condition.NOT_Installed)
+                new ManagedAction(CustonActions.RunApp, Return.ignore, When.After, Step.PreviousActionOrInstallFinalize, Condition.NOT_Installed)
+            };
 
+            Compiler.PreserveTempFiles = true;
             Compiler.BuildMsi(prj);
         }
 
@@ -91,12 +96,12 @@ namespace WeatherWidget2MSI
         }
     }
 
-    public class CustonActions
+    public static class CustonActions
     {
         [CustomAction]
         public static ActionResult RunApp(Session session)
         {
-            System.Diagnostics.Process.Start($"{session["INSTALLDIR"]}/{Program.ExeNameThisMoment}");
+            System.Diagnostics.Process.Start($"{session["INSTALLDIR"]}\\{ Program.ExeNameThisMoment}");
             return ActionResult.Success;
         }
     }
