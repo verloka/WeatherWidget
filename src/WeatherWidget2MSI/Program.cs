@@ -61,7 +61,6 @@ namespace WeatherWidget2MSI
                 new ManagedAction(CustonActions.RunApp, Return.ignore, When.After, Step.PreviousActionOrInstallFinalize, Condition.NOT_Installed)
             };
 
-            Compiler.PreserveTempFiles = true;
             Compiler.BuildMsi(prj);
         }
 
