@@ -1,4 +1,4 @@
-![Logo](http://ipic.su/img/img7/fs/night.1494269443.jpg)
+[![Logo](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/logo.jpg)](https://ogycode.github.io/WeatherWidget/)*
 
 ## Weather Widget 2
 **Widget for demonstration on desktop the weather on your location**
