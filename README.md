@@ -1,4 +1,4 @@
-[![Logo](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/logo.jpg)](https://ogycode.github.io/WeatherWidget/)*
+[![Logo](https://raw.githubusercontent.com/ogycode/WeatherWidget/master/merch/logo.jpg)](https://ogycode.github.io/WeatherWidget/)
 
 ## Weather Widget 2
 **Widget for demonstration on desktop the weather on your location**
