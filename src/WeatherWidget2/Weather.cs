@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Net;
-using System.Windows;
 
 namespace WeatherWidget2
 {
@@ -47,7 +45,7 @@ namespace WeatherWidget2
         {
             using (var webClient = new WebClient())
             {
-                string URL = $"http://api.openweathermap.org/data/2.5/forecast?q={city}&units={measures}&appid={key}";
+                string URL = $"http://api.openweathermap.org/data/2.5/forecast?id={city}&units={measures}&appid={key}";
                 string resp = "";
 
                 try

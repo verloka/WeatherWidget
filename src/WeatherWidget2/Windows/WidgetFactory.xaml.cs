@@ -83,6 +83,7 @@ namespace WeatherWidget2.Windows
                 cbMeasure.SelectedIndex = (int)widget.WidgetMeasure;
                 cbSize.SelectedIndex = (int)widget.Size;
                 cbIconTheme.SelectedIndex = (int)widget.Theme;
+                cbWidgetType.SelectedIndex = widget.Type;
             }
 
             btnAdd.Text = EditMode ? App.Lang.WidgetFactoryEditWidget : App.Lang.WidgetFactoryAddWidget;
@@ -91,11 +92,22 @@ namespace WeatherWidget2.Windows
             cbSize.SelectionChanged += CbSizeSelectionChanged;
             cbIconTheme.SelectionChanged += CbIconThemeSelectionChanged;
             cbTextColors.SelectionChanged += CbTextColorsSelectionChanged;
+            cbWidgetType.SelectionChanged += CbWidgetTypeSelectionChanged;
 
             LoadCountrys();
 
             widget.CreateWindow();
             widget.SetEditMode(true);
+        }
+        private void CbWidgetTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbWidgetType.SelectedIndex == -1)
+                return;
+
+            widget.Type = cbWidgetType.SelectedIndex;
+
+            widget.UpdateLook();
+            widget.UpdateData();
         }
         private void CbTextColorsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

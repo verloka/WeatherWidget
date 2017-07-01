@@ -125,7 +125,12 @@ namespace WeatherWidget2.Model
             }
             else
             {
+                if (updateCity)
+                    weather.SetCity(CityID);
+                if (updateMeasure)
+                    weather.SetMeasure(WidgetMeasure);
 
+                weather.LoadForecast();
             }
         }
         public void Destroy()
