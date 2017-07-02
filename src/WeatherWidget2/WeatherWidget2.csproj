@@ -98,6 +98,7 @@
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\ColorParser.cs" />
     <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\IWidgetView.cs" />
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Model\WidgetStorage.cs" />
@@ -270,6 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\WindowHeadIconLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows\WidgetViews\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

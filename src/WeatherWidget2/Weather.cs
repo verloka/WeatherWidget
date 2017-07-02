@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Net;
+using WeatherWidget2.Model;
 
 namespace WeatherWidget2
 {
@@ -8,23 +10,19 @@ namespace WeatherWidget2
         string key = "b8c6dced55c3dbe25f25f8c827fa76b7";
         int city = 0;
         string measures = "metric"; //metric/imperial
-        public Model.Current Current;
-        public Model.Forecast Forecast;
+        public Current Current;
+        public Forecast Forecast;
 
         public Weather()
         {
             
         }
         
-        public void SetMeasure(Model.Measure ms)
-        {
-            measures = ms == 0 ? "metric" : "imperial";
-        }
         public void SetCity(int id)
         {
             city = id;
         }
-        public Model.Current LoadCurrent()
+        public Current LoadCurrent()
         {
             using (var webClient = new WebClient())
             {
@@ -41,7 +39,7 @@ namespace WeatherWidget2
                 return Current;
             }
         }
-        public Model.Forecast LoadForecast()
+        public Forecast LoadForecast()
         {
             using (var webClient = new WebClient())
             {
@@ -58,11 +56,14 @@ namespace WeatherWidget2
                 return Forecast;
             }
         }
-        public string GetTemperature(double temp)
+        public int GetTemperature(double temp, Measure meas)
         {
-            string s = (temp > 0) ? "+" : "";
-            string e = (measures == "metric") ? "°C" : "°F";
-            return $"{s} {temp} {e}";
+            return meas == Measure.Metric ? (int)Math.Round(temp) : (int)Math.Round((9 / 5) * temp + 32);
+        }
+        public string GetTemperatureString(double temp, Measure meas, bool sign = false)
+        {
+            string s = sign && temp > 0 ? "+ " : "";
+            return s + (meas == Measure.Metric ? ((int)Math.Round(temp)).ToString() + " °C" : ((int)Math.Round((9 / 5) * temp + 32)).ToString() + " °F");
         }
     }
 }

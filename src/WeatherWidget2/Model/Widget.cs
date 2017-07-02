@@ -47,7 +47,6 @@ namespace WeatherWidget2.Model
 
             weather = new Weather();
             weather.SetCity(CityID);
-            weather.SetMeasure(WidgetMeasure);
         }
         public Widget(string value)
         {
@@ -55,7 +54,6 @@ namespace WeatherWidget2.Model
 
             weather = new Weather();
             weather.SetCity(CityID);
-            weather.SetMeasure(WidgetMeasure);
         }
         public Widget(Widget copy)
         {
@@ -63,9 +61,12 @@ namespace WeatherWidget2.Model
 
             weather = new Weather();
             weather.SetCity(CityID);
-            weather.SetMeasure(WidgetMeasure);
         }
 
+        public void NewGUID()
+        {
+            guid = Guid.NewGuid().ToString();
+        }
         public void SetEditMode(bool mode)
         {
             if (Type == 0)
@@ -113,12 +114,10 @@ namespace WeatherWidget2.Model
             {
                 if (updateCity)
                     weather.SetCity(CityID);
-                if (updateMeasure)
-                    weather.SetMeasure(WidgetMeasure);
 
                 weather.LoadCurrent();
 
-                current.UpdateInfo(weather.GetTemperature(weather.Current.Main.Temperature),
+                current.UpdateInfo(weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure),
                                    $"{weather.Current.WeatherList[0].WeatherParameters}",
                                    $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
                 current.UpdateLook(weather.Current.WeatherList[0].Icon);
@@ -127,25 +126,8 @@ namespace WeatherWidget2.Model
             {
                 if (updateCity)
                     weather.SetCity(CityID);
-                if (updateMeasure)
-                    weather.SetMeasure(WidgetMeasure);
 
                 weather.LoadForecast();
-            }
-        }
-        public void Destroy()
-        {
-            if (Type == 0)
-            {
-                if (current != null)
-                {
-                    current.Close();
-                    current = null;
-                }
-            }
-            else
-            {
-
             }
         }
         public void UpdateLook()
@@ -163,9 +145,20 @@ namespace WeatherWidget2.Model
 
             }
         }
-        public void NewGUID()
+        public void Destroy()
         {
-            guid = Guid.NewGuid().ToString();
+            if (Type == 0)
+            {
+                if (current != null)
+                {
+                    current.Close();
+                    current = null;
+                }
+            }
+            else
+            {
+
+            }
         }
 
         public string GetValue()
