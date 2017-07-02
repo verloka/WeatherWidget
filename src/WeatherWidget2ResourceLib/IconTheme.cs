@@ -6,6 +6,7 @@
         Thin,
         Square,
         Ring,
-        Pixel
+        Pixel,
+        Murky
     }
 }

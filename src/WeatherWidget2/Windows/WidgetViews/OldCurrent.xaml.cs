@@ -1,44 +1,84 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WeatherWidget2.Model;
 using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
 
-namespace WeatherWidget2.Windows
+namespace WeatherWidget2.Windows.WidgetViews
 {
-    public partial class WidgetCurrent : Window
+    public partial class OldCurrent : Window, IWidgetView
     {
         public Icons icons;
 
-        public WidgetCurrent(IconSize iconSize, IconTheme iconTheme)
+        public int Type => 0;
+
+        public OldCurrent()
         {
             InitializeComponent();
-
-            icons = new Icons(iconSize, iconTheme);
+            icons = new Icons();
+        }
+        public OldCurrent(IconSize s, IconTheme t)
+        {
+            InitializeComponent();
+            icons = new Icons(s, t);
         }
 
-        public void UpdateInfo(string temp, string condi, string loc)
+        #region IWidgetView
+        public void DestroyView()
         {
+            Close();
+        }
+        public void Edit(bool mode)
+        {
+            gridHeader.Visibility = mode ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public int GetLeft()
+        {
+            return (int)Left;
+        }
+        public int GetTop()
+        {
+            return (int)Top;
+        }
+        public void SetLeft(int left)
+        {
+            Left = left;
+        }
+        public void SetTop(int top)
+        {
+            Top = top;
+        }
+        public void ShowWidget()
+        {
+            Show();
+        }
+        public void UpdateLook(List<object> param)
+        {
+            icons.UpdateData((IconSize)param[0], (IconTheme)param[1]);
+
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
-                 tbThemperature.Text = temp;
-                 tbCondition.Text = condi;
-                 tbLocation.Text = loc;
+                 SolidColorBrush scb = new SolidColorBrush(Model.ColorParser.FromName(param[2].ToString()));
+                 tbThemperature.Foreground = scb;
+                 tbCondition.Foreground = scb;
+                 tbLocation.Foreground = scb;
              }));
         }
-        public void UpdateLook(string icon)
+        public void UpdateInfo(List<object> param)
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
                  BitmapImage bitmap = new BitmapImage();
                  bitmap.BeginInit();
-                 bitmap.UriSource = icons.GetIcon(icon);
+                 bitmap.UriSource = icons.GetIcon(param[0].ToString());
                  bitmap.EndInit();
                  imgIcon.Source = bitmap;
 
@@ -70,23 +110,13 @@ namespace WeatherWidget2.Windows
                          tbLocation.FontSize = 24;
                          break;
                  }
+
+                 tbThemperature.Text = param[1].ToString();
+                 tbCondition.Text = param[2].ToString();
+                 tbLocation.Text = param[3].ToString();
              }));
         }
-        public void UpdateTextColor(string name)
-        {
-            Dispatcher.Invoke(DispatcherPriority.Background, new
-             Action(() =>
-             {
-                 SolidColorBrush scb = new SolidColorBrush(Model.ColorParser.FromName(name));
-                 tbThemperature.Foreground = scb;
-                 tbCondition.Foreground = scb;
-                 tbLocation.Foreground = scb;
-             }));
-        }
-        public void Edit(bool edit)
-        {
-            gridHeader.Visibility = edit ? Visibility.Visible : Visibility.Collapsed;
-        }
+        #endregion
 
         private void gridHeaderMouseDown(object sender, MouseButtonEventArgs e)
         {

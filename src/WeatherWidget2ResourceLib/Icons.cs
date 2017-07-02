@@ -7,6 +7,10 @@ namespace WeatherWidget2ResourceLib
         string size;
         string theme;
 
+        public Icons()
+        {
+            UpdateData(IconSize.Medium, IconTheme.Standart);
+        }
         public Icons(IconSize size, IconTheme theme)
         {
             UpdateData(size, theme);
@@ -47,6 +51,9 @@ namespace WeatherWidget2ResourceLib
                     break;
                 case IconTheme.Pixel:
                     this.theme = "Pixel";
+                    break;
+                case IconTheme.Murky:
+                    this.theme = "Murky";
                     break;
             }
         }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Verloka.HelperLib.Settings;
+using WeatherWidget2.Windows.WidgetViews;
 using WeatherWidget2ResourceLib;
 
 namespace WeatherWidget2.Model
@@ -21,15 +23,12 @@ namespace WeatherWidget2.Model
         {
             get
             {
-                if (Type == 0)
-                    return current != null;
-                else
-                    return false;
+                return view != null;
             }
         }
 
         Weather weather;
-        Windows.WidgetCurrent current;
+        IWidgetView view;
 
         public Widget()
         {
@@ -69,96 +68,62 @@ namespace WeatherWidget2.Model
         }
         public void SetEditMode(bool mode)
         {
-            if (Type == 0)
-            {
-                current.Edit(mode);
-            }
-            else
-            {
-
-            }
+            view.Edit(mode);
         }
         public void CopyPosition()
         {
-            if (Type == 0)
-            {
-                Left = (int)current.Left;
-                Top = (int)current.Top;
-            }
-            else
-            {
-
-            }
+            Left = view.GetLeft();
+            Top = view.GetTop();
         }
         public void CreateWindow()
         {
-            if (Type == 0)
-            {
-                weather.LoadCurrent();
+            weather.LoadCurrent();
 
-                current = new Windows.WidgetCurrent(Size, Theme);
-                UpdateData();
-                UpdateLook();
-                current.Top = Top;
-                current.Left = Left;
-                current.Show();
-            }
-            else
-            {
-                //TODO
-            }
+            view = new OldCurrent(Size, Theme);
+
+            UpdateData();
+            UpdateLook();
+            view.SetLeft(Left);
+            view.SetTop(Top);
+            view.ShowWidget();
         }
         public void UpdateData(bool updateCity = false, bool updateMeasure = false)
         {
-            if (Type == 0)
-            {
-                if (updateCity)
-                    weather.SetCity(CityID);
+            if (updateCity)
+                weather.SetCity(CityID);
 
+            if(view.Type == 0)
                 weather.LoadCurrent();
-
-                current.UpdateInfo(weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure),
-                                   $"{weather.Current.WeatherList[0].WeatherParameters}",
-                                   $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
-                current.UpdateLook(weather.Current.WeatherList[0].Icon);
-            }
             else
-            {
-                if (updateCity)
-                    weather.SetCity(CityID);
-
                 weather.LoadForecast();
-            }
+
+
+            view.UpdateInfo(new List<object>
+            {
+                weather.Current.WeatherList[0].Icon,
+                weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure),
+                $"{weather.Current.WeatherList[0].WeatherParameters}",
+                $"{weather.Current.Name}, {weather.Current.system.CountryCode}"
+            });
         }
         public void UpdateLook()
         {
-            if (Type == 0)
+            //TODO Generic full but use only a part
+            view.UpdateLook(new List<object>
             {
-                if (current == null)
-                    return;
+                Size,
+                Theme,
+                TextColor
+            });
 
-                current.icons.UpdateData(Size, Theme);
-                current.UpdateTextColor(TextColor);
-            }
-            else
-            {
 
-            }
         }
         public void Destroy()
         {
-            if (Type == 0)
-            {
-                if (current != null)
-                {
-                    current.Close();
-                    current = null;
-                }
-            }
-            else
-            {
+            if (view == null) return;
 
-            }
+            view.DestroyView();
+            view = null;
         }
 
         public string GetValue()

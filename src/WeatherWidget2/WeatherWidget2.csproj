@@ -108,12 +108,12 @@
     <Compile Include="Windows\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\WidgetCurrent.xaml.cs">
-      <DependentUpon>WidgetCurrent.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Win32.cs" />
     <Compile Include="Windows\WidgetFactory.xaml.cs">
       <DependentUpon>WidgetFactory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WidgetViews\OldCurrent.xaml.cs">
+      <DependentUpon>OldCurrent.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\IconButton.xaml">
       <SubType>Designer</SubType>
@@ -158,11 +158,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\WidgetCurrent.xaml">
+    <Page Include="Windows\WidgetFactory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\WidgetFactory.xaml">
+    <Page Include="Windows\WidgetViews\OldCurrent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,9 +272,7 @@
   <ItemGroup>
     <Resource Include="Icons\WindowHeadIconLight.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\WidgetViews\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

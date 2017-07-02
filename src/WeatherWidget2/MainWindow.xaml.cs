@@ -49,7 +49,7 @@ namespace WeatherWidget2
                         item.CreateWindow();
                     }
                     else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
-                        Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background,
+                        Dispatcher.Invoke(DispatcherPriority.Background,
                                           new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
                 }
 
@@ -183,7 +183,7 @@ namespace WeatherWidget2
             tbDevInfo.Text = $"{App.Lang.TabInfoDeveloped} Verloka";
             var assembly = Assembly.GetExecutingAssembly();
             var version = assembly.GetName().Version;
-            tbVersion.Text = $"{App.Lang.TabInfoVersion} {version.Major}.{version.Minor}.{version.MajorRevision}.{version.MinorRevision}";
+            tbVersion.Text = $"{App.Lang.TabInfoVersion} {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
 
             //app exit
             Application.Current.Exit += CurrentExit;
@@ -199,7 +199,7 @@ namespace WeatherWidget2
             btnUpdate.Text = App.Lang.TabHomeVersionBtnUpdate;
             tbUpdateInfo.Text = App.Lang.TabHomeVersionOK;
             if(App.Settings.GetValue<bool>("CheckUpdateInStart") == true)
-                updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.MajorRevision, version.MinorRevision));
+                updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.Build, version.Revision));
 
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
         }
