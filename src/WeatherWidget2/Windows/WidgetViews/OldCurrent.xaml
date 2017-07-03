@@ -10,7 +10,10 @@
         Background="{x:Null}"
         FontFamily="{DynamicResource DefaultFontFamily}"
         Foreground="{DynamicResource WindowTextColor}" 
-        Loaded="windowLoaded" ShowInTaskbar="False" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        Loaded="windowLoaded" 
+        ShowInTaskbar="False" 
+        ResizeMode="NoResize" 
+        SizeToContent="WidthAndHeight">
     <Grid x:Name="rootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="20px"/>

@@ -106,6 +106,10 @@ namespace WeatherWidget2.Windows
 
             widget.Type = cbWidgetType.SelectedIndex;
 
+            widget.Destroy();
+            widget.CreateWindow();
+            widget.SetEditMode(true);
+
             widget.UpdateLook();
             widget.UpdateData();
         }

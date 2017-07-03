@@ -77,9 +77,10 @@ namespace WeatherWidget2.Model
         }
         public void CreateWindow()
         {
-            weather.LoadCurrent();
-
-            view = new OldCurrent(Size, Theme);
+            if (Type == 0)
+                view = new OldCurrent(Size, Theme);
+            else
+                view = new OldForecast();
 
             UpdateData();
             UpdateLook();
@@ -89,34 +90,81 @@ namespace WeatherWidget2.Model
         }
         public void UpdateData(bool updateCity = false, bool updateMeasure = false)
         {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+
             if (updateCity)
                 weather.SetCity(CityID);
 
-            if(view.Type == 0)
+            if (view.Type == 0)
+            {
                 weather.LoadCurrent();
+                dic.Add("Icon", weather.Current.WeatherList[0].Icon);
+                dic.Add("Themperature", Weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure));
+                dic.Add("WeatherParam", $"{weather.Current.WeatherList[0].WeatherParameters}");
+                dic.Add("Location", $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
+            }
             else
+            {
                 weather.LoadForecast();
 
+                ForecastOneDay d1 = new ForecastOneDay();
+                d1.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day;
 
-            view.UpdateInfo(new List<object>
-            {
-                weather.Current.WeatherList[0].Icon,
-                weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure),
-                $"{weather.Current.WeatherList[0].WeatherParameters}",
-                $"{weather.Current.Name}, {weather.Current.system.CountryCode}"
-            });
+                ForecastOneDay d2 = new ForecastOneDay();
+                d2.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 1;
+
+                ForecastOneDay d3 = new ForecastOneDay();
+                d3.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
+
+                ForecastOneDay d4 = new ForecastOneDay();
+                d4.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
+
+                ForecastOneDay d5 = new ForecastOneDay();
+                d5.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
+                
+                foreach (var item in weather.Forecast.WeatherBodyList)
+                {
+                    if (d1.Day == item.GetDate().Day)
+                    {
+                        d1.Values.Add(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure));
+                        d1.Labels.Add(item.GetDate().ToShortTimeString().ToString());
+                    }
+                    else if (d2.Day == item.GetDate().Day)
+                    {
+                        d2.Values.Add(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure));
+                        d2.Labels.Add(item.GetDate().ToShortTimeString().ToString());
+                    }
+                    else if (d3.Day == item.GetDate().Day)
+                        ;
+                    else if (d4.Day == item.GetDate().Day)
+                        ;
+                    else if (d5.Day == item.GetDate().Day)
+                        ;
+                }
+
+                List<ForecastOneDay> days = new List<ForecastOneDay>() { d1, d2, d3, d4, d5 };
+                dic.Add("Days", days);
+            }
+
+            view.UpdateInfo(dic);
         }
         public void UpdateLook()
         {
-            //TODO Generic full but use only a part
-            view.UpdateLook(new List<object>
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            if (view.Type == 0)
             {
-                Size,
-                Theme,
-                TextColor
-            });
+                dic.Add("Size", Size);
+                dic.Add("Theme", Theme);
+                dic.Add("TextColor", TextColor);
+            }
+            else
+            {
 
+            }
 
+            view.UpdateLook(dic);
         }
         public void Destroy()
         {

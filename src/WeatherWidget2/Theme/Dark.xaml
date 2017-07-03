@@ -19,8 +19,11 @@
     <SolidColorBrush x:Key="MetroButtonForegraund" Color="White"/>
     <SolidColorBrush x:Key="MetroButtonBackground" Color="White"/>
     <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#007acc"/>
-    
+
     <SolidColorBrush x:Key="IconButtonBuckground" Color="White"/>
+
+    <SolidColorBrush x:Key="ChartStroke" Color="#FFEB3B"/>
+    <SolidColorBrush x:Key="ChartFill" Color="#FFFDE7"/>
 
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonVisible" UriSource="/WeatherWidget2;component/Icons/VisibleIcon.png"/>

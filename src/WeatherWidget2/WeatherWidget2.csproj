@@ -60,6 +60,12 @@
     <Reference Include="HelperLib, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Verloka.HelperLib.1.2.0.2\lib\net452\HelperLib.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Expression.Prototyping.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -98,6 +104,7 @@
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\ColorParser.cs" />
     <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\ForecastOneDay.cs" />
     <Compile Include="Model\IWidgetView.cs" />
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />
@@ -114,6 +121,9 @@
     </Compile>
     <Compile Include="Windows\WidgetViews\OldCurrent.xaml.cs">
       <DependentUpon>OldCurrent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WidgetViews\OldForecast.xaml.cs">
+      <DependentUpon>OldForecast.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\IconButton.xaml">
       <SubType>Designer</SubType>
@@ -163,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WidgetViews\OldCurrent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WidgetViews\OldForecast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

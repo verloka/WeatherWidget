@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace WeatherWidget2.Model
@@ -19,10 +20,18 @@ namespace WeatherWidget2.Model
         [DataMember(Name = "sys")]
         public System system { get; set; }
         [DataMember(Name = "dt_txt")]
-        public string Date2 { get; set; }
+        public string DateString { get; set; }
         [DataMember(Name = "rain")]
         public Rain Rain { get; set; }
         [DataMember(Name = "snow")]
         public Snow Snow { get; set; }
+
+        public DateTime GetDate() => UnixTimeStampToDateTime(Date);
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
     }
 }

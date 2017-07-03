@@ -58,27 +58,27 @@ namespace WeatherWidget2.Windows.WidgetViews
         {
             Show();
         }
-        public void UpdateLook(List<object> param)
+        public void UpdateLook(Dictionary<string, object> param)
         {
-            icons.UpdateData((IconSize)param[0], (IconTheme)param[1]);
+            icons.UpdateData((IconSize)param["Size"], (IconTheme)param["Theme"]);
 
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
-                 SolidColorBrush scb = new SolidColorBrush(Model.ColorParser.FromName(param[2].ToString()));
+                 SolidColorBrush scb = new SolidColorBrush(ColorParser.FromName(param["TextColor"].ToString()));
                  tbThemperature.Foreground = scb;
                  tbCondition.Foreground = scb;
                  tbLocation.Foreground = scb;
              }));
         }
-        public void UpdateInfo(List<object> param)
+        public void UpdateInfo(Dictionary<string, object> param)
         {
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
                  BitmapImage bitmap = new BitmapImage();
                  bitmap.BeginInit();
-                 bitmap.UriSource = icons.GetIcon(param[0].ToString());
+                 bitmap.UriSource = icons.GetIcon(param["Icon"].ToString());
                  bitmap.EndInit();
                  imgIcon.Source = bitmap;
 
@@ -111,9 +111,9 @@ namespace WeatherWidget2.Windows.WidgetViews
                          break;
                  }
 
-                 tbThemperature.Text = param[1].ToString();
-                 tbCondition.Text = param[2].ToString();
-                 tbLocation.Text = param[3].ToString();
+                 tbThemperature.Text = param["Themperature"].ToString();
+                 tbCondition.Text = param["WeatherParam"].ToString();
+                 tbLocation.Text = param["Location"].ToString();
              }));
         }
         #endregion

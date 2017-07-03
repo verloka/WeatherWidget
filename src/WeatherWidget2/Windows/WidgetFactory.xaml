@@ -55,7 +55,7 @@
                                 <TextBlock Text="{Binding WidgetFactoryType, FallbackValue=type}" Foreground="{DynamicResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
                                 <ComboBox x:Name="cbWidgetType" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeDaily, FallbackValue=daily}"/>
-                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeForecast, FallbackValue=forecast}" IsEnabled="False"/>
+                                    <ComboBoxItem Content="{Binding WidgetFactoryTypeForecast, FallbackValue=forecast}"/>
                                 </ComboBox>
                             </Grid>
                             <Grid Margin="0,7,0,0">

@@ -12,8 +12,8 @@ namespace WeatherWidget2.Model
         void SetLeft(int left);
         void SetTop(int top);
         void DestroyView();
-        void UpdateInfo(List<object> param);
-        void UpdateLook(List<object> param);
+        void UpdateInfo(Dictionary<string, object> param);
+        void UpdateLook(Dictionary<string, object> param);
         void ShowWidget();
     }
 }
