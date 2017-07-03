@@ -27,45 +27,43 @@
         <Border x:Name="windowBorder" Grid.Row="1" BorderThickness="1">
             <Border x:Name="widgetBorder" Margin="10" Background="#00979090" BorderBrush="#00C36262" BorderThickness="3">
                 <StackPanel>
-                    <StackPanel x:Name="RootTop" Orientation="Horizontal">
-                        <StackPanel x:Name="RootTopLeft" Orientation="Horizontal">
-                            <Image Source="/WeatherWidget2;component/Icons/Moon.png" Width="64" Height="64"/>
-                            <TextBlock Text="31 C" FontSize="48" VerticalAlignment="Center" Margin="15,0"/>
+                    <StackPanel x:Name="RootTop" Orientation="Horizontal" Margin="25,0,25,15">
+                        <StackPanel x:Name="RootTopLeft">
+                            <StackPanel Orientation="Horizontal">
+                                <Image x:Name="imgIcon" Source="/WeatherWidget2;component/Icons/Moon.png" Width="64" Height="64"/>
+                                <TextBlock x:Name="tbThemperature" Text="31 C" FontSize="48" VerticalAlignment="Center" Margin="15,0"/>
+                            </StackPanel>
+                            <TextBlock x:Name="tbCondy" Text="condytion" FontSize="20" VerticalAlignment="Center" Margin="5,15,5,0" Foreground="{Binding Foreground, ElementName=tbThemperature}" TextAlignment="Center"/>
                         </StackPanel>
-                        <StackPanel x:Name="RootTopRight">
-                            <TextBlock Text="Pressure 715 mmrt" FontSize="24" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                            <TextBlock Text="Humidity 60%" FontSize="24" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                            <TextBlock Text="Wind 54 km/h, W" FontSize="24" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                        <StackPanel x:Name="RootTopRight" VerticalAlignment="Center">
+                            <TextBlock x:Name="tbPress" Text="Pressure 715 mmrt" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
+                            <TextBlock x:Name="tbHumi" Text="Humidity 60%" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
+                            <TextBlock Text="Wind 54 km/h, W" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
                         </StackPanel>
                     </StackPanel>
-                    <lvc:CartesianChart x:Name="chart">
+                    <lvc:CartesianChart x:Name="chart" Height="150" FontSize="14" LegendLocation="Bottom" FontFamily="{DynamicResource DefaultFontFamily}" Hoverable="False" DataTooltip="{x:Null}">
+                        <lvc:CartesianChart.ChartLegend>
+                            <lvc:DefaultLegend x:Name="ccLegend" FontSize="18" BulletSize="0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
+                        </lvc:CartesianChart.ChartLegend>
                         <lvc:CartesianChart.Series>
-                            <lvc:LineSeries x:Name="chartLine" StrokeThickness="2" Stroke="{DynamicResource ChartStroke}" Fill="{DynamicResource ChartFill}" LineSmoothness="1" PointGeometrySize="10"/>
+                            <lvc:LineSeries x:Name="chartLine" StrokeThickness="2" FontFamily="{DynamicResource DefaultFontFamily}" Stroke="{DynamicResource ChartStroke}" Fill="{DynamicResource ChartFill}" LineSmoothness="1" PointGeometrySize="10" FontSize="12"/>
                         </lvc:CartesianChart.Series>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis x:Name="chartXAxis" IsMerged="False">
+                            <lvc:Axis x:Name="chartXAxis" FontSize="12" FontFamily="{DynamicResource DefaultFontFamily}" ShowLabels="true">
                                 <lvc:Axis.Separator>
-                                    <lvc:Separator StrokeThickness="1" StrokeDashArray="8" Step="1">
-                                        <lvc:Separator.Stroke>
-                                            <SolidColorBrush Color="Transparent" />
-                                        </lvc:Separator.Stroke>
-                                    </lvc:Separator>
+                                    <lvc:Separator Step="1" Stroke="Transparent"/>
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis IsMerged="True" ShowLabels="False">
+                            <lvc:Axis ShowLabels="False">
                                 <lvc:Axis.Separator>
-                                    <lvc:Separator StrokeThickness="1" StrokeDashArray="2">
-                                        <lvc:Separator.Stroke>
-                                            <SolidColorBrush Color="Transparent" />
-                                        </lvc:Separator.Stroke>
-                                    </lvc:Separator>
+                                    <lvc:Separator Stroke="Transparent"/>
                                 </lvc:Axis.Separator>
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
-                    <Grid x:Name="RootBottom">
+                    <Grid x:Name="RootBottom" Margin="0,15,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -73,11 +71,11 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="0"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="1"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="2"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="3"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="4"/>
+                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="0" MouseLeftButtonUp="img1Click"/>
+                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="1" MouseLeftButtonUp="img2Click"/>
+                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="2" MouseLeftButtonUp="img3Click"/>
+                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="3" MouseLeftButtonUp="img4Click"/>
+                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="4" MouseLeftButtonUp="img5Click"/>
                     </Grid>
                 </StackPanel>
             </Border>

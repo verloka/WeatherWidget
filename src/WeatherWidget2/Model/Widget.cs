@@ -80,7 +80,7 @@ namespace WeatherWidget2.Model
             if (Type == 0)
                 view = new OldCurrent(Size, Theme);
             else
-                view = new OldForecast();
+                view = new OldForecast(Theme);
 
             UpdateData();
             UpdateLook();
@@ -112,39 +112,75 @@ namespace WeatherWidget2.Model
                 d1.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day;
 
                 ForecastOneDay d2 = new ForecastOneDay();
-                d2.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 1;
+                d2.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(1).Day;
 
                 ForecastOneDay d3 = new ForecastOneDay();
-                d3.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
+                d3.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(2).Day;
 
                 ForecastOneDay d4 = new ForecastOneDay();
-                d4.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
+                d4.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(3).Day;
 
                 ForecastOneDay d5 = new ForecastOneDay();
-                d5.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day + 2;
-                
+                d5.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(4).Day;
+
                 foreach (var item in weather.Forecast.WeatherBodyList)
                 {
                     if (d1.Day == item.GetDate().Day)
                     {
-                        d1.Values.Add(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure));
-                        d1.Labels.Add(item.GetDate().ToShortTimeString().ToString());
+                        d1.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                          item.GetDate().ToShortTimeString().ToString(),
+                                                          item.WeatherList[0].Icon,
+                                                          item.Main.Pressure,
+                                                          item.Main.Humidity,
+                                                          item.WeatherList[0].WeatherParameters);
                     }
                     else if (d2.Day == item.GetDate().Day)
                     {
-                        d2.Values.Add(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure));
-                        d2.Labels.Add(item.GetDate().ToShortTimeString().ToString());
+                        d2.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                          item.GetDate().ToShortTimeString().ToString(),
+                                                          item.WeatherList[0].Icon,
+                                                          item.Main.Pressure,
+                                                          item.Main.Humidity,
+                                                          item.WeatherList[0].WeatherParameters);
                     }
                     else if (d3.Day == item.GetDate().Day)
-                        ;
+                    {
+                        d3.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                          item.GetDate().ToShortTimeString().ToString(),
+                                                          item.WeatherList[0].Icon,
+                                                          item.Main.Pressure,
+                                                          item.Main.Humidity,
+                                                          item.WeatherList[0].WeatherParameters);
+                    }
                     else if (d4.Day == item.GetDate().Day)
-                        ;
+                    {
+                        d4.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                          item.GetDate().ToShortTimeString().ToString(),
+                                                          item.WeatherList[0].Icon,
+                                                          item.Main.Pressure,
+                                                          item.Main.Humidity,
+                                                          item.WeatherList[0].WeatherParameters);
+                    }
                     else if (d5.Day == item.GetDate().Day)
-                        ;
+                    {
+                        d5.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                          item.GetDate().ToShortTimeString().ToString(),
+                                                          item.WeatherList[0].Icon,
+                                                          item.Main.Pressure,
+                                                          item.Main.Humidity,
+                                                          item.WeatherList[0].WeatherParameters);
+                    }
+
+
                 }
 
                 List<ForecastOneDay> days = new List<ForecastOneDay>() { d1, d2, d3, d4, d5 };
+
+                string tempSign = WidgetMeasure == Measure.Metric ? "°C" : "°F";
+
+                dic.Add("Sign", tempSign);
                 dic.Add("Days", days);
+                dic.Add("Location", $"{weather.Forecast.City.Name}, {weather.Forecast.City.Country}");
             }
 
             view.UpdateInfo(dic);
@@ -153,16 +189,11 @@ namespace WeatherWidget2.Model
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
 
-            if (view.Type == 0)
-            {
-                dic.Add("Size", Size);
-                dic.Add("Theme", Theme);
-                dic.Add("TextColor", TextColor);
-            }
-            else
-            {
+            dic.Add("Theme", Theme);
+            dic.Add("TextColor", TextColor);
 
-            }
+            if (view.Type == 0)
+                dic.Add("Size", Size);
 
             view.UpdateLook(dic);
         }

@@ -1,44 +1,76 @@
 ﻿using LiveCharts;
-using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 using WeatherWidget2.Model;
+using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
 
 namespace WeatherWidget2.Windows.WidgetViews
 {
     public partial class OldForecast : Window, IWidgetView
     {
+        public Icons icons;
         ChartValues<int> Values;
         List<ForecastOneDay> Days;
+        string sign = "";
         public string[] Labels { get; set; }
 
         public OldForecast()
         {
             InitializeComponent();
             DataContext = this;
+            icons = new Icons(IconSize.Medium, IconTheme.Standart);
+        }
+        public OldForecast(IconTheme t)
+        {
+            InitializeComponent();
+            DataContext = this;
+            icons = new Icons(IconSize.Medium, t);
         }
 
+        public void SetupDay(int day = 0)
+        {
+            if (chartLine.Values == null)
+                chartLine.Values = new ChartValues<int>();
+
+            if (chartXAxis.Labels == null)
+                chartXAxis.Labels = new List<string>();
+
+            chartLine.Values.Clear();
+            chartXAxis.Labels.Clear();
+
+            foreach (var item in Days[day].Values)
+                chartLine.Values.Add(item);
+
+            foreach (var item in Days[day].Labels)
+                chartXAxis.Labels.Add(item);
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.EndInit();
+            imgIcon.Source = bitmap;
+
+            tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
+            tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
+            tbCondy.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
+
+            tbThemperature.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+        }
+
+        #region IWidgetView
         public int Type => 1;
 
         public void DestroyView()
         {
             Close();
         }
-
-        #region IWidgetView
         public void Edit(bool mode)
         {
             gridHeader.Visibility = mode ? Visibility.Visible : Visibility.Collapsed;
@@ -65,21 +97,26 @@ namespace WeatherWidget2.Windows.WidgetViews
         }
         public void UpdateInfo(Dictionary<string, object> param)
         {
-            Values = new ChartValues<int>();
-            
             Days = (List<ForecastOneDay>)param["Days"];
+            chartLine.Title = param["Location"].ToString();
+            sign = param["Sign"].ToString();
 
-            Labels = Days[0].Labels.ToArray();
-
-            foreach (var item in Days[0].Values)
-                Values.Add(item);
-
-            chartLine.Values = Values;
-            chartXAxis.Labels = Labels;
+            SetupDay();
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
+            icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
             chartLine.DataLabels = true;
+
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 SolidColorBrush scb = new SolidColorBrush(ColorParser.FromName(param["TextColor"].ToString()));
+                 tbThemperature.Foreground = scb;
+                 ccLegend.Foreground = scb;
+                 chartXAxis.Foreground = scb;
+                 chartLine.Foreground = scb;
+             }));
         }
         #endregion
 
@@ -103,6 +140,27 @@ namespace WeatherWidget2.Windows.WidgetViews
                 SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
             }
             catch { }
+        }
+
+        private void img1Click(object sender, MouseButtonEventArgs e)
+        {
+            SetupDay(0);
+        }
+        private void img2Click(object sender, MouseButtonEventArgs e)
+        {
+            SetupDay(1);
+        }
+        private void img3Click(object sender, MouseButtonEventArgs e)
+        {
+            SetupDay(2);
+        }
+        private void img4Click(object sender, MouseButtonEventArgs e)
+        {
+            SetupDay(3);
+        }
+        private void img5Click(object sender, MouseButtonEventArgs e)
+        {
+            SetupDay(4);
         }
     }
 }

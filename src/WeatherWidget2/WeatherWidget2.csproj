@@ -105,6 +105,7 @@
     <Compile Include="Model\ColorParser.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\ForecastOneDay.cs" />
+    <Compile Include="Model\ForecastOneDayExtension.cs" />
     <Compile Include="Model\IWidgetView.cs" />
     <Compile Include="Model\Measure.cs" />
     <Compile Include="Model\Point.cs" />
