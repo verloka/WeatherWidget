@@ -51,6 +51,13 @@ namespace WeatherWidget2.Windows.WidgetViews
             foreach (var item in Days[day].Labels)
                 chartXAxis.Labels.Add(item);
 
+            if(day == 0 && Days[0].Values.Count != Days[1].Values.Count)
+                for (int i = 0; i < Days[1].Values.Count - Days[0].Values.Count; i++)
+                {
+                    chartLine.Values.Add(Days[1].Values[i]);
+                    chartXAxis.Labels.Add(Days[1].Labels[i]);
+                }
+
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
