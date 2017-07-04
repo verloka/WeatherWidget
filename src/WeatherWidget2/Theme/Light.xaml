@@ -24,6 +24,9 @@
     <SolidColorBrush x:Key="ChartStroke" Color="#FFEB3B"/>
     <SolidColorBrush x:Key="ChartFill" Color="#FFFDE7"/>
 
+    <SolidColorBrush x:Key="ForecastButtonBorderColor" Color="#FF707070"/>
+    <SolidColorBrush x:Key="ForecastButtonFillColor" Color="#19000000"/>
+
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonVisible" UriSource="/WeatherWidget2;component/Icons/VisibleIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonHiden" UriSource="/WeatherWidget2;component/Icons/HiddenIcon.png"/>

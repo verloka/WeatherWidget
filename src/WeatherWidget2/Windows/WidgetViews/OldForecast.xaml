@@ -6,6 +6,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Daily" 
+        xmlns:contl="clr-namespace:WeatherWidget2.Controls"
         AllowsTransparency="True" 
         WindowStyle="None" 
         Background="{x:Null}"
@@ -71,11 +72,11 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="0" MouseLeftButtonUp="img1Click"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="1" MouseLeftButtonUp="img2Click"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="2" MouseLeftButtonUp="img3Click"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIcon.png" Grid.Column="3" MouseLeftButtonUp="img4Click"/>
-                        <Image Height="48" Source="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" Grid.Column="4" MouseLeftButtonUp="img5Click"/>
+                        <contl:ForecastDayButton x:Name="day1" Icon="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" FontFamily="{DynamicResource DefaultFontFamily}" Foreground="{Binding Foreground, ElementName=tbThemperature}" Grid.Column="0" IconWidth="32" IconHeight="32" TextDay="пн" TextThemperature="31" Margin="2" BorderColor="{DynamicResource ForecastButtonBorderColor}" BorderFill="{DynamicResource ForecastButtonFillColor}" FontSize="16" Click="day1Click"/>
+                        <contl:ForecastDayButton x:Name="day2" Icon="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" FontFamily="{DynamicResource DefaultFontFamily}" Foreground="{Binding Foreground, ElementName=tbThemperature}" Grid.Column="1" IconWidth="32" IconHeight="32" TextDay="пн" TextThemperature="31" Margin="2" BorderColor="{DynamicResource ForecastButtonBorderColor}" BorderFill="{DynamicResource ForecastButtonFillColor}" FontSize="16" Click="day2Click"/>
+                        <contl:ForecastDayButton x:Name="day3" Icon="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" FontFamily="{DynamicResource DefaultFontFamily}" Foreground="{Binding Foreground, ElementName=tbThemperature}" Grid.Column="2" IconWidth="32" IconHeight="32" TextDay="пн" TextThemperature="31" Margin="2" BorderColor="{DynamicResource ForecastButtonBorderColor}" BorderFill="{DynamicResource ForecastButtonFillColor}" FontSize="16" Click="day3Click"/>
+                        <contl:ForecastDayButton x:Name="day4" Icon="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" FontFamily="{DynamicResource DefaultFontFamily}" Foreground="{Binding Foreground, ElementName=tbThemperature}" Grid.Column="3" IconWidth="32" IconHeight="32" TextDay="пн" TextThemperature="31" Margin="2" BorderColor="{DynamicResource ForecastButtonBorderColor}" BorderFill="{DynamicResource ForecastButtonFillColor}" FontSize="16" Click="day4Click"/>
+                        <contl:ForecastDayButton x:Name="day5" Icon="/WeatherWidget2;component/Icons/WindowHeadIconLight.png" FontFamily="{DynamicResource DefaultFontFamily}" Foreground="{Binding Foreground, ElementName=tbThemperature}" Grid.Column="4" IconWidth="32" IconHeight="32" TextDay="пн" TextThemperature="31" Margin="2" BorderColor="{DynamicResource ForecastButtonBorderColor}" BorderFill="{DynamicResource ForecastButtonFillColor}" FontSize="16" Click="day5Click"/>
                     </Grid>
                 </StackPanel>
             </Border>

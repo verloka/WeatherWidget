@@ -125,7 +125,8 @@ namespace WeatherWidget2.Model
                                                               item.Main.Pressure,
                                                               item.Main.Humidity,
                                                               item.WeatherList[0].WeatherParameters,
-                                                              item.Wind);
+                                                              item.Wind,
+                                                              item.GetDate().DayOfWeek.ToString());
 
 
                 foreach (var item in forecastDic)

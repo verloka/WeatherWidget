@@ -36,7 +36,7 @@ namespace WeatherWidget2MSI
             prj.UI = WUI.WixUI_ProgressOnly;
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
-            prj.Version = new Version(2, 0, 1, 3);
+            prj.Version = new Version(2, 1, 0, 0);
             prj.LicenceFile = LicencePathThisMoment;
 
             Dir installDir = new Dir("%ProgramFiles%");

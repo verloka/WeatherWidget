@@ -4,6 +4,7 @@ namespace WeatherWidget2.Model
 {
     public class ForecastOneDay
     {
+        public string DayString { get; set; }
         public int Day { get; set; }
         public List<string> Labels { get; set; }
         public List<string> Condi { get; set; }
@@ -23,6 +24,7 @@ namespace WeatherWidget2.Model
             Wind = new List<Wind>();
             Condi = new List<string>();
             Day = -1;
+            DayString = "NaN";
         }
 
         public string GetDayIcon()

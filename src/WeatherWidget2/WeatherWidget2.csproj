@@ -95,6 +95,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ForecastDayButton.xaml.cs">
+      <DependentUpon>ForecastDayButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IconButton.xaml.cs">
       <DependentUpon>IconButton.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
     <Compile Include="Windows\WidgetViews\OldForecast.xaml.cs">
       <DependentUpon>OldForecast.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ForecastDayButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\IconButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

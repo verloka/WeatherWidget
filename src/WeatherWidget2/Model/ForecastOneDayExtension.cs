@@ -2,7 +2,7 @@
 {
     public static class ForecastOneDayExtension
     {
-        public static void SetData(this ForecastOneDay f, int vaule, string label, string icon, double press, double humi, string condi, Wind wind)
+        public static void SetData(this ForecastOneDay f, int vaule, string label, string icon, double press, double humi, string condi, Wind wind, string day)
         {
             f.Values.Add(vaule);
             f.Labels.Add(label);
@@ -11,6 +11,7 @@
             f.Humi.Add(humi);
             f.Condi.Add(condi);
             f.Wind.Add(wind);
+            f.DayString = day;
         }
     }
 }
