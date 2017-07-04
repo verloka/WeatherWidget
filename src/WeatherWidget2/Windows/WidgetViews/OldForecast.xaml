@@ -38,7 +38,7 @@
                         <StackPanel x:Name="RootTopRight" VerticalAlignment="Center">
                             <TextBlock x:Name="tbPress" Text="Pressure 715 mmrt" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
                             <TextBlock x:Name="tbHumi" Text="Humidity 60%" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
-                            <TextBlock Text="Wind 54 km/h, W" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
+                            <TextBlock x:Name="tbWind" Text="Wind 54 km/h, W" FontSize="20" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="{Binding Foreground, ElementName=tbThemperature}"/>
                         </StackPanel>
                     </StackPanel>
                     <lvc:CartesianChart x:Name="chart" Height="150" FontSize="14" LegendLocation="Bottom" FontFamily="{DynamicResource DefaultFontFamily}" Hoverable="False" DataTooltip="{x:Null}">

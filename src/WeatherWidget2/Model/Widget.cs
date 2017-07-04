@@ -108,77 +108,34 @@ namespace WeatherWidget2.Model
             {
                 weather.LoadForecast();
 
-                ForecastOneDay d1 = new ForecastOneDay();
-                d1.Day = weather.Forecast.WeatherBodyList[0].GetDate().Day;
+                Dictionary<int, ForecastOneDay> forecastDic = new Dictionary<int, ForecastOneDay>();
+                List<ForecastOneDay> days = new List<ForecastOneDay>();
 
-                ForecastOneDay d2 = new ForecastOneDay();
-                d2.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(1).Day;
-
-                ForecastOneDay d3 = new ForecastOneDay();
-                d3.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(2).Day;
-
-                ForecastOneDay d4 = new ForecastOneDay();
-                d4.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(3).Day;
-
-                ForecastOneDay d5 = new ForecastOneDay();
-                d5.Day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(4).Day;
-
-                foreach (var item in weather.Forecast.WeatherBodyList)
+                for (int i = 0; i < 5; i++)
                 {
-                    if (d1.Day == item.GetDate().Day)
-                    {
-                        d1.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
-                                                          item.GetDate().ToShortTimeString().ToString(),
-                                                          item.WeatherList[0].Icon,
-                                                          item.Main.Pressure,
-                                                          item.Main.Humidity,
-                                                          item.WeatherList[0].WeatherParameters);
-                    }
-                    else if (d2.Day == item.GetDate().Day)
-                    {
-                        d2.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
-                                                          item.GetDate().ToShortTimeString().ToString(),
-                                                          item.WeatherList[0].Icon,
-                                                          item.Main.Pressure,
-                                                          item.Main.Humidity,
-                                                          item.WeatherList[0].WeatherParameters);
-                    }
-                    else if (d3.Day == item.GetDate().Day)
-                    {
-                        d3.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
-                                                          item.GetDate().ToShortTimeString().ToString(),
-                                                          item.WeatherList[0].Icon,
-                                                          item.Main.Pressure,
-                                                          item.Main.Humidity,
-                                                          item.WeatherList[0].WeatherParameters);
-                    }
-                    else if (d4.Day == item.GetDate().Day)
-                    {
-                        d4.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
-                                                          item.GetDate().ToShortTimeString().ToString(),
-                                                          item.WeatherList[0].Icon,
-                                                          item.Main.Pressure,
-                                                          item.Main.Humidity,
-                                                          item.WeatherList[0].WeatherParameters);
-                    }
-                    else if (d5.Day == item.GetDate().Day)
-                    {
-                        d5.SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
-                                                          item.GetDate().ToShortTimeString().ToString(),
-                                                          item.WeatherList[0].Icon,
-                                                          item.Main.Pressure,
-                                                          item.Main.Humidity,
-                                                          item.WeatherList[0].WeatherParameters);
-                    }
-
-
+                    int day = weather.Forecast.WeatherBodyList[0].GetDate().AddDays(i).Day;
+                    forecastDic.Add(day, new ForecastOneDay() { Day = day });
                 }
 
-                List<ForecastOneDay> days = new List<ForecastOneDay>() { d1, d2, d3, d4, d5 };
+                foreach (var item in weather.Forecast.WeatherBodyList)
+                    if (forecastDic.ContainsKey(item.GetDate().Day))
+                        forecastDic[item.GetDate().Day].SetData(Weather.GetTemperature(item.Main.Temperature, WidgetMeasure),
+                                                              item.GetDate().ToShortTimeString().ToString(),
+                                                              item.WeatherList[0].Icon,
+                                                              item.Main.Pressure,
+                                                              item.Main.Humidity,
+                                                              item.WeatherList[0].WeatherParameters,
+                                                              item.Wind);
+
+
+                foreach (var item in forecastDic)
+                    days.Add(item.Value);
 
                 string tempSign = WidgetMeasure == Measure.Metric ? "°C" : "°F";
+                string windSign = WidgetMeasure == Measure.Metric ? "meter/sec" : "miles/hour";
 
                 dic.Add("Sign", tempSign);
+                dic.Add("Wind", windSign);
                 dic.Add("Days", days);
                 dic.Add("Location", $"{weather.Forecast.City.Name}, {weather.Forecast.City.Country}");
             }

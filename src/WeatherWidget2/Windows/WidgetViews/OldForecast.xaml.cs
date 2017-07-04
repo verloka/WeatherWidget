@@ -19,6 +19,7 @@ namespace WeatherWidget2.Windows.WidgetViews
         ChartValues<int> Values;
         List<ForecastOneDay> Days;
         string sign = "";
+        string windSign = "";
         public string[] Labels { get; set; }
 
         public OldForecast()
@@ -67,8 +68,9 @@ namespace WeatherWidget2.Windows.WidgetViews
             tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
             tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
             tbCondy.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
-
             tbThemperature.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+            tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" : 
+                                     $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
 
         #region IWidgetView
@@ -107,6 +109,7 @@ namespace WeatherWidget2.Windows.WidgetViews
             Days = (List<ForecastOneDay>)param["Days"];
             chartLine.Title = param["Location"].ToString();
             sign = param["Sign"].ToString();
+            windSign = param["Wind"].ToString();
 
             SetupDay();
         }

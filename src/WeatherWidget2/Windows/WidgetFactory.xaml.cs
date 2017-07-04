@@ -84,6 +84,8 @@ namespace WeatherWidget2.Windows
                 cbSize.SelectedIndex = (int)widget.Size;
                 cbIconTheme.SelectedIndex = (int)widget.Theme;
                 cbWidgetType.SelectedIndex = widget.Type;
+
+                cbSize.IsEnabled = cbWidgetType.SelectedIndex == 0 ? true : false;
             }
 
             btnAdd.Text = EditMode ? App.Lang.WidgetFactoryEditWidget : App.Lang.WidgetFactoryAddWidget;
@@ -103,6 +105,8 @@ namespace WeatherWidget2.Windows
         {
             if (cbWidgetType.SelectedIndex == -1)
                 return;
+
+            cbSize.IsEnabled = cbWidgetType.SelectedIndex == 0 ? true : false;
 
             widget.Type = cbWidgetType.SelectedIndex;
 

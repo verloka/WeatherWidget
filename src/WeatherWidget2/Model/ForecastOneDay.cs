@@ -11,7 +11,7 @@ namespace WeatherWidget2.Model
         public List<string> Icons { get; set; }
         public List<double> Press { get; set; }
         public List<double> Humi { get; set; }
-        public Dictionary<int, string> Wind { get; set; }
+        public List<Wind> Wind { get; set; }
 
         public ForecastOneDay()
         {
@@ -20,7 +20,7 @@ namespace WeatherWidget2.Model
             Icons = new List<string>();
             Press = new List<double>();
             Humi = new List<double>();
-            Wind = new Dictionary<int, string>();
+            Wind = new List<Wind>();
             Condi = new List<string>();
             Day = -1;
         }
@@ -64,6 +64,64 @@ namespace WeatherWidget2.Model
         public int GetCurrentValue()
         {
             return Values[0];
+        }
+        public int GetDayWindSpeed()
+        {
+            return (int)Wind[Wind.Count / 2].Speed;
+        }
+        public int GetCurrentWindSpeed()
+        {
+            return (int)Wind[0].Speed;
+        }
+        public int GetDayWindDeg()
+        {
+            return (int)Wind[Wind.Count / 2].Direction;
+        }
+        public int GetCurrentWindDeg()
+        {
+            return (int)Wind[0].Direction;
+        }
+
+        public static string GetSideCode(int degre)
+        {
+            switch (degre)
+            {
+                case int i when i > 348 &&  i < 11:
+                    return "N";
+                case int i when i > 11 && i < 34:
+                    return "NNE";
+                case int i when i > 34 && i < 55:
+                    return "NE";
+                case int i when i > 55 && i < 79:
+                    return "ENE";
+                case int i when i > 79 && i < 101:
+                    return "E";
+                case int i when i > 101 && i < 124:
+                    return "ESE";
+                case int i when i > 124 && i < 146:
+                    return "SE";
+                case int i when i > 146 && i < 169:
+                    return "SSE";
+                case int i when i > 169 && i < 191:
+                    return "S";
+                case int i when i > 191 && i < 204:
+                    return "SSW";
+                case int i when i > 204 && i < 234:
+                    return "SW";
+                case int i when i > 234 && i < 259:
+                    return "WDW";
+                case int i when i > 259 && i < 281:
+                    return "W";
+                case int i when i > 281 && i < 304:
+                    return "WNW";
+                case int i when i > 304 && i < 326:
+                    return "NW";
+                case int i when i > 326 && i < 348:
+                    return "NNW";
+                default:
+                    break;
+            }
+            return "";
         }
 
         public override bool Equals(object obj)
