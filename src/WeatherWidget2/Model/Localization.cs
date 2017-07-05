@@ -66,6 +66,8 @@ namespace WeatherWidget2.Model
         public string WidgetFactoryTitle { get; set; } = "!create widgt";
         [DataMember(Name = "WidgetFactoryType")]
         public string WidgetFactoryType { get; set; } = "!type of widget";
+        [DataMember(Name = "WidgetFactoryView")]
+        public string WidgetFactoryView { get; set; } = "!view";
         [DataMember(Name = "WidgetFactoryTypeDaily")]
         public string WidgetFactoryTypeDaily { get; set; } = "!daily (one day)";
         [DataMember(Name = "WidgetFactoryTypeForecast")]

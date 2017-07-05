@@ -27,6 +27,13 @@
     <SolidColorBrush x:Key="ForecastButtonBorderColor" Color="#FF707070"/>
     <SolidColorBrush x:Key="ForecastButtonFillColor" Color="#19000000"/>
 
+    <SolidColorBrush x:Key="CARDForecastDarkColor" Color="#0288D1"/>
+    <SolidColorBrush x:Key="CARDForecastLightColor" Color="#03A9F4"/>
+    <SolidColorBrush x:Key="CARDForecastBackgroundColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="CARDForecastTextColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="CARDForecastTextSecondaryColor" Color="#B3E5FC"/>
+    <SolidColorBrush x:Key="CARDForecastTextThridColor" Color="#757575"/>
+
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonVisible" UriSource="/WeatherWidget2;component/Icons/VisibleIcon.png"/>
     <BitmapImage x:Key="IconVisibleButtonHiden" UriSource="/WeatherWidget2;component/Icons/HiddenIcon.png"/>

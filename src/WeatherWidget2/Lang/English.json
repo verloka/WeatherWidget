@@ -26,6 +26,7 @@
   "TabWIdgetsZeroWidgets": "Your have any widget, press green plus for create one",
   "WidgetFactoryTitle": "Create widget",
   "WidgetFactoryType": "Type of widget",
+  "WidgetFactoryView": "View of widget",
   "WidgetFactoryTypeDaily": "Daily (one day)",
   "WidgetFactoryTypeForecast": "Forecast (5 days)",
   "WidgetFactoryTypeMeasures": "Measures",

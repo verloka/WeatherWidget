@@ -1,20 +1,18 @@
 ﻿using LiveCharts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using System.Linq;
 using WeatherWidget2.Model;
 using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
 
 namespace WeatherWidget2.Windows.WidgetViews
 {
-    public partial class OldForecast : Window, IWidgetView
+    public partial class MaterialChartCardForecast : Window, IWidgetView
     {
         public Icons icons;
         List<ForecastOneDay> Days;
@@ -22,13 +20,13 @@ namespace WeatherWidget2.Windows.WidgetViews
         string windSign = "";
         public string[] Labels { get; set; }
 
-        public OldForecast()
+        public MaterialChartCardForecast()
         {
             InitializeComponent();
             DataContext = this;
             icons = new Icons(IconSize.Medium, IconTheme.Standart);
         }
-        public OldForecast(IconTheme t)
+        public MaterialChartCardForecast(IconTheme t)
         {
             InitializeComponent();
             DataContext = this;
@@ -52,7 +50,7 @@ namespace WeatherWidget2.Windows.WidgetViews
             foreach (var item in Days[day].Labels)
                 chartXAxis.Labels.Add(item);
 
-            if(day == 0 && Days[0].Values.Count != Days[1].Values.Count)
+            if (day == 0 && Days[0].Values.Count != Days[1].Values.Count)
                 for (int i = 0; i < Days[1].Values.Count - Days[0].Values.Count; i++)
                 {
                     chartLine.Values.Add(Days[1].Values[i]);
@@ -67,9 +65,9 @@ namespace WeatherWidget2.Windows.WidgetViews
 
             tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
             tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
-            tbCondy.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
-            tbThemperature.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
-            tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" : 
+            tbCondi.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
+            tbThemp.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+            tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" :
                                      $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
         public void SetupButtons(int day)
@@ -79,7 +77,7 @@ namespace WeatherWidget2.Windows.WidgetViews
             bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
 
-            string themp = $"{Days[day].Values.ToArray().Max()} ° {Days[day].Values.ToArray().Min()} °";
+            string themp = $"{Days[day].Values.ToArray().Max()}/{Days[day].Values.ToArray().Min()} {sign}";
 
             switch (day)
             {
@@ -147,9 +145,11 @@ namespace WeatherWidget2.Windows.WidgetViews
         public void UpdateInfo(Dictionary<string, object> param)
         {
             Days = (List<ForecastOneDay>)param["Days"];
-            chartLine.Title = param["Location"].ToString();
+            tbLocation.Text = param["Location"].ToString();
             sign = param["Sign"].ToString();
             windSign = param["Wind"].ToString();
+
+            chartLine.Title = " ";
 
             SetupDay();
         }
@@ -158,21 +158,11 @@ namespace WeatherWidget2.Windows.WidgetViews
             icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
             chartLine.DataLabels = true;
 
-            Dispatcher.Invoke(DispatcherPriority.Background, new
-             Action(() =>
-             {
-                 SolidColorBrush scb = new SolidColorBrush(ColorParser.FromName(param["TextColor"].ToString()));
-                 tbThemperature.Foreground = scb;
-                 ccLegend.Foreground = scb;
-                 chartXAxis.Foreground = scb;
-                 chartLine.Foreground = scb;
-
-                 SetupButtons(0);
-                 SetupButtons(1);
-                 SetupButtons(2);
-                 SetupButtons(3);
-                 SetupButtons(4);
-             }));
+            SetupButtons(0);
+            SetupButtons(1);
+            SetupButtons(2);
+            SetupButtons(3);
+            SetupButtons(4);
         }
         #endregion
 

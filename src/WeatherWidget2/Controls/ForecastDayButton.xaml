@@ -7,7 +7,7 @@
              mc:Ignorable="d" >
     <Border MouseLeftButtonDown="gridMouseLeftButtonDown" MouseLeftButtonUp="gridMouseLeftButtonUp" MouseLeave="gridMouseLeave" Background="#02FFFFFF" Cursor="Hand">
         <Grid>
-            <Border x:Name="bBorder" BorderThickness="1" BorderBrush="{Binding BorderColor, FallbackValue=Red}" Background="{Binding BorderFill, FallbackValue=Green}" />
+            <Border x:Name="bBorder" BorderThickness="{Binding ButtonBorder, FallbackValue=3}" BorderBrush="{Binding BorderColor, FallbackValue=Red}" Background="{Binding BorderFill, FallbackValue=Green}" />
             <StackPanel Margin="3">
                 <TextBlock x:Name="tbDay" Text="{Binding TextDay, FallbackValue=day}" HorizontalAlignment="Center" Margin="5,5,5,7" Foreground="{Binding Foreground, ElementName=root}" FontFamily="{Binding FontFamily, ElementName=root}" FontSize="{Binding FontSize, ElementName=root}"/>
                 <Image x:Name="imgIcon" Source="{Binding Icon}" Width="{Binding IconWidth, FallbackValue=32}" Height="{Binding IconHeight, FallbackValue=32}" Margin="0,7"/>

@@ -13,6 +13,7 @@ namespace WeatherWidget2.Model
         public int Left { get; set; }
         public int Top { get; set; }
         public int Type { get; set; } //0 daily, 1 forecast
+        public int ViewCode { get; set; }
         public int CityID { get; set; }
         public Measure WidgetMeasure { get; set; }
         public IconSize Size { get; set; }
@@ -77,10 +78,22 @@ namespace WeatherWidget2.Model
         }
         public void CreateWindow()
         {
-            if (Type == 0)
-                view = new OldCurrent(Size, Theme);
-            else
-                view = new OldForecast(Theme);
+            switch (ViewCode)
+            {
+                case 0:
+                default:
+                    view = new OldCurrent(Size, Theme);
+                    break;
+                case 100:
+                    view = new OldForecast(Theme);
+                    break;
+                case 101:
+                    view = new MaterialCardForecast(Theme);
+                    break;
+                case 102:
+                    view = new MaterialChartCardForecast(Theme);
+                    break;
+            }
 
             UpdateData();
             UpdateLook();
@@ -126,7 +139,7 @@ namespace WeatherWidget2.Model
                                                               item.Main.Humidity,
                                                               item.WeatherList[0].WeatherParameters,
                                                               item.Wind,
-                                                              item.GetDate().DayOfWeek.ToString());
+                                                              GetDayByDayOfWeek(item.GetDate().DayOfWeek));
 
 
                 foreach (var item in forecastDic)
@@ -165,7 +178,7 @@ namespace WeatherWidget2.Model
 
         public string GetValue()
         {
-            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure.GetHashCode()}|{Size.GetHashCode()}|{Visible}|{CityID}|{guid}|{Theme.GetHashCode()}|{TextColor}";
+            return $"{Name}|{Left}|{Top}|{Type}|{WidgetMeasure.GetHashCode()}|{Size.GetHashCode()}|{Visible}|{CityID}|{guid}|{Theme.GetHashCode()}|{TextColor}|{ViewCode}";
         }
         public void SetValue(string value)
         {
@@ -206,11 +219,44 @@ namespace WeatherWidget2.Model
             Theme = (IconTheme)num;
             //Text color
             TextColor = strs[10];
+
+            try
+            {
+                int.TryParse(strs[11], out num);
+                ViewCode = num;
+            }
+            catch
+            {
+                ViewCode = 0;
+            }
         }
 
         public override string ToString()
         {
             return $"{Name}";
+        }
+
+        public static string GetDayByDayOfWeek(DayOfWeek d)
+        {
+            switch (d)
+            {
+                case DayOfWeek.Sunday:
+                    return "Sun";
+                case DayOfWeek.Monday:
+                    return "Mon";
+                case DayOfWeek.Tuesday:
+                    return "Tue";
+                case DayOfWeek.Wednesday:
+                    return "Wed";
+                case DayOfWeek.Thursday:
+                    return "Thu";
+                case DayOfWeek.Friday:
+                    return "Fri";
+                case DayOfWeek.Saturday:
+                    return "Sat";
+                default:
+                    return "";
+            }
         }
     }
 }

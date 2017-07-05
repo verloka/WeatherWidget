@@ -123,6 +123,12 @@
     <Compile Include="Windows\WidgetFactory.xaml.cs">
       <DependentUpon>WidgetFactory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WidgetViews\MaterialCardForecast.xaml.cs">
+      <DependentUpon>MaterialCardForecast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WidgetViews\MaterialChartCardForecast.xaml.cs">
+      <DependentUpon>MaterialChartCardForecast.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WidgetViews\OldCurrent.xaml.cs">
       <DependentUpon>OldCurrent.xaml</DependentUpon>
     </Compile>
@@ -177,6 +183,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WidgetFactory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WidgetViews\MaterialCardForecast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WidgetViews\MaterialChartCardForecast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,7 +308,6 @@
   <ItemGroup>
     <Resource Include="Icons\WindowHeadIconLight.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

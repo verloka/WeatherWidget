@@ -44,6 +44,38 @@ namespace WeatherWidget2.Windows
         {
             country = JsonConvert.DeserializeObject<Country>(Geonames.GetCoutryJson(countryName));
         }
+        void SetCurrentViewCode()
+        {
+            switch (cbWidgetViewCurrent.SelectedIndex)
+            {
+                default:
+                case 0:
+                    widget.ViewCode = 0;
+                    break;
+            }
+        }
+        void SetForecastViewCode()
+        {
+            switch (cbWidgetViewForecast.SelectedIndex)
+            {
+                default:
+                case 0:
+                    widget.ViewCode = 100;
+                    break;
+                case 1:
+                    widget.ViewCode = 101;
+                    break;
+                case 2:
+                    widget.ViewCode = 102;
+                    break;
+            }
+        }
+        void SetVisibleByType()
+        {
+            gridSizeIcon.Visibility = cbWidgetType.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
+            cbWidgetViewCurrent.Visibility = cbWidgetType.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
+            cbWidgetViewForecast.Visibility = cbWidgetType.SelectedIndex == 1 ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         #region Window Events
         private void DragWindow(object sender, MouseButtonEventArgs e)
@@ -85,7 +117,7 @@ namespace WeatherWidget2.Windows
                 cbIconTheme.SelectedIndex = (int)widget.Theme;
                 cbWidgetType.SelectedIndex = widget.Type;
 
-                cbSize.IsEnabled = cbWidgetType.SelectedIndex == 0 ? true : false;
+                SetVisibleByType();
             }
 
             btnAdd.Text = EditMode ? App.Lang.WidgetFactoryEditWidget : App.Lang.WidgetFactoryAddWidget;
@@ -95,18 +127,47 @@ namespace WeatherWidget2.Windows
             cbIconTheme.SelectionChanged += CbIconThemeSelectionChanged;
             cbTextColors.SelectionChanged += CbTextColorsSelectionChanged;
             cbWidgetType.SelectionChanged += CbWidgetTypeSelectionChanged;
+            cbWidgetViewCurrent.SelectionChanged += CbWidgetViewCurrentSelectionChanged;
+            cbWidgetViewForecast.SelectionChanged += CbWidgetViewForecastSelectionChanged;
 
             LoadCountrys();
 
             widget.CreateWindow();
             widget.SetEditMode(true);
         }
+        private void CbWidgetViewForecastSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetForecastViewCode();
+
+            widget.Destroy();
+            widget.CreateWindow();
+            widget.SetEditMode(true);
+
+            widget.UpdateLook();
+            widget.UpdateData();
+        }
+        private void CbWidgetViewCurrentSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetCurrentViewCode();
+
+            widget.Destroy();
+            widget.CreateWindow();
+            widget.SetEditMode(true);
+
+            widget.UpdateLook();
+            widget.UpdateData();
+        }
         private void CbWidgetTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbWidgetType.SelectedIndex == -1)
                 return;
 
-            cbSize.IsEnabled = cbWidgetType.SelectedIndex == 0 ? true : false;
+            SetVisibleByType();
+
+            if (cbWidgetType.SelectedIndex == 0)
+                SetCurrentViewCode();
+            else
+                SetForecastViewCode();
 
             widget.Type = cbWidgetType.SelectedIndex;
 
@@ -150,6 +211,7 @@ namespace WeatherWidget2.Windows
 
             widget.WidgetMeasure = (Measure)cbMeasure.SelectedIndex;
             widget.UpdateData(updateMeasure: true);
+            widget.UpdateLook();
         }
         private void mywindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {

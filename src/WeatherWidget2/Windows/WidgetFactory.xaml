@@ -63,13 +63,28 @@
                                     <ColumnDefinition Width="150px"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding WidgetFactoryView, FallbackValue=view}" Foreground="{DynamicResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                <ComboBox x:Name="cbWidgetViewCurrent" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
+                                    <ComboBoxItem Content="Standart"/>
+                                </ComboBox>
+                                <ComboBox x:Name="cbWidgetViewForecast" Grid.Column="1" Width="200" Height="22" SelectedIndex="0" Visibility="Collapsed">
+                                    <ComboBoxItem Content="Standart"/>
+                                    <ComboBoxItem Content="Material"/>
+                                    <ComboBoxItem Content="Material with chart"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150px"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding WidgetFactoryTypeMeasures, FallbackValue=measure}" Foreground="{DynamicResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
                                 <ComboBox x:Name="cbMeasure" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeMetrical, FallbackValue=metric}"/>
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeImperial, FallbackValue=imperial}"/>
                                 </ComboBox>
                             </Grid>
-                            <Grid Margin="0,7,0,0">
+                            <Grid x:Name="gridSizeIcon" Margin="0,7,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="150px"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -81,7 +96,7 @@
                                     <ComboBoxItem Content="{Binding WidgetFactoryTypeSizeSmall, FallbackValue=small}"/>
                                 </ComboBox>
                             </Grid>
-                            <Grid Margin="0,7,0,0">
+                            <Grid x:Name="gridColor" Margin="0,7,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="150px"/>
                                     <ColumnDefinition Width="Auto"/>

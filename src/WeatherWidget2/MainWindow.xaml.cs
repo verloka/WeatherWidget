@@ -62,7 +62,10 @@ namespace WeatherWidget2
             {
                 foreach (var item in wstorage.Widgets)
                     if (item.Visible)
+                    {
                         item.UpdateData();
+                        item.UpdateLook();
+                    }
             }
             else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
                 Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));

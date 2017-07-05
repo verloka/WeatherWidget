@@ -53,6 +53,12 @@ namespace WeatherWidget2.Controls
             set { SetValue(IconHeightProperty, value); }
         }
         public static readonly DependencyProperty IconHeightProperty = DependencyProperty.Register("IconHeight", typeof(int), typeof(ForecastDayButton), null);
+        public Thickness ButtonBorder
+        {
+            get { return (Thickness)GetValue(ButtonBorderProperty); }
+            set { SetValue(ButtonBorderProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonBorderProperty = DependencyProperty.Register("ButtonBorder", typeof(Thickness), typeof(ForecastDayButton), null);
 
         public ForecastDayButton()
         {
