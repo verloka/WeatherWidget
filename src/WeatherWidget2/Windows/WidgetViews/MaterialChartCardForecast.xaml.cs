@@ -65,8 +65,8 @@ namespace WeatherWidget2.Windows.WidgetViews
 
             tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
             tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
-            tbCondi.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
-            tbThemp.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+            tbCondi.Text = day == 0 ? Days.LastOrDefault().GetCurrentCondition() : Days[day].GetDayCondition();
+            tbThemp.Text = day == 0 ? $"{Days.LastOrDefault().GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
             tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" :
                                      $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
@@ -74,7 +74,7 @@ namespace WeatherWidget2.Windows.WidgetViews
         {
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
 
             string themp = $"{Days[day].Values.ToArray().Max()}/{Days[day].Values.ToArray().Min()} {sign}";
@@ -149,9 +149,15 @@ namespace WeatherWidget2.Windows.WidgetViews
             sign = param["Sign"].ToString();
             windSign = param["Wind"].ToString();
 
-            chartLine.Title = " ";
+            ForecastOneDay fod = new ForecastOneDay();
+            fod.Day = 5;
+            fod.Values.Add((int)param["ThemperatureF"]);
+            fod.Condi.Add(param["WeatherParamF"].ToString());
+            fod.Icons.Add(param["IconF"].ToString());
 
-            SetupDay();
+            Days.Add(fod);
+
+            chartLine.Title = " ";
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
@@ -163,6 +169,8 @@ namespace WeatherWidget2.Windows.WidgetViews
             SetupButtons(2);
             SetupButtons(3);
             SetupButtons(4);
+
+            SetupDay();
         }
         #endregion
 

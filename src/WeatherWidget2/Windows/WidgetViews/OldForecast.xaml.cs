@@ -61,14 +61,14 @@ namespace WeatherWidget2.Windows.WidgetViews
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
             imgIcon.Source = bitmap;
 
             tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
             tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
-            tbCondy.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
-            tbThemperature.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+            tbCondy.Text = day == 0 ? Days.LastOrDefault().GetCurrentCondition() : Days[day].GetDayCondition();
+            tbThemperature.Text = day == 0 ? $"{Days.LastOrDefault().GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
             tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" : 
                                      $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
@@ -76,7 +76,7 @@ namespace WeatherWidget2.Windows.WidgetViews
         {
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
 
             string themp = $"{Days[day].Values.ToArray().Max()} ° {Days[day].Values.ToArray().Min()} °";
@@ -151,7 +151,13 @@ namespace WeatherWidget2.Windows.WidgetViews
             sign = param["Sign"].ToString();
             windSign = param["Wind"].ToString();
 
-            SetupDay();
+            ForecastOneDay fod = new ForecastOneDay();
+            fod.Day = 5;
+            fod.Values.Add((int)param["ThemperatureF"]);
+            fod.Condi.Add(param["WeatherParamF"].ToString());
+            fod.Icons.Add(param["IconF"].ToString());
+
+            Days.Add(fod);
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
@@ -172,6 +178,8 @@ namespace WeatherWidget2.Windows.WidgetViews
                  SetupButtons(2);
                  SetupButtons(3);
                  SetupButtons(4);
+
+                 SetupDay();
              }));
         }
         #endregion

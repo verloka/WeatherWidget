@@ -34,40 +34,16 @@ namespace WeatherWidget2.Windows.WidgetViews
 
         public void SetupDay(int day = 0)
         {
-            /*if (chartLine.Values == null)
-                chartLine.Values = new ChartValues<int>();
-
-            if (chartXAxis.Labels == null)
-                chartXAxis.Labels = new List<string>();
-
-            chartLine.Values.Clear();
-            chartXAxis.Labels.Clear();
-
-            foreach (var item in Days[day].Values)
-                chartLine.Values.Add(item);
-
-            foreach (var item in Days[day].Labels)
-                chartXAxis.Labels.Add(item);
-
-            if (day == 0 && Days[0].Values.Count != Days[1].Values.Count)
-                for (int i = 0; i < Days[1].Values.Count - Days[0].Values.Count; i++)
-                {
-                    chartLine.Values.Add(Days[1].Values[i]);
-                    chartXAxis.Labels.Add(Days[1].Labels[i]);
-                }
-
-            */
-
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
             imgIcon.Source = bitmap;
 
             tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
             tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
-            tbCondi.Text = day == 0 ? Days[day].GetCurrentCondition() : Days[day].GetDayCondition();
-            tbThemp.Text = day == 0 ? $"{Days[day].GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
+            tbCondi.Text = day == 0 ? Days.LastOrDefault().GetCurrentCondition() : Days[day].GetDayCondition();
+            tbThemp.Text = day == 0 ? $"{Days.LastOrDefault().GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
             tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" :
                                      $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
@@ -75,7 +51,7 @@ namespace WeatherWidget2.Windows.WidgetViews
         {
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
 
             string themp = $"{Days[day].Values.ToArray().Max()}/{Days[day].Values.ToArray().Min()} {sign}";
@@ -149,19 +125,26 @@ namespace WeatherWidget2.Windows.WidgetViews
             tbLocation.Text = param["Location"].ToString();
             sign = param["Sign"].ToString();
             windSign = param["Wind"].ToString();
-            
-            SetupDay();
+
+            ForecastOneDay fod = new ForecastOneDay();
+            fod.Day = 5;
+            fod.Values.Add((int)param["ThemperatureF"]);
+            fod.Condi.Add(param["WeatherParamF"].ToString());
+            fod.Icons.Add(param["IconF"].ToString());
+
+            Days.Add(fod);
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
             icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
-            //chartLine.DataLabels = true;
 
             SetupButtons(0);
             SetupButtons(1);
             SetupButtons(2);
             SetupButtons(3);
             SetupButtons(4);
+
+            SetupDay();
         }
         #endregion
 

@@ -66,6 +66,7 @@
                                 <TextBlock Text="{Binding WidgetFactoryView, FallbackValue=view}" Foreground="{DynamicResource WindowTextColor}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
                                 <ComboBox x:Name="cbWidgetViewCurrent" Grid.Column="1" Width="200" Height="22" SelectedIndex="0">
                                     <ComboBoxItem Content="Standart"/>
+                                    <ComboBoxItem Content="Material"/>
                                 </ComboBox>
                                 <ComboBox x:Name="cbWidgetViewForecast" Grid.Column="1" Width="200" Height="22" SelectedIndex="0" Visibility="Collapsed">
                                     <ComboBoxItem Content="Standart"/>

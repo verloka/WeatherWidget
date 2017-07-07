@@ -84,6 +84,9 @@ namespace WeatherWidget2.Model
                 default:
                     view = new OldCurrent(Size, Theme);
                     break;
+                case 1:
+                    view = new MaterialCardCurrent(Size, Theme);
+                    break;
                 case 100:
                     view = new OldForecast(Theme);
                     break;
@@ -97,6 +100,7 @@ namespace WeatherWidget2.Model
 
             UpdateData();
             UpdateLook();
+
             view.SetLeft(Left);
             view.SetTop(Top);
             view.ShowWidget();
@@ -109,10 +113,10 @@ namespace WeatherWidget2.Model
             if (updateCity)
                 weather.SetCity(CityID);
 
+            weather.LoadCurrent();
+
             if (view.Type == 0)
             {
-                weather.LoadCurrent();
-                dic.Add("Icon", weather.Current.WeatherList[0].Icon);
                 dic.Add("Themperature", Weather.GetTemperatureString(weather.Current.Main.Temperature, WidgetMeasure));
                 dic.Add("WeatherParam", $"{weather.Current.WeatherList[0].WeatherParameters}");
                 dic.Add("Location", $"{weather.Current.Name}, {weather.Current.system.CountryCode}");
@@ -148,6 +152,10 @@ namespace WeatherWidget2.Model
                 string tempSign = WidgetMeasure == Measure.Metric ? "°C" : "°F";
                 string windSign = WidgetMeasure == Measure.Metric ? "meter/sec" : "miles/hour";
 
+                dic.Add("IconF", weather.Current.WeatherList[0].Icon);
+                dic.Add("ThemperatureF", Weather.GetTemperature(weather.Current.Main.Temperature, WidgetMeasure));
+                dic.Add("WeatherParamF", $"{weather.Current.WeatherList[0].WeatherParameters}");
+
                 dic.Add("Sign", tempSign);
                 dic.Add("Wind", windSign);
                 dic.Add("Days", days);
@@ -162,9 +170,8 @@ namespace WeatherWidget2.Model
 
             dic.Add("Theme", Theme);
             dic.Add("TextColor", TextColor);
-
-            if (view.Type == 0)
-                dic.Add("Size", Size);
+            dic.Add("Size", Size);
+            dic.Add("Icon", weather.Current.WeatherList[0].Icon);
 
             view.UpdateLook(dic);
         }

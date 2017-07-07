@@ -46,29 +46,11 @@ namespace WeatherWidget2.Windows
         }
         void SetCurrentViewCode()
         {
-            switch (cbWidgetViewCurrent.SelectedIndex)
-            {
-                default:
-                case 0:
-                    widget.ViewCode = 0;
-                    break;
-            }
+            widget.ViewCode = cbWidgetViewCurrent.SelectedIndex != -1 ? cbWidgetViewCurrent.SelectedIndex : 0;
         }
         void SetForecastViewCode()
         {
-            switch (cbWidgetViewForecast.SelectedIndex)
-            {
-                default:
-                case 0:
-                    widget.ViewCode = 100;
-                    break;
-                case 1:
-                    widget.ViewCode = 101;
-                    break;
-                case 2:
-                    widget.ViewCode = 102;
-                    break;
-            }
+            widget.ViewCode = cbWidgetViewForecast.SelectedIndex != -1 ? cbWidgetViewForecast.SelectedIndex + 100 : 0;
         }
         void SetVisibleByType()
         {
@@ -142,9 +124,9 @@ namespace WeatherWidget2.Windows
             widget.Destroy();
             widget.CreateWindow();
             widget.SetEditMode(true);
-
-            widget.UpdateLook();
+            
             widget.UpdateData();
+            widget.UpdateLook();
         }
         private void CbWidgetViewCurrentSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -154,8 +136,8 @@ namespace WeatherWidget2.Windows
             widget.CreateWindow();
             widget.SetEditMode(true);
 
-            widget.UpdateLook();
             widget.UpdateData();
+            widget.UpdateLook();
         }
         private void CbWidgetTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -175,8 +157,8 @@ namespace WeatherWidget2.Windows
             widget.CreateWindow();
             widget.SetEditMode(true);
 
-            widget.UpdateLook();
             widget.UpdateData();
+            widget.UpdateLook();
         }
         private void CbTextColorsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -192,8 +174,9 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.Theme = (IconTheme)cbIconTheme.SelectedIndex;
-            widget.UpdateLook();
+
             widget.UpdateData();
+            widget.UpdateLook();
         }
         private void CbSizeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -201,8 +184,9 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.Size = (IconSize)cbSize.SelectedIndex;
-            widget.UpdateLook();
+
             widget.UpdateData();
+            widget.UpdateLook();
         }
         private void CbMeasureSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -210,6 +194,7 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.WidgetMeasure = (Measure)cbMeasure.SelectedIndex;
+
             widget.UpdateData(updateMeasure: true);
             widget.UpdateLook();
         }
@@ -242,7 +227,9 @@ namespace WeatherWidget2.Windows
                 return;
 
             widget.CityID = (lvSearchedCitys.SelectedItem as City).ID;
+
             widget.UpdateData(updateCity: true);
+            widget.UpdateLook();
         }
         private void btnAddClick()
         {
