@@ -21,7 +21,6 @@ namespace WeatherWidget2
 
         System.Timers.Timer timer;
         System.Windows.Forms.NotifyIcon notifyIcon;
-        UpdateClient updateClient;
         UpdateItem updateContent;
         const string UpdateUrl = "https://ogycode.github.io/WeatherWidget/update.json";
 
@@ -101,8 +100,8 @@ namespace WeatherWidget2
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
-                 tbConnectionStatus.Text = result ? 
-                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" : 
+                 tbConnectionStatus.Text = result ?
+                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" :
                                            $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionNO}";
              }));
 
@@ -145,10 +144,6 @@ namespace WeatherWidget2
             else
                 cbStartup.IsChecked = true;
             cbStartup.Click += CbStartupClick;
-
-            //check updates
-            cbUpdateChekc.IsChecked = App.Settings.GetValue("CheckUpdateInStart", true);
-            cbUpdateChekc.Click += CbUpdateChekc_Click;
 
             //wrong internet connection
             cbAlertInternet.IsChecked = App.Settings.GetValue("ShowAlertInternetMsg", false);
@@ -197,12 +192,14 @@ namespace WeatherWidget2
             UpdateData();
 
             //check update
-            updateClient = new UpdateClient(UpdateUrl);
-            updateClient.NewVersion += UpdateClientNewVersion;
-            btnUpdate.Text = App.Lang.TabHomeVersionBtnUpdate;
-            tbUpdateInfo.Text = App.Lang.TabHomeVersionOK;
-            if(App.Settings.GetValue<bool>("CheckUpdateInStart") == true)
-                updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.Build, version.Revision));
+            using (UpdateClient updateClient = new UpdateClient(UpdateUrl))
+            {
+                updateClient.NewVersion += UpdateClientNewVersion;
+                btnUpdate.Text = App.Lang.TabHomeVersionBtnUpdate;
+                tbUpdateInfo.Text = App.Lang.TabHomeVersionOK;
+                if (GetConnection())
+                    updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.Build, version.Revision));
+            }
 
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
         }
@@ -256,10 +253,6 @@ namespace WeatherWidget2
         private void CbAlertInternetClick(object sender, RoutedEventArgs e)
         {
             App.Settings["ShowAlertInternetMsg"] = cbAlertInternet.IsChecked.Value;
-        }
-        private void CbUpdateChekc_Click(object sender, RoutedEventArgs e)
-        {
-            App.Settings["CheckUpdateInStart"] = cbUpdateChekc.IsChecked.Value;
         }
         private void CbStartupClick(object sender, RoutedEventArgs e)
         {
