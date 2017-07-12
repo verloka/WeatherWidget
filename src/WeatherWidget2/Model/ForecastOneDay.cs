@@ -128,6 +128,9 @@ namespace WeatherWidget2.Model
 
         public override bool Equals(object obj)
         {
+            if (obj == null)
+                return false;
+
             return Day == ((ForecastOneDay)obj).Day;
         }
         public override int GetHashCode()
