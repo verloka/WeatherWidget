@@ -15,11 +15,13 @@ namespace WeatherWidget2.Windows
             InitializeComponent();
             DataContext = App.Lang;
 
-            DownloadClient dc = new DownloadClient(item.Files, path);
-            dc.DownloadProgress += Dc_DownloadProgress;
-            dc.DownloadCompleted += Dc_DownloadCompleted;
+            using (DownloadClient dc = new DownloadClient(item.Files, path))
+            {
+                dc.DownloadProgress += Dc_DownloadProgress;
+                dc.DownloadCompleted += Dc_DownloadCompleted;
 
-            dc.Start();
+                dc.Start();
+            }
         }
 
         #region Window Events
