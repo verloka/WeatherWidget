@@ -146,27 +146,31 @@ namespace WeatherWidget2.Windows.WidgetViews
         }
         public void UpdateInfo(Dictionary<string, object> param)
         {
-            Days = (List<ForecastOneDay>)param["Days"];
-            chartLine.Title = param["Location"].ToString();
-            sign = param["Sign"].ToString();
-            windSign = param["Wind"].ToString();
-
-            ForecastOneDay fod = new ForecastOneDay();
-            fod.Day = 5;
-            fod.Values.Add((int)param["ThemperatureF"]);
-            fod.Condi.Add(param["WeatherParamF"].ToString());
-            fod.Icons.Add(param["IconF"].ToString());
-
-            Days.Add(fod);
-        }
-        public void UpdateLook(Dictionary<string, object> param)
-        {
-            icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
-            chartLine.DataLabels = true;
-
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
+                 Days = (List<ForecastOneDay>)param["Days"];
+                 chartLine.Title = param["Location"].ToString();
+                 sign = param["Sign"].ToString();
+                 windSign = param["Wind"].ToString();
+
+                 ForecastOneDay fod = new ForecastOneDay();
+                 fod.Day = 5;
+                 fod.Values.Add((int)param["ThemperatureF"]);
+                 fod.Condi.Add(param["WeatherParamF"].ToString());
+                 fod.Icons.Add(param["IconF"].ToString());
+
+                 Days.Add(fod);
+             }));
+        }
+        public void UpdateLook(Dictionary<string, object> param)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
+                 chartLine.DataLabels = true;
+
                  SolidColorBrush scb = new SolidColorBrush(ColorParser.FromName(param["TextColor"].ToString()));
                  tbThemperature.Foreground = scb;
                  ccLegend.Foreground = scb;

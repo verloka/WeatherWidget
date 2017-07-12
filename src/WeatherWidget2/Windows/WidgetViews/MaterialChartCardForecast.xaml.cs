@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WeatherWidget2.Model;
 using WeatherWidget2ResourceLib;
 using static WeatherWidget2.Win32;
@@ -59,7 +60,7 @@ namespace WeatherWidget2.Windows.WidgetViews
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = day == 0 ? icons.GetIcon(Days[day].GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
+            bitmap.UriSource = day == 0 ? icons.GetIcon(Days.LastOrDefault().GetCurrentIcon()) : icons.GetIcon(Days[day].GetDayIcon());
             bitmap.EndInit();
             imgIcon.Source = bitmap;
 
@@ -144,33 +145,41 @@ namespace WeatherWidget2.Windows.WidgetViews
         }
         public void UpdateInfo(Dictionary<string, object> param)
         {
-            Days = (List<ForecastOneDay>)param["Days"];
-            tbLocation.Text = param["Location"].ToString();
-            sign = param["Sign"].ToString();
-            windSign = param["Wind"].ToString();
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 Days = (List<ForecastOneDay>)param["Days"];
+                 tbLocation.Text = param["Location"].ToString();
+                 sign = param["Sign"].ToString();
+                 windSign = param["Wind"].ToString();
 
-            ForecastOneDay fod = new ForecastOneDay();
-            fod.Day = 5;
-            fod.Values.Add((int)param["ThemperatureF"]);
-            fod.Condi.Add(param["WeatherParamF"].ToString());
-            fod.Icons.Add(param["IconF"].ToString());
+                 ForecastOneDay fod = new ForecastOneDay();
+                 fod.Day = 5;
+                 fod.Values.Add((int)param["ThemperatureF"]);
+                 fod.Condi.Add(param["WeatherParamF"].ToString());
+                 fod.Icons.Add(param["IconF"].ToString());
 
-            Days.Add(fod);
+                 Days.Add(fod);
 
-            chartLine.Title = " ";
+                 chartLine.Title = " ";
+             }));
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
-            icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
-            chartLine.DataLabels = true;
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 icons.UpdateData(IconSize.Medium, (IconTheme)param["Theme"]);
+                 chartLine.DataLabels = true;
 
-            SetupButtons(0);
-            SetupButtons(1);
-            SetupButtons(2);
-            SetupButtons(3);
-            SetupButtons(4);
+                 SetupButtons(0);
+                 SetupButtons(1);
+                 SetupButtons(2);
+                 SetupButtons(3);
+                 SetupButtons(4);
 
-            SetupDay();
+                 SetupDay();
+             }));
         }
         #endregion
 

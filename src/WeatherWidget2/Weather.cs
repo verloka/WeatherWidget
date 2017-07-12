@@ -58,12 +58,12 @@ namespace WeatherWidget2
         }
         public static int GetTemperature(double temp, Measure meas)
         {
-            return meas == Measure.Metric ? (int)Math.Round(temp) : (int)Math.Round((9 / 5) * temp + 32);
+            return meas == Measure.Metric ? (int)Math.Round(temp) : (int)Math.Round((9d / 5d) * temp + 32d);
         }
         public static string GetTemperatureString(double temp, Measure meas, bool sign = false)
         {
             string s = sign && temp > 0 ? "+ " : "";
-            return s + (meas == Measure.Metric ? ((int)Math.Round(temp)).ToString() + " °C" : ((int)Math.Round((9 / 5) * temp + 32)).ToString() + " °F");
+            return s + (meas == Measure.Metric ? ((int)Math.Round(temp)).ToString() + " °C" : ((int)Math.Round((9d / 5d) * temp + 32d)).ToString() + " °F");
         }
     }
 }

@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using WeatherWidget2.Model;
 using WeatherWidget2ResourceLib;
@@ -77,11 +69,11 @@ namespace WeatherWidget2.Windows.WidgetViews
         }
         public void UpdateLook(Dictionary<string, object> param)
         {
-            icons.UpdateData((IconSize)param["Size"], (IconTheme)param["Theme"]);
-
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
+                 icons.UpdateData((IconSize)param["Size"], (IconTheme)param["Theme"]);
+
                  BitmapImage bitmap = new BitmapImage();
                  bitmap.BeginInit();
                  bitmap.UriSource = icons.GetIcon(param["Icon"].ToString());

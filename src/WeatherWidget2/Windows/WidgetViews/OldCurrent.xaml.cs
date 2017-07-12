@@ -58,13 +58,23 @@ namespace WeatherWidget2.Windows.WidgetViews
         {
             Show();
         }
-        public void UpdateLook(Dictionary<string, object> param)
+        public void UpdateInfo(Dictionary<string, object> param)
         {
-            icons.UpdateData((IconSize)param["Size"], (IconTheme)param["Theme"]);
-
             Dispatcher.Invoke(DispatcherPriority.Background, new
              Action(() =>
              {
+                 tbThemperature.Text = param["Themperature"].ToString();
+                 tbCondition.Text = param["WeatherParam"].ToString();
+                 tbLocation.Text = param["Location"].ToString();
+             }));
+        }
+        public void UpdateLook(Dictionary<string, object> param)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Background, new
+             Action(() =>
+             {
+                 icons.UpdateData((IconSize)param["Size"], (IconTheme)param["Theme"]);
+
                  BitmapImage bitmap = new BitmapImage();
                  bitmap.BeginInit();
                  bitmap.UriSource = icons.GetIcon(param["Icon"].ToString());
@@ -104,16 +114,6 @@ namespace WeatherWidget2.Windows.WidgetViews
                  tbThemperature.Foreground = scb;
                  tbCondition.Foreground = scb;
                  tbLocation.Foreground = scb;
-             }));
-        }
-        public void UpdateInfo(Dictionary<string, object> param)
-        {
-            Dispatcher.Invoke(DispatcherPriority.Background, new
-             Action(() =>
-             {
-                 tbThemperature.Text = param["Themperature"].ToString();
-                 tbCondition.Text = param["WeatherParam"].ToString();
-                 tbLocation.Text = param["Location"].ToString();
              }));
         }
         #endregion

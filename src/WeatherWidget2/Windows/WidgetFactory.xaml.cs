@@ -58,6 +58,13 @@ namespace WeatherWidget2.Windows
             cbWidgetViewCurrent.Visibility = cbWidgetType.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
             cbWidgetViewForecast.Visibility = cbWidgetType.SelectedIndex == 1 ? Visibility.Visible : Visibility.Collapsed;
         }
+        void SetSelectedByType()
+        {
+            if (widget.Type == 0)
+                cbWidgetViewCurrent.SelectedIndex = widget.ViewCode;
+            else
+                cbWidgetViewForecast.SelectedIndex = widget.ViewCode - 100;
+        }
 
         #region Window Events
         private void DragWindow(object sender, MouseButtonEventArgs e)
@@ -98,7 +105,7 @@ namespace WeatherWidget2.Windows
                 cbSize.SelectedIndex = (int)widget.Size;
                 cbIconTheme.SelectedIndex = (int)widget.Theme;
                 cbWidgetType.SelectedIndex = widget.Type;
-
+                SetSelectedByType();
                 SetVisibleByType();
             }
 
