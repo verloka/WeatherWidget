@@ -36,12 +36,12 @@ namespace WeatherWidget2MSI
             prj.UI = WUI.WixUI_ProgressOnly;
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
-            prj.Version = new Version(2, 2, 1, 0);
+            prj.Version = new Version(2, 2, 1, 1);
             prj.LicenceFile = LicencePathThisMoment;
 
             Dir installDir = new Dir("%ProgramFiles%");
             Dir root = new Dir(Company);
-            Dir rootProduct = getDir(RootPathThisMoment, Conmplete, "*.dll|*.exe|*.ico|*.png|*.json");
+            Dir rootProduct = getDir(RootPathThisMoment, Conmplete, "*.dll|*.exe|*.ico|*.png|*.json|*.ini");
             rootProduct.Name = Product;
             root.Dirs = new Dir[] { rootProduct };
             installDir.Dirs = new Dir[] { root };
