@@ -19,35 +19,37 @@ namespace WeatherWidget2MSI
 
         static void Main(string[] args)
         {
-            ProductInfo pi = new ProductInfo();
-            pi.Manufacturer = Company;
-            pi.Name = Product;
-            pi.Contact = Owner;
-            pi.Id = Guid.NewGuid().ToString();
-            pi.UrlInfoAbout = "https://ogycode.github.io/WeatherWidget/";
-            pi.UrlUpdateInfo = "https://ogycode.github.io/WeatherWidget/";
-            pi.ProductIcon = ExeIconPathThisMoment;
-            
+            ProductInfo pi = new ProductInfo()
+            {
+                Manufacturer = Company,
+                Name = Product,
+                Contact = Owner,
+                Id = Guid.NewGuid().ToString(),
+                UrlInfoAbout = "https://ogycode.github.io/WeatherWidget/",
+                UrlUpdateInfo = "https://ogycode.github.io/WeatherWidget/",
+                ProductIcon = ExeIconPathThisMoment
+            };
             Feature Conmplete = new Feature("Conmplete", "All files from project for Wiget can work", true);
 
-            Project prj = new Project();
-
-            prj.Name = "Weather Widget 2";
-            prj.UI = WUI.WixUI_ProgressOnly;
-            prj.ControlPanelInfo = pi;
-            prj.GUID = Guid.NewGuid();
-            prj.Version = new Version(2, 2, 1, 1);
-            prj.LicenceFile = LicencePathThisMoment;
+            Project prj = new Project()
+            {
+                Name = "Weather Widget 2",
+                UI = WUI.WixUI_ProgressOnly,
+                ControlPanelInfo = pi,
+                GUID = Guid.NewGuid(),
+                Version = new Version(2, 2, 1, 6),
+                LicenceFile = LicencePathThisMoment
+            };
+            
 
             Dir installDir = new Dir("%ProgramFiles%");
             Dir root = new Dir(Company);
-            Dir rootProduct = getDir(RootPathThisMoment, Conmplete, "*.dll|*.exe|*.ico|*.png|*.json|*.ini");
+            Dir rootProduct = GetDir(RootPathThisMoment, Conmplete, "*.dll|*.exe|*.ico|*.png|*.json|*.ini");
             rootProduct.Name = Product;
             root.Dirs = new Dir[] { rootProduct };
             installDir.Dirs = new Dir[] { root };
 
-            Dir shortcuts = new Dir(@"%Desktop%",
-                        new ExeFileShortcut(Product, $"[INSTALLDIR]{ExeNameThisMoment}", ""));
+            Dir shortcuts = new Dir(@"%Desktop%", new ExeFileShortcut(Product, $"[INSTALLDIR]{ExeNameThisMoment}", ""));
 
             prj.Dirs = new Dir[] { installDir, shortcuts };
 
@@ -55,22 +57,18 @@ namespace WeatherWidget2MSI
             prj.MajorUpgradeStrategy.RemoveExistingProductAfter = Step.InstallInitialize;
             prj.MajorUpgradeStrategy.PreventDowngradingVersions.OnlyDetect = false;
 
-            prj.Actions = new WixSharp.Action[]
-            {
-                //new InstalledFileAction(ExeNameThisMoment, "", Return.ignore, When.After, Step.InstallFinalize, Condition.NOT_Installed)
-                new ManagedAction(CustonActions.RunApp, Return.ignore, When.After, Step.PreviousActionOrInstallFinalize, Condition.NOT_Installed)
-            };
+            prj.Actions = new WixSharp.Action[] { new ManagedAction(CustonActions.RunApp, Return.ignore, When.After, Step.PreviousActionOrInstallFinalize, Condition.NOT_Installed) };
 
             Compiler.BuildMsi(prj);
         }
 
-        static Dir getDir(string path, Feature f, string ex = "*.*")
+        static Dir GetDir(string path, Feature f, string ex = "*.*")
         {
             DirectoryInfo di = new DirectoryInfo(path);
             Dir dir = new Dir(di.Name);
 
             List<WixSharp.File> files = new List<WixSharp.File>();
-            foreach (var item in getFiles(di.FullName, ex, SearchOption.TopDirectoryOnly))
+            foreach (var item in GetFiles(di.FullName, ex, SearchOption.TopDirectoryOnly))
             {
                 files.Add(new WixSharp.File(f, item));
             }
@@ -79,13 +77,13 @@ namespace WeatherWidget2MSI
             List<Dir> dirs = new List<Dir>();
             foreach (var item in di.GetDirectories())
             {
-                dirs.Add(getDir(item.FullName, f, ex));
+                dirs.Add(GetDir(item.FullName, f, ex));
             }
             dir.Dirs = dirs.ToArray();
 
             return dir;
         }
-        static string[] getFiles(string SourceFolder, string Filter, SearchOption searchOption)
+        static string[] GetFiles(string SourceFolder, string Filter, SearchOption searchOption)
         {
             ArrayList alFiles = new ArrayList();
             string[] MultipleFilters = Filter.Split('|');
