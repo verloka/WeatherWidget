@@ -12,10 +12,10 @@ namespace WeatherWidget2MSI
         public const string Company = "Verloka";
         public const string Owner = "Verloka Vadim";
         public const string Product = "Weather Widget 2";
-        public const string RootPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\bin\Release\";
-        public const string ExeIconPathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
+        public const string RootPathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2\bin\Release\";
+        public const string ExeIconPathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
         public const string ExeNameThisMoment = "WeatherWidget2.exe";
-        public const string LicencePathThisMoment = @"C:\Projects\Windows\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
+        public const string LicencePathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
 
         static void Main(string[] args)
         {
@@ -36,7 +36,7 @@ namespace WeatherWidget2MSI
             prj.UI = WUI.WixUI_ProgressOnly;
             prj.ControlPanelInfo = pi;
             prj.GUID = Guid.NewGuid();
-            prj.Version = new Version(2, 1, 2, 17960);
+            prj.Version = new Version(2, 2, 1, 0);
             prj.LicenceFile = LicencePathThisMoment;
 
             Dir installDir = new Dir("%ProgramFiles%");

@@ -71,13 +71,13 @@
                                 </Setter>
                             </Style>
                         </TabControl.Resources>
-                        <TabItem Header="{Binding GeneralTabHome, FallbackValue=home}" Foreground="{DynamicResource WindowTextColor}">
+                        <TabItem x:Name="tabHome" Header="home" Foreground="{DynamicResource WindowTextColor}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="Weather Widget 2" FontSize="28" TextAlignment="Center" />
-                                <TextBlock x:Name="tbWhatNew" Text="{Binding TabHomeWhatNew, FallbackValue=whatnew?}" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{DynamicResource WindowTextLinkColor}" MouseLeftButtonUp="tbWhatNewClick" />
+                                <TextBlock Text="Weather Widget 2" FontSize="28" TextAlignment="Center"/>
+                                <TextBlock x:Name="tbWhatNew" Text="what new?" FontSize="16" TextAlignment="Center" Cursor="Hand" Foreground="{DynamicResource WindowTextLinkColor}" MouseLeftButtonUp="tbWhatNewClick" />
                                 <StackPanel MinWidth="250" Margin="0,25,0,0">
                                     <TextBlock x:Name="tbActiveWidgets" Text="active widgets - 0" Margin="0,5,0,0"/>
-                                    <TextBlock x:Name="tbConnectionStatus" Text="conection status - ok/fail" Margin="0,5,0,0"/>
+                                    <TextBlock x:Name="tbConnectionStatus" Text="..." Margin="0,5,0,0"/>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Name="tbUpdateInfo" Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
                                         <Controls:MetroButton x:Name="btnUpdate" BorderThickness="0" Margin="15,0,0,0" Visibility="Collapsed" HorizontalAlignment="Left" VerticalContentAlignment="Center" Click="btnUpdateClick" />
@@ -85,7 +85,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabWidgets, FallbackValue=widgets}" Foreground="{DynamicResource WindowTextColor}">
+                        <TabItem x:Name="tabWidgets" Header="widgets" Foreground="{DynamicResource WindowTextColor}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40px"/>
@@ -96,40 +96,40 @@
                                 <Controls:IconButton x:Name="bntEditWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconEditButton}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="55,0,0,0" IsEnabled="False" Click="bntEditWidgetClick"/>
                                 <Controls:IconButton x:Name="bntVisibleWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconVisibleButtonVisible}" IconThickness="5" Height="30" VerticalAlignment="Bottom" Margin="90,0,0,0" IsEnabled="False" Click="bntVisibleWidgetClick"/>
                                 <Controls:IconButton x:Name="bntRemoveWidget" Grid.Row="0" Width="30" HorizontalAlignment="Left" Icon="{DynamicResource IconRemoveButton}" IconThickness="6" Height="30" VerticalAlignment="Bottom" Margin="125,0,0,0" IsEnabled="False" Click="bntRemoveWidgetClick"/>
-                                <TextBlock Grid.Row="1" Text="{Binding TabWIdgetsYourWidget, FallbackValue=widgets:}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>
+                                <TextBlock x:Name="tbWidgets" Grid.Row="1" Text="widgets" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" FontSize="18"/>
                                 <ListView x:Name="lvWidgets" Foreground="{DynamicResource WindowTextColor}" Grid.Row="2" Background="{DynamicResource WidgetListBackgroundColor}" BorderBrush="{x:Null}" BorderThickness="0" SelectionChanged="lvWidgetsSelectionChanged"/>
-                                <TextBlock x:Name="tbZeroWidgets" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TabWIdgetsZeroWidgets, FallbackValue=zero}" VerticalAlignment="Center" Margin="20,0" TextAlignment="Center"/>
+                                <TextBlock x:Name="tbZeroWidgets" Grid.Row="2" TextWrapping="Wrap" Text="zero" VerticalAlignment="Center" Margin="20,0" TextAlignment="Center"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabOptions, FallbackValue=options}" Foreground="{DynamicResource WindowTextColor}">
+                        <TabItem x:Name="tabOptions" Header="options" Foreground="{DynamicResource WindowTextColor}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <StackPanel Margin="10,10,10,50">
-                                    <CheckBox x:Name="cbStartup" Content="{Binding TabOptionsAutorun, FallbackValue=startup}" Foreground="{DynamicResource WindowTextColor}"/>
-                                    <CheckBox x:Name="cbExit" Content="{Binding TabOptionsExit, FallbackValue=exit}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
-                                    <CheckBox x:Name="cbAlertInternet" Content="{Binding TabOptionsMsgInet, FallbackValue=internet-message}" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
-                                    <Grid x:Name="gridSettingLanguage" Margin="0,7,0,0" IsEnabled="False">
+                                    <CheckBox x:Name="cbStartup" Content="startup" Foreground="{DynamicResource WindowTextColor}"/>
+                                    <CheckBox x:Name="cbExit" Content="exit" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <CheckBox x:Name="cbAlertInternet" Content="inet msg" Foreground="{DynamicResource WindowTextColor}" Margin="0,7,0,0"/>
+                                    <Grid x:Name="gridSettingLanguage" Margin="0,15,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150px"/>
+                                            <ColumnDefinition Width="175px"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding TabOptionsLanguage, FallbackValue=lang}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                        <ComboBox x:Name="cbLang" Grid.Column="1" Width="200" Height="22"/>
+                                        <TextBlock x:Name="tbLanguage" Text="lang" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                        <ComboBox x:Name="cbLang" Grid.Column="1" Width="200" Height="22" FontSize="14"/>
                                     </Grid>
                                     <Grid x:Name="gridSettingTheme" Margin="0,7,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150px"/>
+                                            <ColumnDefinition Width="175px"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding TabOptionsTheme, FallbackValue=theme}" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-                                        <ComboBox x:Name="cbTheme" Grid.Column="1" Width="200" Height="22">
-                                            <ComboBoxItem Content="{Binding TabOptionsThemeDark, FallbackValue=dark}"/>
-                                            <ComboBoxItem Content="{Binding TabOptionsThemeLight, FallbackValue=light}"/>
+                                        <TextBlock x:Name="tbTheme" Text="theme" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                        <ComboBox x:Name="cbTheme" Grid.Column="1" Width="200" Height="22" FontSize="14">
+                                            <ComboBoxItem x:Name="cbiDark" Content="dark"/>
+                                            <ComboBoxItem x:Name="cbiLight" Content="light"/>
                                         </ComboBox>
                                     </Grid>
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="{Binding GeneralTabInformation, FallbackValue=information}" Foreground="{DynamicResource WindowTextColor}">
+                        <TabItem x:Name="tabInfo" Header="information" Foreground="{DynamicResource WindowTextColor}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="170px"/>

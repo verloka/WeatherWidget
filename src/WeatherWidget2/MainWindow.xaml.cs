@@ -23,11 +23,11 @@ namespace WeatherWidget2
         System.Windows.Forms.NotifyIcon notifyIcon;
         UpdateItem updateContent;
         const string UpdateUrl = "https://ogycode.github.io/WeatherWidget/update.json";
+        int Major = 0, Minor = 0, Build = 0, Revision = 0;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = App.Lang;
             Model.ColorParser.Load();
         }
 
@@ -49,10 +49,10 @@ namespace WeatherWidget2
                     }
                     else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
                         Dispatcher.Invoke(DispatcherPriority.Background,
-                                          new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
+                                          new Action(() => new Alert().ShowDialog(App.Lang["AlertTitle"], App.Lang["AlertNoInternet"])));
                 }
 
-            tbActiveWidgets.Text = $"{App.Lang.TabHomeActiveWidgets}{wstorage.Widgets.Count}";
+            tbActiveWidgets.Text = $"{App.Lang["TabHomeActiveWidgets"]}{wstorage.Widgets.Count}";
             UpdateItemSource();
         }
         public void UpdateData()
@@ -67,7 +67,7 @@ namespace WeatherWidget2
                     }
             }
             else if (App.Settings.GetValue<bool>("ShowAlertInternetMsg"))
-                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet)));
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang["AlertTitle"], App.Lang["AlertNoInternet"])));
         }
         public ImageSource GetIconFromRes(string name)
         {
@@ -101,11 +101,66 @@ namespace WeatherWidget2
              Action(() =>
              {
                  tbConnectionStatus.Text = result ?
-                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionOK}" :
-                                           $"{App.Lang.TabHomeConnection}{App.Lang.TabHomeConnectionNO}";
+                                           $"{App.Lang["TabHomeConnection"]}{App.Lang["TabHomeConnectionOK"]}" :
+                                           $"{App.Lang["TabHomeConnection"]}{App.Lang["TabHomeConnectionNO"]}";
              }));
 
             return result;
+        }
+
+        void GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var version = assembly.GetName().Version;
+            Major = version.Major;
+            Minor = version.Minor;
+            Build = version.Build;
+            Revision = version.Revision;
+        }
+        void SetTray()
+        {
+            if (notifyIcon != null)
+                notifyIcon.Visible = false;
+
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Text = "Weather Widget 2";
+            notifyIcon.Icon = Properties.Resources.AppIcon;
+            notifyIcon.DoubleClick += NotifyIconDoubleClick;
+            notifyIcon.Visible = true;
+            notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            notifyIcon.ContextMenuStrip.Items.Add(App.Lang["NotifyIconUpdate"]).Click += UpdateWidgetClick;
+            notifyIcon.ContextMenuStrip.Items.Add(App.Lang["NotifyIconExit"]).Click += ExitAppClick;
+        }
+        void SetVersionData()
+        {
+            //info tab
+            tbDevInfo.Text = $"{App.Lang["TabInfoDeveloped"]} Verloka";
+            tbVersion.Text = $"{App.Lang["TabInfoVersion"]} {Major}.{Minor}.{Build}.{Revision}";
+        }
+        void SetLocale()
+        {
+            GetConnection();
+
+            tbActiveWidgets.Text = $"{App.Lang["TabHomeActiveWidgets"]}{wstorage?.Widgets.Count}";
+            btnUpdate.Text = App.Lang["TabHomeVersionBtnUpdate"];
+            tbUpdateInfo.Text = App.Lang["TabHomeVersionOK"];
+            tabHome.Header = App.Lang["GeneralTabHome"];
+            tabWidgets.Header = App.Lang["GeneralTabWidgets"];
+            tabOptions.Header = App.Lang["GeneralTabOptions"];
+            tabInfo.Header = App.Lang["GeneralTabInformation"];
+            tbWhatNew.Text = App.Lang["TabHomeWhatNew"];
+            tbWidgets.Text = App.Lang["TabWIdgetsYourWidget"];
+            tbZeroWidgets.Text = App.Lang["TabWIdgetsZeroWidgets"];
+            cbStartup.Content = App.Lang["TabOptionsAutorun"];
+            cbExit.Content = App.Lang["TabOptionsExit"];
+            cbAlertInternet.Content = App.Lang["TabOptionsMsgInet"];
+            tbLanguage.Text = App.Lang["TabOptionsLanguage"];
+            tbTheme.Text = App.Lang["TabOptionsTheme"];
+            cbiDark.Content = App.Lang["TabOptionsThemeDark"];
+            cbiLight.Content = App.Lang["TabOptionsThemeLight"];
+
+            SetVersionData();
+            SetTray();
         }
 
         #region Window Events
@@ -133,6 +188,9 @@ namespace WeatherWidget2
 
         private void mywindowLoaded(object sender, RoutedEventArgs e)
         {
+            GetVersion();
+            SetLocale();
+
             //widget storage
             wstorage = App.Settings.GetValue("widgets", new Model.WidgetStorage());
             wstorage.ListChangded += WstorageListChangded;
@@ -150,8 +208,8 @@ namespace WeatherWidget2
             cbAlertInternet.Click += CbAlertInternetClick;
 
             //lang
-            cbLang.ItemsSource = App.Languages;
-            cbLang.SelectedItem = App.Languages.Where(item => item == App.Settings.GetValue<string>("Language")).First();
+            cbLang.ItemsSource = App.Lang.AvailableLanguages;
+            cbLang.SelectedItem = App.Lang.Current;
             cbLang.SelectionChanged += CbLangSelectionChanged;
 
             //theme
@@ -167,22 +225,6 @@ namespace WeatherWidget2
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 
-            //set notyfi
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Text = "Weather Widget 2";
-            notifyIcon.Icon = Properties.Resources.AppIcon;
-            notifyIcon.DoubleClick += NotifyIconDoubleClick;
-            notifyIcon.Visible = true;
-            notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            notifyIcon.ContextMenuStrip.Items.Add(App.Lang.NotifyIconUpdate).Click += UpdateWidgetClick;
-            notifyIcon.ContextMenuStrip.Items.Add(App.Lang.NotifyIconExit).Click += ExitAppClick;
-
-            //info tab
-            tbDevInfo.Text = $"{App.Lang.TabInfoDeveloped} Verloka";
-            var assembly = Assembly.GetExecutingAssembly();
-            var version = assembly.GetName().Version;
-            tbVersion.Text = $"{App.Lang.TabInfoVersion} {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-
             //app exit
             Application.Current.Exit += CurrentExit;
 
@@ -195,13 +237,17 @@ namespace WeatherWidget2
             using (UpdateClient updateClient = new UpdateClient(UpdateUrl))
             {
                 updateClient.NewVersion += UpdateClientNewVersion;
-                btnUpdate.Text = App.Lang.TabHomeVersionBtnUpdate;
-                tbUpdateInfo.Text = App.Lang.TabHomeVersionOK;
                 if (GetConnection())
-                    updateClient.Check(new Verloka.HelperLib.Update.Version(version.Major, version.Minor, version.Build, version.Revision));
+                    updateClient.Check(new Verloka.HelperLib.Update.Version(Major, Minor, Build, Revision));
             }
 
+            App.Lang.LanguageChanged += LangLanguageChanged;
+
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+        }
+        private void LangLanguageChanged(Verloka.HelperLib.Localization.Manager obj)
+        {
+            SetLocale();
         }
         private void ExitAppClick(object sender, EventArgs e)
         {
@@ -213,12 +259,12 @@ namespace WeatherWidget2
         }
         private void CbLangSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            App.Settings["Language"] = cbLang.SelectedItem as string;
-            App.UpdateLang(App.Settings.GetValue("Language", "English"));
+            App.Lang.SetCurrent((cbLang.SelectedItem as Verloka.HelperLib.Localization.Language).Code);
+            App.Settings["LanguageCode"] = App.Lang.Current.Code;
         }
         private void UpdateClientNewVersion(UpdateItem obj)
         {
-            tbUpdateInfo.Text = App.Lang.TabHomeVersionNO;
+            tbUpdateInfo.Text = App.Lang["TabHomeVersionNO"];
             btnUpdate.Visibility = Visibility.Visible;
             updateContent = obj;
         }
@@ -265,7 +311,7 @@ namespace WeatherWidget2
         private void WstorageListChangded()
         {
             App.Settings["widgets"] = wstorage;
-            tbActiveWidgets.Text = $"{App.Lang.TabHomeActiveWidgets}{wstorage.Widgets.Count}";
+            tbActiveWidgets.Text = $"{App.Lang["TabHomeActiveWidgets"]}{wstorage.Widgets.Count}";
             UpdateItemSource();
         }
         private void bntAddWidgetClick()
@@ -276,7 +322,7 @@ namespace WeatherWidget2
                 wf.Show();
             }
             else
-                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang["AlertTitle"], App.Lang["AlertNeedInternet"])));
         }
         private void lvWidgetsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -326,7 +372,7 @@ namespace WeatherWidget2
                 wf.Show();
             }
             else
-                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNeedInternet)));
+                Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang["AlertTitle"], App.Lang["AlertNeedInternet"])));
         }
         private void btnUpdateClick()
         {

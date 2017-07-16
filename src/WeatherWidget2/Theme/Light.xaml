@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     x:Name="ThemeDictionary">
-    <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#HelveticaNeueCyr</FontFamily>
+
+    <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#Comfortaa Light</FontFamily>
 
     <SolidColorBrush x:Key="WindowBackgroundColor" Color="#eeeef2"/>
     <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="Black"/>

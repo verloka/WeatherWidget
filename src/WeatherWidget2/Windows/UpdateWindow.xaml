@@ -11,6 +11,7 @@
         WindowStyle="None" 
         Background="{x:Null}"
         Closing="mywindow_Closing"
+        Loaded="mywindow_Loaded"
         AllowsTransparency="True"
         x:Name="mywindow" 
         SizeToContent="WidthAndHeight"
@@ -33,7 +34,7 @@
                 </Grid>
                 <Grid x:Name="gridBody" Margin="0,50,0,0" >
                     <StackPanel >
-                        <TextBlock Text="{Binding UpdateWindowMessage, FallbackValue=wait}" Foreground="{DynamicResource WindowTextColor}" Margin="10" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="tbWait" Text="wait" Foreground="{DynamicResource WindowTextColor}" Margin="10" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <ProgressBar x:Name="pbProgress" Margin="10,5,10,15" Height="24" SmallChange="1"/>
                     </StackPanel>
                 </Grid>

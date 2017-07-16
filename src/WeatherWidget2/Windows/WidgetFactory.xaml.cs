@@ -24,13 +24,11 @@ namespace WeatherWidget2.Windows
         public WidgetFactory(MainWindow mw)
         {
             InitializeComponent();
-            DataContext = App.Lang;
             this.mw = mw;
         }
         public WidgetFactory(MainWindow mw, Widget widget)
         {
             InitializeComponent();
-            DataContext = App.Lang;
             this.mw = mw;
             this.widget = new Widget(widget);
             copy = widget;
@@ -64,6 +62,28 @@ namespace WeatherWidget2.Windows
                 cbWidgetViewCurrent.SelectedIndex = widget.ViewCode;
             else
                 cbWidgetViewForecast.SelectedIndex = widget.ViewCode - 100;
+        }
+        void SetLocale()
+        {
+            Title = EditMode ?  App.Lang["WidgetFactoryTitleEdit"] : App.Lang["WidgetFactoryTitle"];
+            btnAdd.Text = EditMode ? App.Lang["WidgetFactoryEditWidget"] : App.Lang["WidgetFactoryAddWidget"];
+            tbWidgetNameString.Text = App.Lang["WidgetFactoryWidgetName"];
+            tbType.Text = App.Lang["WidgetFactoryType"];
+            cbiDaily.Content = App.Lang["WidgetFactoryTypeDaily"];
+            cbiForecast.Content = App.Lang["WidgetFactoryTypeForecast"];
+            tbMeasure.Text = App.Lang["WidgetFactoryTypeMeasures"];
+            cbiMetric.Content = App.Lang["WidgetFactoryTypeMetrical"];
+            cbiImperial.Content = App.Lang["WidgetFactoryTypeImperial"];
+            tbSize.Text = App.Lang["WidgetFactoryTypeSize"];
+            cbiBig.Content = App.Lang["WidgetFactoryTypeSizeBig"];
+            cbiMedium.Content = App.Lang["WidgetFactoryTypeSizeMedium"];
+            cbiSmall.Content = App.Lang["WidgetFactoryTypeSizeSmall"];
+            tbColor.Text = App.Lang["WidgetFactoryTextColor"];
+            tbIcons.Text = App.Lang["WidgetFactoryTypeIconTheme"];
+            tbAtention.Text = App.Lang["WidgetFactoryCountryAtention"];
+            tbCountry.Text = App.Lang["WidgetFactoryContry"];
+            tbCity.Text = App.Lang["WidgetFactoryCity"];
+            tbView.Text = App.Lang["WidgetFactoryView"];
         }
 
         #region Window Events
@@ -109,7 +129,8 @@ namespace WeatherWidget2.Windows
                 SetVisibleByType();
             }
 
-            btnAdd.Text = EditMode ? App.Lang.WidgetFactoryEditWidget : App.Lang.WidgetFactoryAddWidget;
+            SetLocale();
+            
 
             cbMeasure.SelectionChanged += CbMeasureSelectionChanged;
             cbSize.SelectionChanged += CbSizeSelectionChanged;
@@ -123,6 +144,13 @@ namespace WeatherWidget2.Windows
 
             widget.CreateWindow();
             widget.SetEditMode(true);
+
+            App.Lang.LanguageChanged += LangLanguageChanged;
+        }
+
+        private void LangLanguageChanged(Verloka.HelperLib.Localization.Manager obj)
+        {
+            SetLocale();
         }
         private void CbWidgetViewForecastSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

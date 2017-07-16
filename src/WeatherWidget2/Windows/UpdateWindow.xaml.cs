@@ -13,7 +13,6 @@ namespace WeatherWidget2.Windows
         public UpdateWindow(UpdateItem item)
         {
             InitializeComponent();
-            DataContext = App.Lang;
 
             using (DownloadClient dc = new DownloadClient(item.Files, path))
             {
@@ -41,6 +40,11 @@ namespace WeatherWidget2.Windows
         }
         #endregion
 
+        private void mywindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Title = App.Lang["UpdateWindowTitle"];
+            tbWait.Text = App.Lang["UpdateWindowMessage"];
+        }
         private void mywindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!Update)
