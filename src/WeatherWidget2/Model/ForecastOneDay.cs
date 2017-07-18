@@ -88,7 +88,7 @@ namespace WeatherWidget2.Model
         {
             switch (degre)
             {
-                case int i when i > 348 &&  i < 11:
+                case int i when i > 348 ||  i < 11:
                     return "N";
                 case int i when i > 11 && i < 34:
                     return "NNE";
