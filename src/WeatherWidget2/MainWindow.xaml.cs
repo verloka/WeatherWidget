@@ -219,7 +219,7 @@ namespace WeatherWidget2
             cbExit.Click += CbExitClick;
 
             //set timer
-            timer = new System.Timers.Timer(GetInMilisec(15d));
+            timer = new System.Timers.Timer(GetInMilisec(30d));
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 
@@ -243,9 +243,12 @@ namespace WeatherWidget2
             if (!l)
                 return;
 
-            DownloadClient dc = new DownloadClient();
-            dc.DownloadCompleted += DcDownloadCompleted;
-            dc.DownloadFile(updateManager.Last.GetZIP(), ARCHIVE_TEMP);
+            if(updateManager.IsAvailable(version))
+            {
+                DownloadClient dc = new DownloadClient();
+                dc.DownloadCompleted += DcDownloadCompleted;
+                dc.DownloadFile(updateManager.Last.GetZIP(), ARCHIVE_TEMP);
+            }
         }
         private async void DcDownloadCompleted()
         {
@@ -293,7 +296,7 @@ namespace WeatherWidget2
             UpdateData();
 
             App.Settings["UpdateCurrentState"] = App.Settings.GetValue("UpdateCurrentState", 0) + 1;
-            if (App.Settings.GetValue<int>("UpdateCurrentState") > App.Settings.GetValue<int>("UpdateCurrentMaxState"))
+            if (App.Settings.GetValue<int>("UpdateCurrentState") >= App.Settings.GetValue("UpdateCurrentMax", 1))
                 await updateManager.LoadFromWeb();
         }
         private void CbThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
