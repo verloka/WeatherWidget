@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using System.IO;
 using WixSharp;
 
-namespace WeatherWidget2MSI
+namespace setup
 {
     class Program
     {
-        public const string Company = "Verloka";
-        public const string Owner = "Verloka Vadim";
-        public const string Product = "Weather Widget 2";
-        public const string RootPathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2\bin\Release\";
+        public const string Company = "Verloka";                        //Company name
+        public const string Owner = "Verloka Vadim";                    //Publisher name
+        public const string Product = "Weather Widget 2";               //Application name
+        public const string ExeNameThisMoment = "Launcher.exe";         //EXE name, what launch app
+        public static Version version = new Version(2, 3, 0, 0);        //Veriosn of app
+
+        public const string RootPathThisMoment = @"C:\Users\verlo\Desktop\app\";
         public const string ExeIconPathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";
-        public const string ExeNameThisMoment = "WeatherWidget2.exe";
         public const string LicencePathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2MSI\Lic.rtf";
 
         static void Main(string[] args)
@@ -33,16 +35,17 @@ namespace WeatherWidget2MSI
 
             Project prj = new Project()
             {
-                Name = "Weather Widget 2",
+                Name = Product,
                 UI = WUI.WixUI_ProgressOnly,
                 ControlPanelInfo = pi,
                 GUID = Guid.NewGuid(),
-                Version = new Version(2, 2, 1, 6),
+                Version = version,
                 LicenceFile = LicencePathThisMoment
             };
-            
 
-            Dir installDir = new Dir("%ProgramFiles%");
+
+
+            Dir installDir = new Dir(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             Dir root = new Dir(Company);
             Dir rootProduct = GetDir(RootPathThisMoment, Conmplete, "*.dll|*.exe|*.ico|*.png|*.json|*.ini");
             rootProduct.Name = Product;

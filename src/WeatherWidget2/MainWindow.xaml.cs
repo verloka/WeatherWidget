@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Windows;
@@ -17,13 +17,16 @@ namespace WeatherWidget2
 {
     public partial class MainWindow : Window
     {
+        const string UPDATE_URL = "https://ogycode.github.io/WeatherWidget/update.ini";
+        readonly string ARCHIVE_TEMP = $@"{Path.GetTempPath()}\{Guid.NewGuid().ToString()}.zip";
+        readonly string PARENT_PATH = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
+
         public Model.WidgetStorage wstorage;
+        public Manager updateManager;
+        public Verloka.HelperLib.Update.Version version;
 
         System.Timers.Timer timer;
         System.Windows.Forms.NotifyIcon notifyIcon;
-        UpdateItem updateContent;
-        const string UpdateUrl = "https://ogycode.github.io/WeatherWidget/update.json";
-        int Major = 0, Minor = 0, Build = 0, Revision = 0;
 
         public MainWindow()
         {
@@ -111,11 +114,8 @@ namespace WeatherWidget2
         void GetVersion()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var version = assembly.GetName().Version;
-            Major = version.Major;
-            Minor = version.Minor;
-            Build = version.Build;
-            Revision = version.Revision;
+            var v = assembly.GetName().Version;
+            version = new Verloka.HelperLib.Update.Version(v.Major, v.Minor, v.Build, v.Revision);
         }
         void SetTray()
         {
@@ -135,15 +135,13 @@ namespace WeatherWidget2
         {
             //info tab
             tbDevInfo.Text = $"{App.Lang["TabInfoDeveloped"]} Verloka";
-            tbVersion.Text = $"{App.Lang["TabInfoVersion"]} {Major}.{Minor}.{Build}.{Revision}";
+            tbVersion.Text = $"{App.Lang["TabInfoVersion"]} {version.GetMajor()}.{version.GetMinor()}.{version.GetBuild()}.{version.GetRevision()}";
         }
         void SetLocale()
         {
             GetConnection();
 
             tbActiveWidgets.Text = $"{App.Lang["TabHomeActiveWidgets"]}{wstorage?.Widgets.Count}";
-            btnUpdate.Text = App.Lang["TabHomeVersionBtnUpdate"];
-            tbUpdateInfo.Text = App.Lang["TabHomeVersionOK"];
             tabHome.Header = App.Lang["GeneralTabHome"];
             tabWidgets.Header = App.Lang["GeneralTabWidgets"];
             tabOptions.Header = App.Lang["GeneralTabOptions"];
@@ -186,7 +184,7 @@ namespace WeatherWidget2
         }
         #endregion
 
-        private void mywindowLoaded(object sender, RoutedEventArgs e)
+        private async void mywindowLoaded(object sender, RoutedEventArgs e)
         {
             GetVersion();
             SetLocale();
@@ -227,23 +225,33 @@ namespace WeatherWidget2
 
             //app exit
             Application.Current.Exit += CurrentExit;
-
-            //load widgets
-            Load(false);
-            //load weather data
-            UpdateData();
+            
+            Load(false);        //load widgets
+            UpdateData();       //load weather data
 
             //check update
-            using (UpdateClient updateClient = new UpdateClient(UpdateUrl))
-            {
-                updateClient.NewVersion += UpdateClientNewVersion;
-                if (GetConnection())
-                    updateClient.Check(new Verloka.HelperLib.Update.Version(Major, Minor, Build, Revision));
-            }
+            updateManager = new Manager(UPDATE_URL);
+            updateManager.DataLoaded += UpdateManagerDataLoaded;
+            await updateManager.LoadFromWeb();
 
             App.Lang.LanguageChanged += LangLanguageChanged;
 
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+        }
+        private void UpdateManagerDataLoaded(bool l)
+        {
+            if (!l)
+                return;
+
+            DownloadClient dc = new DownloadClient();
+            dc.DownloadCompleted += DcDownloadCompleted;
+            dc.DownloadFile(updateManager.Last.GetZIP(), ARCHIVE_TEMP);
+        }
+        private async void DcDownloadCompleted()
+        {
+            await Worker.Unarchive(ARCHIVE_TEMP, $@"{PARENT_PATH}\{updateManager.Last.GetVersionNumber()}");
+            Process.Start($@"{PARENT_PATH}\{"Launcher.exe"}");
+            Environment.Exit(0);
         }
         private void LangLanguageChanged(Verloka.HelperLib.Localization.Manager obj)
         {
@@ -261,12 +269,6 @@ namespace WeatherWidget2
         {
             App.Lang.SetCurrent((cbLang.SelectedItem as Verloka.HelperLib.Localization.Language).Code);
             App.Settings["LanguageCode"] = App.Lang.Current.Code;
-        }
-        private void UpdateClientNewVersion(UpdateItem obj)
-        {
-            tbUpdateInfo.Text = App.Lang["TabHomeVersionNO"];
-            btnUpdate.Visibility = Visibility.Visible;
-            updateContent = obj;
         }
         private void CbExitClick(object sender, RoutedEventArgs e)
         {
@@ -286,9 +288,13 @@ namespace WeatherWidget2
             timer.Dispose();
             timer = null;
         }
-        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private async void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             UpdateData();
+
+            App.Settings["UpdateCurrentState"] = App.Settings.GetValue("UpdateCurrentState", 0) + 1;
+            if (App.Settings.GetValue<int>("UpdateCurrentState") > App.Settings.GetValue<int>("UpdateCurrentMaxState"))
+                await updateManager.LoadFromWeb();
         }
         private void CbThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -373,16 +379,6 @@ namespace WeatherWidget2
             }
             else
                 Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => new Alert().ShowDialog(App.Lang["AlertTitle"], App.Lang["AlertNeedInternet"])));
-        }
-        private void btnUpdateClick()
-        {
-            if (updateContent == null)
-                return;
-
-            notifyIcon.Visible = false;
-            Hide();
-
-            new UpdateWindow(updateContent).Show();
         }
         private void tbWhatNewClick(object sender, MouseButtonEventArgs e)
         {

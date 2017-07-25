@@ -64,8 +64,8 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="HelperLib, Version=1.4.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Verloka.HelperLib.1.4.0.2\lib\net452\HelperLib.dll</HintPath>
+    <Reference Include="HelperLib, Version=1.4.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Verloka.HelperLib.1.4.0.4\lib\net452\HelperLib.dll</HintPath>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -124,9 +124,6 @@
     <Compile Include="Model\WidgetStorage.cs" />
     <Compile Include="Windows\Alert.xaml.cs">
       <DependentUpon>Alert.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\UpdateWindow.xaml.cs">
-      <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Win32.cs" />
     <Compile Include="Windows\WidgetFactory.xaml.cs">
@@ -187,10 +184,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Alert.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\UpdateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

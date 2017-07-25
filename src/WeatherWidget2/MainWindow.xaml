@@ -78,10 +78,6 @@
                                 <StackPanel MinWidth="250" Margin="0,25,0,0">
                                     <TextBlock x:Name="tbActiveWidgets" Text="active widgets - 0" Margin="0,5,0,0"/>
                                     <TextBlock x:Name="tbConnectionStatus" Text="..." Margin="0,5,0,0"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Name="tbUpdateInfo" Text="latest versinon - in using/need update" Margin="0,5,0,0"/>
-                                        <Controls:MetroButton x:Name="btnUpdate" BorderThickness="0" Margin="15,0,0,0" Visibility="Collapsed" HorizontalAlignment="Left" VerticalContentAlignment="Center" Click="btnUpdateClick" />
-                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </TabItem>
