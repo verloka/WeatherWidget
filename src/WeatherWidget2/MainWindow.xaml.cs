@@ -134,7 +134,7 @@ namespace WeatherWidget2
         void SetVersionData()
         {
             //info tab
-            tbDevInfo.Text = $"{App.Lang["TabInfoDeveloped"]} Verloka";
+            tbDevInfo.Text = $"{App.Lang["TabInfoDeveloped"]}Verloka";
             tbVersion.Text = $"{App.Lang["TabInfoVersion"]} {version.GetMajor()}.{version.GetMinor()}.{version.GetBuild()}.{version.GetRevision()}";
         }
         void SetLocale()
@@ -156,9 +156,21 @@ namespace WeatherWidget2
             tbTheme.Text = App.Lang["TabOptionsTheme"];
             cbiDark.Content = App.Lang["TabOptionsThemeDark"];
             cbiLight.Content = App.Lang["TabOptionsThemeLight"];
+            tbUpdatePeriod.Text = App.Lang["tbUpdatePeriod"];
+            cbOften1.Content = App.Lang["cbOften1"];
+            cbOften2.Content = App.Lang["cbOften2"];
+            cbOften3.Content = App.Lang["cbOften3"];
 
             SetVersionData();
             SetTray();
+        }
+        async void CheckUpdate()
+        {
+            if (GetConnection())
+            {
+                App.Settings["UpdateCurrentState"] = 0;
+                await updateManager.LoadFromWeb();
+            }
         }
 
         #region Window Events
@@ -184,7 +196,7 @@ namespace WeatherWidget2
         }
         #endregion
 
-        private async void mywindowLoaded(object sender, RoutedEventArgs e)
+        private void mywindowLoaded(object sender, RoutedEventArgs e)
         {
             GetVersion();
             SetLocale();
@@ -223,27 +235,63 @@ namespace WeatherWidget2
             timer.Elapsed += TimerElapsed;
             timer.Enabled = true;
 
+            //set update period
+            switch (App.Settings.GetValue("UpdateCurrentMax", 5))
+            {
+                case 1:
+                default:
+                    cbUpdatePeriod.SelectedIndex = 0;
+                    break;
+                case 5:
+                    cbUpdatePeriod.SelectedIndex = 1;
+                    break;
+                case 10:
+                    cbUpdatePeriod.SelectedIndex = 2;
+                    break;
+            }
+            cbUpdatePeriod.SelectionChanged += CbUpdatePeriodSelectionChanged;
+
             //app exit
             Application.Current.Exit += CurrentExit;
-            
+
             Load(false);        //load widgets
             UpdateData();       //load weather data
 
             //check update
             updateManager = new Manager(UPDATE_URL);
             updateManager.DataLoaded += UpdateManagerDataLoaded;
-            await updateManager.LoadFromWeb();
+            CheckUpdate();
 
             App.Lang.LanguageChanged += LangLanguageChanged;
 
             //new Alert().ShowDialog(App.Lang.AlertTitle, App.Lang.AlertNoInternet);
+        }
+
+        private void CbUpdatePeriodSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbUpdatePeriod.SelectedIndex == -1)
+                return;
+
+            switch (cbUpdatePeriod.SelectedIndex)
+            {
+                case 0:
+                default:
+                    App.Settings["UpdateCurrentMax"] = 1;
+                    break;
+                case 1:
+                    App.Settings["UpdateCurrentMax"] = 5;
+                    break;
+                case 2:
+                    App.Settings["UpdateCurrentMax"] = 10;
+                    break;
+            }
         }
         private void UpdateManagerDataLoaded(bool l)
         {
             if (!l)
                 return;
 
-            if(updateManager.IsAvailable(version))
+            if (updateManager.IsAvailable(version))
             {
                 DownloadClient dc = new DownloadClient();
                 dc.DownloadCompleted += DcDownloadCompleted;
@@ -253,7 +301,7 @@ namespace WeatherWidget2
         private async void DcDownloadCompleted()
         {
             await Worker.Unarchive(ARCHIVE_TEMP, $@"{PARENT_PATH}\{updateManager.Last.GetVersionNumber()}");
-            Process.Start($@"{PARENT_PATH}\{"Launcher.exe"}");
+            Process.Start($@"{PARENT_PATH}\{"Launcher.exe"}", "-silent");
             Environment.Exit(0);
         }
         private void LangLanguageChanged(Verloka.HelperLib.Localization.Manager obj)
@@ -267,6 +315,7 @@ namespace WeatherWidget2
         private void UpdateWidgetClick(object sender, EventArgs e)
         {
             UpdateData();
+            CheckUpdate();
         }
         private void CbLangSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -291,13 +340,13 @@ namespace WeatherWidget2
             timer.Dispose();
             timer = null;
         }
-        private async void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             UpdateData();
 
             App.Settings["UpdateCurrentState"] = App.Settings.GetValue("UpdateCurrentState", 0) + 1;
-            if (App.Settings.GetValue<int>("UpdateCurrentState") >= App.Settings.GetValue("UpdateCurrentMax", 1))
-                await updateManager.LoadFromWeb();
+            if (App.Settings.GetValue<int>("UpdateCurrentState") >= App.Settings.GetValue<int>("UpdateCurrentMax"))
+                CheckUpdate();
         }
         private void CbThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -315,7 +364,7 @@ namespace WeatherWidget2
             if (!cbStartup.IsChecked.Value)
                 key.DeleteValue("Weather Widget 2", false);
             else
-                key.SetValue("Weather Widget 2", $"\"{Assembly.GetExecutingAssembly().Location}\" -silent");
+                key.SetValue("Weather Widget 2", $"\"{PARENT_PATH}\\Launcher.exe\" -silent");
         }
         private void WstorageListChangded()
         {

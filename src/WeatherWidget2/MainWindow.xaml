@@ -122,6 +122,18 @@
                                             <ComboBoxItem x:Name="cbiLight" Content="light"/>
                                         </ComboBox>
                                     </Grid>
+                                    <Grid x:Name="gridUpdatePeriod" Margin="0,7,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="175px"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="tbUpdatePeriod" Text="update" Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+                                        <ComboBox x:Name="cbUpdatePeriod" Grid.Column="1" Width="200" Height="22" FontSize="14">
+                                            <ComboBoxItem x:Name="cbOften1" Content="often"/>
+                                            <ComboBoxItem x:Name="cbOften2" Content="normally (recomended)"/>
+                                            <ComboBoxItem x:Name="cbOften3" Content="infrequently"/>
+                                        </ComboBox>
+                                    </Grid>
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
