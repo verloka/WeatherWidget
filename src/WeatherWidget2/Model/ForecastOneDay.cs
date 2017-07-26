@@ -89,37 +89,37 @@ namespace WeatherWidget2.Model
             switch (degre)
             {
                 case int i when i > 348 ||  i < 11:
-                    return "N";
+                    return App.Lang["N"];
                 case int i when i > 11 && i < 34:
-                    return "NNE";
+                    return App.Lang["NNE"];
                 case int i when i > 34 && i < 55:
-                    return "NE";
+                    return App.Lang["NE"];
                 case int i when i > 55 && i < 79:
-                    return "ENE";
+                    return App.Lang["ENE"];
                 case int i when i > 79 && i < 101:
-                    return "E";
+                    return App.Lang["E"];
                 case int i when i > 101 && i < 124:
-                    return "ESE";
+                    return App.Lang["ESE"];
                 case int i when i > 124 && i < 146:
-                    return "SE";
+                    return App.Lang["SE"];
                 case int i when i > 146 && i < 169:
-                    return "SSE";
+                    return App.Lang["SSE"];
                 case int i when i > 169 && i < 191:
-                    return "S";
+                    return App.Lang["S"];
                 case int i when i > 191 && i < 204:
-                    return "SSW";
+                    return App.Lang["SSW"];
                 case int i when i > 204 && i < 234:
-                    return "SW";
+                    return App.Lang["SW"];
                 case int i when i > 234 && i < 259:
-                    return "WDW";
+                    return App.Lang["WDW"];
                 case int i when i > 259 && i < 281:
-                    return "W";
+                    return App.Lang["W"];
                 case int i when i > 281 && i < 304:
-                    return "WNW";
+                    return App.Lang["WNW"];
                 case int i when i > 304 && i < 326:
-                    return "NW";
+                    return App.Lang["NW"];
                 case int i when i > 326 && i < 348:
-                    return "NNW";
+                    return App.Lang["NNW"];
                 default:
                     break;
             }

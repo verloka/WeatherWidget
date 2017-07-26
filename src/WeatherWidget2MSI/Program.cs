@@ -13,7 +13,7 @@ namespace setup
         public const string Owner = "Verloka Vadim";                    //Publisher name
         public const string Product = "Weather Widget 2";               //Application name
         public const string ExeNameThisMoment = "Launcher.exe";         //EXE name, what launch app
-        public static Version version = new Version(2, 3, 0, 2);        //Veriosn of app
+        public static Version version = new Version(2, 3, 0, 3);        //Veriosn of app
 
         public const string RootPathThisMoment = @"C:\Users\verlo\Desktop\app\";
         public const string ExeIconPathThisMoment = @"C:\Projects\App\WeatherWidget\src\WeatherWidget2\Icons\AppIcon.ico";

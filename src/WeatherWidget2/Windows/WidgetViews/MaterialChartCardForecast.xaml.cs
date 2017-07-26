@@ -64,12 +64,12 @@ namespace WeatherWidget2.Windows.WidgetViews
             bitmap.EndInit();
             imgIcon.Source = bitmap;
 
-            tbPress.Text = day == 0 ? $"Pressure {Days[day].GetCurrentPressure()} hPa" : $"Pressure {Days[day].GetDayPressure()} hPa";
-            tbHumi.Text = day == 0 ? $"Humidity {Days[day].GetCurrentHumidity()} %" : $"Humidity {Days[day].GetDayHumidity()} %";
+            tbPress.Text = day == 0 ? $"{App.Lang["Pressure"]} {Days[day].GetCurrentPressure()} {App.Lang["mmHG"]}" : $"{App.Lang["Pressure"]} {Days[day].GetDayPressure()} {App.Lang["mmHG"]}";
+            tbHumi.Text = day == 0 ? $"{App.Lang["Humidity"]} {Days[day].GetCurrentHumidity()} %" : $"{App.Lang["Humidity"]} {Days[day].GetDayHumidity()} %";
             tbCondi.Text = day == 0 ? Days.LastOrDefault().GetCurrentCondition() : Days[day].GetDayCondition();
             tbThemp.Text = day == 0 ? $"{Days.LastOrDefault().GetCurrentValue()} {sign}" : $"{Days[day].GetDayValue()} {sign}";
-            tbWind.Text = day == 0 ? $"Wind {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" :
-                                     $"Wind {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
+            tbWind.Text = day == 0 ? $"{App.Lang["Wind"]} {Days[day].GetCurrentWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetCurrentWindDeg())}" :
+                                     $"{App.Lang["Wind"]} {Days[day].GetDayWindSpeed()} {windSign}, {ForecastOneDay.GetSideCode(Days[day].GetDayWindDeg())}";
         }
         public void SetupButtons(int day)
         {

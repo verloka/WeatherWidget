@@ -307,6 +307,7 @@ namespace WeatherWidget2
         private void LangLanguageChanged(Verloka.HelperLib.Localization.Manager obj)
         {
             SetLocale();
+            UpdateData();
         }
         private void ExitAppClick(object sender, EventArgs e)
         {

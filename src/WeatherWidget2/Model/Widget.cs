@@ -150,7 +150,7 @@ namespace WeatherWidget2.Model
                     days.Add(item.Value);
 
                 string tempSign = WidgetMeasure == Measure.Metric ? "°C" : "°F";
-                string windSign = WidgetMeasure == Measure.Metric ? "meter/sec" : "miles/hour";
+                string windSign = WidgetMeasure == Measure.Metric ? App.Lang["ms"] : App.Lang["mh"];
 
                 dic.Add("IconF", weather.Current.WeatherList[0].Icon);
                 dic.Add("ThemperatureF", Weather.GetTemperature(weather.Current.Main.Temperature, WidgetMeasure));
@@ -248,19 +248,19 @@ namespace WeatherWidget2.Model
             switch (d)
             {
                 case DayOfWeek.Sunday:
-                    return "Sun";
+                    return App.Lang["Sun"];
                 case DayOfWeek.Monday:
-                    return "Mon";
+                    return App.Lang["Mon"];
                 case DayOfWeek.Tuesday:
-                    return "Tue";
+                    return App.Lang["Tue"];
                 case DayOfWeek.Wednesday:
-                    return "Wed";
+                    return App.Lang["Wed"];
                 case DayOfWeek.Thursday:
-                    return "Thu";
+                    return App.Lang["Thu"];
                 case DayOfWeek.Friday:
-                    return "Fri";
+                    return App.Lang["Fri"];
                 case DayOfWeek.Saturday:
-                    return "Sat";
+                    return App.Lang["Sat"];
                 default:
                     return "";
             }
