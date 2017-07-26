@@ -18,7 +18,7 @@ namespace WeatherWidget2
     public partial class MainWindow : Window
     {
         const string UPDATE_URL = "https://ogycode.github.io/WeatherWidget/update.ini";
-        readonly string ARCHIVE_TEMP = $@"{Path.GetTempPath()}\{Guid.NewGuid().ToString()}.zip";
+        readonly string ARCHIVE_TEMP = $@"{Path.GetTempPath()}{Guid.NewGuid().ToString()}.zip";
         readonly string PARENT_PATH = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
 
         public Model.WidgetStorage wstorage;
@@ -295,8 +295,15 @@ namespace WeatherWidget2
             {
                 DownloadClient dc = new DownloadClient();
                 dc.DownloadCompleted += DcDownloadCompleted;
-                dc.DownloadFile(updateManager.Last.GetZIP(), ARCHIVE_TEMP);
+                dc.WebException += DcWebException;
+                string zip = updateManager.Last.GetZIP().Replace('\r', ' ');
+                zip = zip.Replace('\n', ' ');
+                dc.DownloadFile(zip, ARCHIVE_TEMP);
             }
+        }
+        private void DcWebException(WebException obj)
+        {
+
         }
         private async void DcDownloadCompleted()
         {
