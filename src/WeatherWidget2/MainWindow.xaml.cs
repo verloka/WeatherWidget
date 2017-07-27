@@ -156,10 +156,16 @@ namespace WeatherWidget2
             tbTheme.Text = App.Lang["TabOptionsTheme"];
             cbiDark.Content = App.Lang["TabOptionsThemeDark"];
             cbiLight.Content = App.Lang["TabOptionsThemeLight"];
+            cbiPurple.Content = App.Lang["Purple"];
+            cbiRed.Content = App.Lang["Red"];
+            cbiIndigo.Content = App.Lang["Indigo"];
+            cbiCyan.Content = App.Lang["Cyan"];
+            cbiAmber.Content = App.Lang["Amber"];
             tbUpdatePeriod.Text = App.Lang["tbUpdatePeriod"];
             cbOften1.Content = App.Lang["cbOften1"];
             cbOften2.Content = App.Lang["cbOften2"];
             cbOften3.Content = App.Lang["cbOften3"];
+            cbOften4.Content = App.Lang["cbOften4"];
 
             SetVersionData();
             SetTray();
@@ -283,6 +289,9 @@ namespace WeatherWidget2
                     break;
                 case 2:
                     App.Settings["UpdateCurrentMax"] = 10;
+                    break;
+                case 3:
+                    App.Settings["UpdateCurrentMax"] = int.MaxValue;
                     break;
             }
         }

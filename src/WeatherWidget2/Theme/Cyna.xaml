@@ -4,26 +4,26 @@
 
     <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#Comfortaa Light</FontFamily>
 
-    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#eeeef2"/>
-    <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="Black"/>
-    <SolidColorBrush x:Key="WindowHeadTextColor" Color="#525252"/>
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#00BCD4"/>
+    <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="White"/>
+    <SolidColorBrush x:Key="WindowHeadTextColor" Color="#F0F0F0"/>
 
     <!-- //identy 1-->
-    <SolidColorBrush x:Key="WindowBorderColor" Color="#865fc5"/>
+    <SolidColorBrush x:Key="WindowBorderColor" Color="#E0F7FA"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
-    
+
     <SolidColorBrush x:Key="WindowAlertBorderColor" Color="#e74c3c"/>
     <SolidColorBrush x:Key="WindowUpdateBorderColor" Color="#2ecc71"/>
-    <SolidColorBrush x:Key="WindowTextColor" Color="Black"/>
-    <SolidColorBrush x:Key="WindowTextLinkColor" Color="#6ce26c"/>
-    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="White"/>
+    <SolidColorBrush x:Key="WindowTextColor" Color="White"/>
+    <SolidColorBrush x:Key="WindowTextLinkColor" Color="#8dd28a"/>
+    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="#26C6DA"/>
 
-    <SolidColorBrush x:Key="MetroButtonBorderColor" Color="Black"/>
-    <SolidColorBrush x:Key="MetroButtonForegraund" Color="Black"/>
-    <SolidColorBrush x:Key="MetroButtonBackground" Color="Black"/>
-    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#865fc5"/>
+    <SolidColorBrush x:Key="MetroButtonBorderColor" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonForegraund" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonBackground" Color="White"/>
+    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#f39c12"/>
 
-    <SolidColorBrush x:Key="IconButtonBuckground" Color="Black"/>
+    <SolidColorBrush x:Key="IconButtonBuckground" Color="White"/>
 
     <SolidColorBrush x:Key="ChartStroke" Color="#FFEB3B"/>
     <SolidColorBrush x:Key="ChartFill" Color="#FFFDE7"/>
@@ -31,11 +31,11 @@
     <SolidColorBrush x:Key="ForecastButtonBorderColor" Color="#FF707070"/>
     <SolidColorBrush x:Key="ForecastButtonFillColor" Color="#19000000"/>
 
-    <SolidColorBrush x:Key="CARDForecastDarkColor" Color="#0288D1"/>
-    <SolidColorBrush x:Key="CARDForecastLightColor" Color="#03A9F4"/>
+    <SolidColorBrush x:Key="CARDForecastDarkColor" Color="#0097A7"/>
+    <SolidColorBrush x:Key="CARDForecastLightColor" Color="#26C6DA"/>
     <SolidColorBrush x:Key="CARDForecastBackgroundColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="CARDForecastTextColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="CARDForecastTextSecondaryColor" Color="#B3E5FC"/>
+    <SolidColorBrush x:Key="CARDForecastTextSecondaryColor" Color="#C5CAE9"/>
     <SolidColorBrush x:Key="CARDForecastTextThridColor" Color="#757575"/>
 
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
@@ -43,8 +43,8 @@
     <BitmapImage x:Key="IconVisibleButtonHiden" UriSource="/WeatherWidget2;component/Icons/HiddenIcon.png"/>
     <BitmapImage x:Key="IconRemoveButton" UriSource="/WeatherWidget2;component/Icons/RemoveIcon.png"/>
     <BitmapImage x:Key="IconEditButton" UriSource="/WeatherWidget2;component/Icons/EditIcon.png"/>
-    <BitmapImage x:Key="IconWindowHead" UriSource="/WeatherWidget2;component/Icons/WindowHeadIconLight.png"/>
-    <BitmapImage x:Key="IconCloseButton" UriSource="/WeatherWidget2;component/Icons/CloseButtonIconLight.png"/>
-    <BitmapImage x:Key="IconMinimazingButton" UriSource="/WeatherWidget2;component/Icons/MinimazeButtonLight.png"/>
+    <BitmapImage x:Key="IconWindowHead" UriSource="/WeatherWidget2;component/Icons/WindowHeadIcon.png"/>
+    <BitmapImage x:Key="IconCloseButton" UriSource="/WeatherWidget2;component/Icons/CloseButtonIcon.png"/>
+    <BitmapImage x:Key="IconMinimazingButton" UriSource="/WeatherWidget2;component/Icons/MinimazeButton.png"/>
 
 </ResourceDictionary>

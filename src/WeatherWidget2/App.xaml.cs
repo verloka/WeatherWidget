@@ -27,6 +27,36 @@ namespace WeatherWidget2
                     Current.Resources.MergedDictionaries.Clear();
                     Current.Resources.MergedDictionaries.Add(light);
                     break;
+                case 2:
+                    ResourceDictionary purple = new ResourceDictionary();
+                    purple.Source = new Uri("Theme\\Purple.xaml", UriKind.Relative);
+                    Current.Resources.MergedDictionaries.Clear();
+                    Current.Resources.MergedDictionaries.Add(purple);
+                    break;
+                case 3:
+                    ResourceDictionary red = new ResourceDictionary();
+                    red.Source = new Uri("Theme\\Red.xaml", UriKind.Relative);
+                    Current.Resources.MergedDictionaries.Clear();
+                    Current.Resources.MergedDictionaries.Add(red);
+                    break;
+                case 4:
+                    ResourceDictionary indigo = new ResourceDictionary();
+                    indigo.Source = new Uri("Theme\\Indigo.xaml", UriKind.Relative);
+                    Current.Resources.MergedDictionaries.Clear();
+                    Current.Resources.MergedDictionaries.Add(indigo);
+                    break;
+                case 5:
+                    ResourceDictionary cyna = new ResourceDictionary();
+                    cyna.Source = new Uri("Theme\\Cyna.xaml", UriKind.Relative);
+                    Current.Resources.MergedDictionaries.Clear();
+                    Current.Resources.MergedDictionaries.Add(cyna);
+                    break;
+                case 6:
+                    ResourceDictionary amber = new ResourceDictionary();
+                    amber.Source = new Uri("Theme\\Amber.xaml", UriKind.Relative);
+                    Current.Resources.MergedDictionaries.Clear();
+                    Current.Resources.MergedDictionaries.Add(amber);
+                    break;
             }
         }
 

@@ -120,6 +120,11 @@
                                         <ComboBox x:Name="cbTheme" Grid.Column="1" Width="200" Height="22" FontSize="14">
                                             <ComboBoxItem x:Name="cbiDark" Content="dark"/>
                                             <ComboBoxItem x:Name="cbiLight" Content="light"/>
+                                            <ComboBoxItem x:Name="cbiPurple" Content="purple"/>
+                                            <ComboBoxItem x:Name="cbiRed" Content="red"/>
+                                            <ComboBoxItem x:Name="cbiIndigo" Content="indigo"/>
+                                            <ComboBoxItem x:Name="cbiCyan" Content="cyan"/>
+                                            <ComboBoxItem x:Name="cbiAmber" Content="amber"/>
                                         </ComboBox>
                                     </Grid>
                                     <Grid x:Name="gridUpdatePeriod" Margin="0,7,0,0">
@@ -132,6 +137,7 @@
                                             <ComboBoxItem x:Name="cbOften1" Content="often"/>
                                             <ComboBoxItem x:Name="cbOften2" Content="normally (recomended)"/>
                                             <ComboBoxItem x:Name="cbOften3" Content="infrequently"/>
+                                            <ComboBoxItem x:Name="cbOften4" Content="no check"/>
                                         </ComboBox>
                                     </Grid>
                                 </StackPanel>

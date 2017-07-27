@@ -4,24 +4,24 @@
 
     <FontFamily x:Key="DefaultFontFamily">/WeatherWidget2;component/Fonts/#Comfortaa Light</FontFamily>
 
-    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#eeeef2"/>
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#FFC107"/>
     <SolidColorBrush x:Key="WindowCloseButtonBackground" Color="Black"/>
     <SolidColorBrush x:Key="WindowHeadTextColor" Color="#525252"/>
 
     <!-- //identy 1-->
-    <SolidColorBrush x:Key="WindowBorderColor" Color="#865fc5"/>
+    <SolidColorBrush x:Key="WindowBorderColor" Color="#FFF8E1"/>
     <Color x:Key="WindowShadowColor" A="255" R="0" G="122" B="204"/>
-    
+
     <SolidColorBrush x:Key="WindowAlertBorderColor" Color="#e74c3c"/>
     <SolidColorBrush x:Key="WindowUpdateBorderColor" Color="#2ecc71"/>
     <SolidColorBrush x:Key="WindowTextColor" Color="Black"/>
     <SolidColorBrush x:Key="WindowTextLinkColor" Color="#6ce26c"/>
-    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="White"/>
+    <SolidColorBrush x:Key="WidgetListBackgroundColor" Color="#FFCA28"/>
 
     <SolidColorBrush x:Key="MetroButtonBorderColor" Color="Black"/>
     <SolidColorBrush x:Key="MetroButtonForegraund" Color="Black"/>
     <SolidColorBrush x:Key="MetroButtonBackground" Color="Black"/>
-    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#865fc5"/>
+    <SolidColorBrush x:Key="MetroButtonBackgroundTop" Color="#bdc3c7"/>
 
     <SolidColorBrush x:Key="IconButtonBuckground" Color="Black"/>
 
@@ -31,11 +31,11 @@
     <SolidColorBrush x:Key="ForecastButtonBorderColor" Color="#FF707070"/>
     <SolidColorBrush x:Key="ForecastButtonFillColor" Color="#19000000"/>
 
-    <SolidColorBrush x:Key="CARDForecastDarkColor" Color="#0288D1"/>
-    <SolidColorBrush x:Key="CARDForecastLightColor" Color="#03A9F4"/>
+    <SolidColorBrush x:Key="CARDForecastDarkColor" Color="#FFA000"/>
+    <SolidColorBrush x:Key="CARDForecastLightColor" Color="#FFCA28"/>
     <SolidColorBrush x:Key="CARDForecastBackgroundColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="CARDForecastTextColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="CARDForecastTextSecondaryColor" Color="#B3E5FC"/>
+    <SolidColorBrush x:Key="CARDForecastTextSecondaryColor" Color="#F0F0F0"/>
     <SolidColorBrush x:Key="CARDForecastTextThridColor" Color="#757575"/>
 
     <BitmapImage x:Key="IconAddButton" UriSource="/WeatherWidget2;component/Icons/AddIcon.png"/>
